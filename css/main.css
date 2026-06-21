@@ -1,0 +1,42 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: #35276c;
+}
+
+#header-one {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 30px;
+}
+
+.logo {
+    margin-right: 2rem;
+    border-radius: 30rem; 
+    height: 6.8rem; 
+}
+
+
+.nav-one {
+    display: flex;
+    /* justify-content: space-evenly; */
+    justify-content: flex-end;
+    gap: 5rem;
+    margin-right: 1rem;
+}
+
+.nav-link {
+    color: #04fb1d;
+    text-decoration: none;
+    font-family:'Trebuchet MS';
+    font-size: 1.1rem;
+}
+
+.nav-link:hover {
+    color: #09993c;
+}
