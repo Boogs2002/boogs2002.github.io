@@ -1,202 +1,741 @@
-* {
+
+:root {
+    --gold:         #ffd700;
+    --gold-dim:     rgba(255, 215, 0, 0.25);
+    --gold-glow:    rgba(255, 215, 0, 0.55);
+    --stone-dark:   #1a1814;
+    --stone-mid:    #2e2a24;
+    --stone-text:   #4a4540;
+    --lava-hot:     #ff4500;
+    --lava-mid:     #ff8800;
+    --lava-pale:    #ffcc00;
+    --font-display: 'Cinzel', Georgia, serif;
+    --font-body:    'IM Fell English', Georgia, serif;
+}
+
+*, *::before, *::after {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
-.div-main {
+html {
+    scroll-behavior: smooth;
+}
+
+/* ── 2. THE MASTER CONTINUOUS GRADIENT ─────────────────── */
+/* This is the spine of the entire descent. Every section
+   is transparent — this body gradient shows through all of them. */
+body {
+    /* Hero sky colour sampled from wallpaper base → deep midnight → tomb black */
+    background: linear-gradient(
+        to bottom,
+        #3a3058 0%,      /* matches wallpaper dune base */
+        #261e45 12%,     /* deepening dusk */
+        #160f38 28%,     /* midnight entry */
+        #0e0824 44%,     /* descending */
+        #080518 58%,     /* mid-tomb */
+        #050310 74%,     /* deep tomb */
+        #020108 88%,     /* near black */
+        #010005 100%     /* absolute dark */
+    );
+    background-attachment: fixed; /* parallax — sky stays as content scrolls */
+    color: #e8dcc8;
+    font-family: var(--font-body);
+    overflow-x: hidden;
+    min-height: 100vh;
+}
+
+/* ── 3. SCARAB NAV ──────────────────────────────────────── */
+.scarab-nav {
+    position: fixed;
+    top: 28px;
+    left: 36px;
+    z-index: 1000;
+}
+
+/* Hide the default <details> marker */
+.scarab-details {
+    list-style: none;
+}
+.scarab-details > summary {
+    list-style: none;
+}
+.scarab-details > summary::-webkit-details-marker {
+    display: none;
+}
+
+.scarab-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 52px;
+    height: 52px;
+    cursor: pointer;
+    user-select: none;
+    /* No background — the scarab floats */
+}
+
+.scarab-icon {
+    font-size: 2.4rem;
+    color: var(--gold);
+    text-shadow: 0 0 18px var(--gold-glow), 0 0 40px rgba(255, 215, 0, 0.25);
+    display: block;
+    transition: transform 0.3s ease, text-shadow 0.3s ease;
+}
+
+.scarab-btn:hover .scarab-icon,
+.scarab-details[open] .scarab-icon {
+    transform: scale(1.18) rotate(-8deg);
+    text-shadow: 0 0 28px var(--gold-glow), 0 0 60px rgba(255, 215, 0, 0.4);
+}
+
+/* Menu slides in from left when <details> is open */
+.papyrus-menu {
+    position: absolute;
+    top: 60px;
+    left: 0;
+    list-style: none;
+    background: rgba(5, 3, 16, 0.92);
+    border: 1px solid rgba(255, 215, 0, 0.15);
+    border-left: 2px solid var(--gold-dim);
+    padding: 16px 0;
+    min-width: 170px;
+    backdrop-filter: blur(8px);
+
+    /* Slide-in animation driven by <details> open state */
+    animation: menuSlide 0.22s ease both;
+}
+
+@keyframes menuSlide {
+    from { opacity: 0; transform: translateX(-14px); }
+    to   { opacity: 1; transform: translateX(0); }
+}
+
+.papyrus-menu li {
+    border-bottom: 1px solid rgba(255, 215, 0, 0.06);
+}
+.papyrus-menu li:last-child { border-bottom: none; }
+
+.papyrus-menu a {
+    display: block;
+    padding: 12px 24px;
+    font-family: var(--font-display);
+    font-size: 0.72rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: rgba(255, 215, 0, 0.5);
+    text-decoration: none;
+    transition: color 0.2s, padding-left 0.2s;
+}
+
+.papyrus-menu a:hover {
+    color: var(--gold);
+    padding-left: 32px;
+}
+
+/* ── 4. SECTION SHARED STYLES ───────────────────────────── */
+section {
+    position: relative;
+    min-height: 100vh;
     display: flex;
     flex-direction: column;
-    background-color: #290d3f;
-    padding-bottom: 10rem;
-    border-radius: 2rem;
-    margin: 2rem;
-    
+    align-items: center;
+    justify-content: center;
+    padding: 100px 8%;
+    /* All sections are transparent — body gradient shows through */
+    background: transparent;
 }
 
-.div-main{
-    background-image: 
-    /* radial-gradient(circle, rgba(255, 255, 255, 0), rgba(0, 0, 0, 0.1) ), */
-    url('/images/hex.png')
-    /* background-opacity: ; */
-}
-
-.section-zero {
+.section-heading {
+    font-family: var(--font-display);
+    font-size: clamp(1.1rem, 2.5vw, 1.5rem);
+    font-weight: 400;
+    letter-spacing: 0.45em;
+    text-transform: uppercase;
+    color: var(--gold-dim);
+    margin-bottom: 60px;
     display: flex;
-    margin-left: 1rem;
-    padding-top: 2rem;
+    align-items: center;
+    gap: 16px;
 }
 
-.section-tz {
-    font-size: 1.5rem;
-    color: #f4a9bd;
-    font-family:'Trebuchet MS';
-    background-color: #b9063c;
-    border-radius: 5rem;
-    padding: 0.5rem 1rem;
-}
-
-.section-dz {
-    font-size: 1.25rem;
-    color: #9f8d8d;
-    font-family:'Arial';
-    padding-top: 0.7rem;
-    padding-left: 0.8rem;
-}
-
-.section-one {
-    display: flex;
-    flex-direction: column;
-    margin-left: 1rem;
-    padding-top: 4rem;
-    font-size: 1.5rem;
-    gap: 1.5rem;
-    color: #fff4f7;
-    
-}
-
-.section-to{
-    font-size: 4rem;
-    margin-right: 20rem;
-
-}
-
-.section-do {
+.section-glyph {
     font-size: 1.4rem;
-    color: #9f8d8d;
-    font-family:'Arial';
-    padding-top: 2rem;
-    padding-right: 2rem;
-    /* padding-left: 1.2rem; */
+    opacity: 0.6;
 }
 
-.section-two {
+/* ── 5. HERO SECTION ────────────────────────────────────── */
+#hero {
+    /* Wallpaper image layers over the body gradient for this section only */
+    background-image: url('../images/wallpaper\ 1.png');
+    background-size: cover;
+    background-position: center bottom;
+    background-repeat: no-repeat;
+    /* No background-attachment here — fixed is on body,
+       this image scrolls naturally with the section */
+    text-align: center;
+    gap: 32px;
+}
+
+/* Subtle vignette so text reads over the image */
+#hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(
+        ellipse at center,
+        rgba(0,0,0,0.1) 0%,
+        rgba(0,0,0,0.45) 100%
+    );
+    pointer-events: none;
+}
+
+/* ── CRESCENT MOON PROFILE FRAME ── */
+.moon-frame {
+    transition: transform 0.2s ease-out, box-shadow 0.3s ease;
+    position: relative;
+    width: 200px;
+    height: 200px;
+    /* The crescent is made by overlapping two circles:
+       one large visible circle, one smaller offset circle
+       that cuts into it via a radial-gradient mask */
+    background: radial-gradient(
+        circle at 55% 50%,
+        transparent 42%,
+        rgba(255, 255, 255, 0.12) 43%,
+        rgba(255, 255, 255, 0.08) 50%
+    );
+    border-radius: 50%;
+    /* Outer glow */
+    box-shadow:
+        0 0 40px rgba(255, 255, 255, 0.18),
+        0 0 80px rgba(255, 255, 255, 0.08),
+        inset -8px 8px 20px rgba(255, 255, 255, 0.15);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    /* Clip to crescent shape using clip-path */
+    /* A crescent = circle minus an offset circle.
+       We achieve it with a CSS mask. */
+    mask-image: radial-gradient(
+        circle at 60% 50%,
+        transparent 40%,
+        black 41%
+    );
+    -webkit-mask-image: radial-gradient(
+        circle at 60% 50%,
+        transparent 40%,
+        black 41%
+    );
+    z-index: 1;
+}
+
+/* Subtle ambient light behind the moon */
+.moon-frame::before {
+    content: '';
+    position: absolute;
+    inset: -20px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(220,210,180,0.12) 0%, transparent 70%);
+    z-index: 0;
+    pointer-events: none;
+}
+
+.moon-photo {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: top;
+    position: relative;
+    z-index: 1;
+}
+
+.moon-photo-placeholder {
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, #2a2040, #1a1030);
+    border-radius: 50%;
+    opacity: 0.6;
+    /* Replace this div with your <img> once you have the photo */
+}
+
+/* ── HERO TEXT ── */
+.hero-content {
+    position: relative;
+    z-index: 1;
+}
+
+.hero-content h1 {
+    font-family: var(--font-display);
+    font-size: clamp(2rem, 5.5vw, 3.8rem);
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    color: #f0e8d8;
+    text-shadow: 2px 3px 18px rgba(0,0,0,0.7), 0 0 60px rgba(0,0,0,0.4);
+    margin-bottom: 12px;
+}
+
+.hero-content h2 {
+    font-family: var(--font-display);
+    font-size: clamp(0.75rem, 1.8vw, 1rem);
+    font-weight: 400;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: var(--gold);
+    opacity: 0.85;
+    text-shadow: 0 0 20px var(--gold-glow);
+}
+
+/* ── SCROLL INDICATOR ── */
+.scroll-indicator {
+    position: absolute;
+    bottom: 40px;
+    left: 50%;
+    transform: translateX(-50%);
     display: flex;
     flex-direction: column;
-    margin-top: 3rem;
-    margin-left: 2rem;
-    padding-top: 4rem;
-    padding-left: 1rem;
-    padding-right: 1rem;
-    padding-bottom: 2rem;
-    margin-right: 2rem;
-    font-size: 1.5rem;
-    gap: 1.5rem;
-    color: #fff4f7; 
-    background-color: #290d3f;
-    border-radius: 2rem;
+    align-items: center;
+    gap: 6px;
+    text-decoration: none;
+    z-index: 1;
+    animation: bounce 2.4s ease-in-out infinite;
 }
 
-.sectionskill-span {
-    font-size: 1rem;
-    color: #f4a9bd;
-    font-family:'Trebuchet MS';
-    background-color: #b9063c;
-    border-radius: 5rem;
-    padding: 0.5rem 1rem;
-    width: fit-content;
+.descend-text {
+    font-family: var(--font-display);
+    font-size: 0.62rem;
+    letter-spacing: 0.45em;
+    text-transform: uppercase;
+    color: rgba(255, 215, 0, 0.5);
 }
 
-.skill-grid{
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 2rem;
-    margin-top: 3rem;
-    /* background-color: #684781; */
+.descend-arrow {
+    font-size: 1.3rem;
+    color: rgba(255, 215, 0, 0.4);
 }
 
-.skill-card{ 
-    background-color: #413659;
-    border-radius: 0.8rem;
-    padding: 1rem;
+@keyframes bounce {
+    0%, 60%, 100% { transform: translateX(-50%) translateY(0); }
+    30%            { transform: translateX(-50%) translateY(-10px); }
+    45%            { transform: translateX(-50%) translateY(-4px); }
 }
 
-.skill-span{
-    font-size: 1.5rem;
-    color: #f4a9bd;
-    font-family:'Trebuchet MS';
-    /* padding-bottom: rem; */
-    /* margin-bottom: 1rem; */
+/* ── 6. SHAFT (surface → pyramid transition) ────────────── */
+.shaft {
+    position: relative;
+    height: 180px;
+    display: flex;
+    justify-content: center;
+    align-items: stretch;
+    overflow: hidden;
 }
 
-.skill-h3{
-    font-size: 1.25rem;
-    color: #fff4f7;
-    font-family:'Arial';
-    margin-top: 1.3rem;
-    padding-left: 1rem;
+.shaft-wall {
+    width: 38%;
+    background: linear-gradient(
+        to bottom,
+        transparent 0%,
+        rgba(10,8,20,0.5) 40%,
+        rgba(10,8,20,0.85) 100%
+    );
+    /* Stone texture via repeating gradient */
+    background-image:
+        repeating-linear-gradient(
+            0deg,
+            transparent,
+            transparent 28px,
+            rgba(0,0,0,0.18) 28px,
+            rgba(0,0,0,0.18) 30px
+        ),
+        linear-gradient(to bottom, transparent 0%, rgba(10,8,20,0.85) 100%);
 }
 
-.section-three {
+.shaft-wall.left  { border-right: 1px solid rgba(255,215,0,0.06); }
+.shaft-wall.right { border-left:  1px solid rgba(255,215,0,0.06); }
+
+/* ── 7. SKILLS / PYRAMID ────────────────────────────────── */
+#skills {
+    padding-top: 60px;
+}
+
+.pyramid-container {
     display: flex;
     flex-direction: column;
-    margin-left: 2rem;
-    padding-top: 4rem;
-    padding-bottom: 2rem;
-    background-color: #290d3f;
-    border-radius: 2rem;
-    margin-top: 3rem;
-    margin-right: 2rem;
-    margin-bottom: 2rem;
-    padding-left: 1rem;
-    gap: 1.5rem;
-    color: #fff4f7;
-    font-size: 1.5rem;
+    align-items: center;
+    gap: 4px;
+    width: 100%;
+    max-width: 640px;
 }
 
-.sectionwork-span{
-    font-size: 1rem;
-    color: #f4a9bd;
-    font-family:'Trebuchet MS';
-    background-color: #b9063c;
-    border-radius: 5rem;
-    padding: 0.5rem 1rem;
-    width: fit-content;
+/* CSS-only apex triangle */
+.pyramid-apex {
+    width: 0;
+    height: 0;
+    border-left:  70px solid transparent;
+    border-right: 70px solid transparent;
+    border-bottom: 60px solid #4C4574;
+    filter: drop-shadow(0 -4px 14px rgba(255, 217, 0, 0.423));
+    margin-bottom: 2px;
+    transition: filter 0.3s ease;
 }
 
-.work-grid{
+/* Each layer row */
+.pyramid-layer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    /* Reveal animation target — starts hidden via JS */
+    transition: opacity 0.5s ease, transform 0.1s ease;
+}
+
+/* The trapezoid block */
+.block {
+    /* height: 60px; */
+    clip-path: polygon(8% 0%, 92% 0%, 100% 100%, 0% 100%);
+    background: linear-gradient(135deg, #4C4574, #2e2e60);
+    box-shadow:
+        inset 0 0 18px rgba(0,0,0,0.6),
+        0 4px 16px rgba(0,0,0,0.5);
+    transition: background 0.35s ease, box-shadow 0.35s ease;
+    cursor: default;
+    /* Gold top-edge line */
+    border-top: 1px solid rgba(255,215,0,0.15);
+}
+
+.tier-1 { 
+    width: 200px;
+    height: 50px;
+}
+.tier-2 {
+     width: 270px; 
+     height: 60px;
+}
+.tier-3 {
+     width: 345px;
+     height: 70px;
+}
+.tier-4 {
+     width: 445px;
+     height: 80px;
+}
+
+
+
+/* Hover: ignite in gold */
+.pyramid-layer:hover .block {
+    background: linear-gradient(135deg, #c8950a, #ffd700, #e6a800);
+    box-shadow:
+        0 0 30px rgba(255,215,0,0.5),
+        0 0 60px rgba(255,215,0,0.2),
+        inset 0 0 10px rgba(255,255,255,0.1);
+}
+
+/* Skill labels — dim by default, glow on hover */
+.skill-label {
+    position: absolute;
+    font-family: var(--font-display);
+    font-size: 0.68rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--gold-dim);
+    white-space: nowrap;
+    transition: color 0.3s ease, transform 0.3s ease, text-shadow 0.3s ease;
+    pointer-events: none;
+}
+
+.skill-label.left  { right: calc(100% + 20px); text-align: right; }
+.skill-label.right { left:  calc(100% + 20px); }
+
+.pyramid-layer:hover .skill-label {
+    color: var(--gold);
+    text-shadow: 0 0 12px var(--gold-glow);
+    transform: scale(1.08);
+}
+
+/* JS-controlled visibility states */
+.hidden  { opacity: 0; transform: translateY(40px); }
+.visible { opacity: 1; transform: translateY(0); }
+
+/* ── 8. TOMB ARCH (pyramid → tomb transition) ───────────── */
+.tomb-arch {
+    width: 100%;
+    overflow: hidden;
+    line-height: 0;
+    /* Slightly negative margin pulls it flush against the pyramid section */
+    margin-top: -2px;
+}
+
+.tomb-arch svg {
+    width: 100%;
+    height: 120px;
+    display: block;
+}
+
+/* ── 9. EXPERIENCE / TOMB ───────────────────────────────── */
+#experience {
+    background: #050505; 
+    padding: 100px 0;
+    width: 100%;
+    position: relative; /* Keep this for the absolute button */
+}
+
+/* Style the button */
+.accessibility-btn {
+    position: absolute;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%); /* Perfectly center it */
+    z-index: 20; /* Ensure it is always above the mask */
+    background: #050505; /* Solid background to make it readable */
+    border: 1px solid var(--gold);
+    color: var(--gold);
+    padding: 8px 16px;
+    cursor: pointer;
+}
+
+.accessibility-btn:hover {
+    background: var(--gold-dim);
+}
+
+/* The magic override: when no-torch is applied, remove the mask */
+#experience.no-torch .tomb-container {
+    -webkit-mask-image: none;
+    mask-image: none;
+}
+
+.tomb-heading {
+    color: rgba(255, 215, 0, 0.18);
+}
+
+.tomb-container {
+    width: 100%;
+    max-width: 900px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    
+    /* The Spotlight Effect: Only masks the text */
+    -webkit-mask-image: radial-gradient(circle 350px at var(--cursor-x) var(--cursor-y), black 20%, transparent 100%);
+    mask-image: radial-gradient(circle 350px at var(--cursor-x) var(--cursor-y), black 20%, transparent 100%);
+}
+
+/* Stone-wall tablet rows */
+.tablet-row {
     display: grid;
-    gap: 3rem;
-    margin-top: 2rem;
-    padding-right: 1rem;
-    /* background-color: #684781; */
+    grid-template-columns: 1fr 2px 1.5fr;
+    align-items: center;
+    gap: 0 32px;
+    padding: 44px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+    transition: opacity 0.75s ease, transform 0.75s ease;
 }
 
-.work-card{ 
-    background-color: #413659;
-    border-radius: 0.8rem;
-    padding: 2rem;
-    padding-bottom: 2rem;
+.tablet-row:last-child { border-bottom: none; }
+
+/* Engraving — job title & date */
+.engraving h3 {
+    font-family: var(--font-display);
+    font-size: clamp(1rem, 2.5vw, 1.5rem);
+    font-weight: 600;
+    color: var(--stone-text); /* dim stone grey — looks carved */
+    text-shadow:
+        1px 1px 0 rgba(0,0,0,0.9),
+        -1px -1px 0 rgba(255,255,255,0.03);
+    margin-bottom: 8px;
+    transition: color 0.4s ease, text-shadow 0.4s ease;
+    color: rgba(255, 255, 255, 0.05);
 }
 
-.work-span{
-    font-size: 1.2rem;
-    color: #f4a9bd;
-    font-family:'Trebuchet MS';
-    padding-left: 1rem;
+.engraving-date {
+    display: block;
+    font-family: var(--font-display);
+    font-size: 0.62rem;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: rgba(255,215,0,0.18);
+    transition: color 0.4s ease;
 }
 
-.work-h3{
-    font-size: 1.8rem;
-    color: #fff4f7;
-    font-family:'Arial';
-    margin-top: 0.8rem;
+/* The vertical golden divider bar — starts dark, ignites on hover */
+.tablet-divider {
+    width: 2px;
+    height: 70px;
+    background: #1a1a1a;
+    align-self: center;
+    transition: background 0.4s ease, box-shadow 0.4s ease;
 }
 
-.work-p{
-    font-size: 1rem;
-    color: #cfc4c7;
-    font-family:'Arial';
-    margin-top: 1rem;
-    padding-bottom: 1rem;
-    padding-left: 1rem;
+/* Description — hidden until hover */
+.details {
+    opacity: 0;
+    transition: opacity 0.4s ease;
 }
 
-.work-ul{
-    padding-top: 1rem;
-    font-size: 1.5rem;
+.details p {
+    font-family: var(--font-body);
+    font-size: 0.9rem;
+    line-height: 1.75;
+    color: rgba(200, 188, 160, 0.0); /* starts invisible */
+    transition: color 0.4s ease;
 }
 
+/* ── TORCHLIGHT HOVER MECHANIC ── */
+.tablet-row:hover .engraving h3 {
+    color: var(--gold);
+    text-shadow: 0 0 20px var(--gold-glow), 0 0 40px rgba(255,215,0,0.2);
+}
 
+.tablet-row:hover .engraving-date {
+    color: rgba(255,215,0,0.5);
+}
 
+.tablet-row:hover .tablet-divider {
+    background: var(--gold);
+    box-shadow: 0 0 12px var(--gold-glow), 0 0 30px rgba(255,215,0,0.3);
+}
 
+.tablet-row:hover .details {
+    opacity: 1;
+}
+
+.tablet-row:hover .details p {
+    color: #c8bca0;
+}
+
+/* Slide-in animation for tablet rows (JS adds .visible) */
+.hidden-left {
+    opacity: 0;
+    transform: translateX(-60px);
+}
+
+.hidden-left.visible {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+/* ── 10. FOOTER ──────────────────────────────────────────── */
+#contact {
+    position: relative;
+    padding: 80px 8% 40px;
+    text-align: center;
+    overflow: hidden;
+    background: radial-gradient(circle at 50% 100%, #3d1a00 0%, #1a0a00 50%, #050505 100%);
+    z-index: 1;
+    animation: breathe 5s ease-in-out infinite;
+}
+
+@keyframes breathe {
+    0% { filter: brightness(1); }
+    50% { filter: brightness(1.2); }
+    100% { filter: brightness(1); }
+}
+
+.footer-content {
+    position: relative;
+    z-index: 2;
+    padding-bottom: 40px;
+}
+
+/* --- Keep your .footer-glyph, .footer-name, .footer-links, .footer-copy styles as they were --- */
+.footer-glyph { font-size: 2rem; color: var(--gold-dim); margin-bottom: 14px; }
+.footer-name { font-family: var(--font-display); color: var(--gold); text-shadow: 0 0 15px rgba(255, 69, 0, 0.6); margin-bottom: 20px; }
+.footer-links { display: flex; justify-content: center; align-items: center; gap: 16px; flex-wrap: wrap; margin-bottom: 24px; }
+.link-github { color: #716e6e; }   /* Example: Neutral Grey */
+.link-linkedin { color: #716e6e; } /* Example: Classic LinkedIn Blue */
+.link-github:hover, 
+.link-linkedin:hover {
+    color: var(--gold); /* Or your --lava-hot variable */
+    text-shadow: 0 0 10px var(--gold-glow);}
+.footer-sep { color: rgba(255,215,0,0.15); }
+.footer-copy { font-size: 0.68rem; letter-spacing: 0.15em; color: rgba(255,215,0,0.12); }
+
+/* ── LAVA ATMOSPHERE ── */
+.lava-stage {
+    position: absolute;
+    bottom: 0; left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    pointer-events: none;
+    overflow: hidden;
+    /* Soften the very top edge so it blends into the black */
+    mask-image: linear-gradient(to top, rgba(0,0,0,1) 0%, transparent 100%);
+}
+
+.lava-wave {
+    position: absolute;
+    bottom: -50px;
+    width: 200%;
+    height: 200px;
+    background: var(--lava-hot);
+    border-radius: 40%;
+    filter: blur(80px); /* Heavy blur to make it look like a glow, not a line */
+    opacity: 0.3;
+    mix-blend-mode: screen;
+    animation: lavaFlow 15s infinite ease-in-out;
+}
+
+.wave-a { left: -50%; }
+.wave-b { left: -20%; animation-delay: -5s; opacity: 0.2; }
+.wave-c { left: -80%; animation-delay: -10s; opacity: 0.25; }
+
+@keyframes lavaFlow {
+    0%   { transform: translateX(0%) translateY(0%); }
+    50%  { transform: translateX(-25%) translateY(-20px); }
+    100% { transform: translateX(0%) translateY(0%); }
+}
+
+/* ── 11. ACCESSIBILITY & RESPONSIVE ─────────────────────── */
+
+/* Focus ring for keyboard nav */
+a:focus-visible,
+summary:focus-visible {
+    outline: 2px solid var(--gold);
+    outline-offset: 4px;
+    border-radius: 2px;
+}
+
+/* Mobile: hide side skill labels, show them below block */
+@media (max-width: 640px) {
+    .skill-label { display: none; }
+
+    .tablet-row {
+        grid-template-columns: 1fr;
+        grid-template-rows: auto auto auto;
+        gap: 14px 0;
+    }
+
+    .tablet-divider {
+        width: 40px;
+        height: 2px;
+    }
+
+    .details { opacity: 1; }
+    .details p { color: rgba(200,188,160,0.65); }
+
+    .tomb-arch svg { height: 70px; }
+
+    .shaft { height: 100px; }
+}
+
+@media (max-width: 400px) {
+    .tier-4 { width: 95vw; }
+    .tier-3 { width: 75vw; }
+    .tier-2 { width: 56vw; }
+    .tier-1 { width: 38vw; }
+}
+
+/* Respect prefers-reduced-motion */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}

@@ -1,121 +1,192 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Home</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/css/index.css">
-    <link rel="stylesheet" href="/css/main.css">
-
+    <title>Hrishikesh Bajnath | Portfolio</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=IM+Fell+English:ital@0;1&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/index.css">
 </head>
 <body>
-    
-    <header id="header-one">
-        <img class="logo" src="/images/icon.jpeg" alt="Logo">
 
-        <nav class="nav-one">
-            <a class="nav-link active" href="/">Home</a>
-            <a class="nav-link" href="/about.html">About</a>
-            <a class="nav-link" href="/work.html">Work</a>
-            <a class="nav-link" href="/contact.html">Contact</a>
-        </nav>
-    </header>
-    
-    <main id="main-one">
-        <div class="div-main">
-            <section class="section-zero">   
-                <h2 class="section-tz">Open to internships & opportunities</h2>
-                <p class="section-dz">————software engineer </p>
-            </section>
-        
-            <section class="section-one">
-                <h1 class="section-to">HI, I'M HRISHIKESH BAJNATH</h1>
-                <p class="section-do">A Software Engineering student at UNASAT, Paramaribo, passionate about building full-stack applications and solving real-world problems through clean, purposeful code.</p>
-            </section>
-        </div>
+    <nav class="scarab-nav" aria-label="Main navigation">
+        <details class="scarab-details">
+            <summary class="scarab-btn" aria-label="Open navigation menu">
+                <span class="scarab-icon" aria-hidden="true">𓆣</span>
+            </summary>
+            <ul class="papyrus-menu" role="list">
+                <li><a href="/index.html">Home</a></li>
+                <li><a href="/work.html">Work</a></li>
+                <li><a href="/about.html">About</a></li>
+                <li><a href="/contact.html">Contact</a></li>
+            </ul>
+        </details>
+    </nav>
 
+    <main>
 
-       <section class="section-two">   
-        <span class="sectionskill-span">WHAT HAVE I WORKED WITH?</span> 
-        <h2>SKILLS & TOOLS </h2>
-        <P>From front-end interfaces to back-end logic and databases — here's my current toolkit.</P>
-       
-        <div class="skill-grid">
-            
-            <div class="skill-card">
-                <span class="skill-span">LANGUAGE</span>
-                <h3 class="skill-h3">Java</h3>
+        <!-- Home -->
+        <section id="hero" aria-label="Hero — The Surface">
+
+            <div class="moon-frame" aria-label="Profile photo">
+                <img src="/images/icon.jpeg" alt="Hrishikesh Bajnath" class="moon-photo">            
             </div>
 
-            <div class="skill-card">
-                <span class="skill-span">LANGUAGE</span>
-                <h3 class="skill-h3">JavaScript</h3>
+            <div class="hero-content">
+                <h1>Hrishikesh Bajnath</h1>
+                <h2>Software Security &amp; Full-Stack Web Development</h2>
             </div>
 
-            <div class="skill-card">
-                <span class="skill-span">FRONTEND</span>
-                <h3 class="skill-h3">HTML & CSS</h3>
-            </div>
+            <a href="#skills" class="scroll-indicator" aria-label="Scroll down to skills">
+                <span class="descend-text">Descend</span>
+                <span class="descend-arrow" aria-hidden="true">↓</span>
+            </a>
 
-            <div class="skill-card">
-                <span class="skill-span">BACKEND</span>
-                <h3 class="skill-h3">Node.js</h3>
-            </div>
-
-            <div class="skill-card">
-                <span class="skill-span">DATABASE</span>
-                <h3 class="skill-h3">MySQL & Prisma</h3>
-            </div>
-
-            <div class="skill-card">
-                <span class="skill-span">TOOLS</span>
-                <h3 class="skill-h3">Git & GitHub</h3>
-            </div>
-
-        </div>
         </section>
 
+        <!-- Tunnel -->
+        <div class="shaft" aria-hidden="true">
+            <div class="shaft-wall left"></div>
+            <div class="shaft-wall right"></div>
+        </div>
 
+        <!-- skills -->
+        <section id="skills" aria-label="Skills — The Pyramid">
 
-        <section class="section-three">
-            <span class="sectionwork-span">WHAT HAVE I WORKED?</span> 
-            <h2>EXPERIENCE</h2>
-            <P> A look in to my professional background, highlighting hands-on expertise in customer relations, operational management and administrative workflows.</P>
-           
-            <div class="work-grid">
-                
-                <div class="work-card">
-                    <span class="work-span">Adminstration & Sales</span>
-                    <h3 class="work-h3">STR Trading VBA - Aruba</h3>
-                    <p class="work-p">Sept 2023 - April 2024</p>
+            <h2 class="section-heading" aria-label="Skills section">
+                <span class="section-glyph" aria-hidden="true">𓇳</span>
+                Knowledge
+            </h2>
 
-                    <ul class="work-ul">
-                        <li class="work-li">Responsible for the daily operational opening and secure closing of the store.</li>
-                        <li class="work-li">Managed the full administrative workflow, including digitising and organising invoices, bank statements, and shipment data for accounting.</li>
-                        <li class="work-li">Optimised sales by preparing current price lists and handling customer correspondence via email, phone, and in person.</li>
-                        <li class="work-li">Maintained a clean, presentable store environment for an optimal customer experience.</li>
-                    </ul>
+            <div class="pyramid-container" role="list" aria-label="Skills pyramid">
+
+                <!-- top van pyramide -->
+                <div class="pyramid-apex" aria-hidden="true"></div>
+
+                <div class="pyramid-layer hidden" role="listitem" data-delay="0">
+                    <span class="skill-label left" aria-hidden="true">HTML</span>
+                    <div class="block tier-1"></div>
+                    <span class="skill-label right" aria-hidden="true">CSS</span>
                 </div>
 
-                <div class="work-card">
-                    <span class="work-span">Call Center Agent</span>
-                    <h3 class="work-h3">Yource - Suriname</h3>
-                    <p class="work-p">Juni 2024 - Aug 2024</p>
-
-                    <ul class="work-ul">
-                        <li class="work-li">Supported customers with a wide range of queries, focusing on service-oriented and effective communication.</li>
-                        <li class="work-li">Registered and processed customer data and interactions in the relevant CRM systems.</li>
-                        <li class="work-li">Analysed customer problems to quickly identify efficient and appropriate solutions.</li>
-                    </ul>
+                <div class="pyramid-layer hidden" role="listitem" data-delay="1">
+                    <span class="skill-label left" aria-hidden="true">Java</span>
+                    <div class="block tier-2"></div>
+                    <span class="skill-label right" aria-hidden="true">Javascript</span>
                 </div>
 
-               
+                <div class="pyramid-layer hidden" role="listitem" data-delay="2">
+                    <span class="skill-label left" aria-hidden="true">Node.js</span>
+                    <div class="block tier-3"></div>
+                    <span class="skill-label right" aria-hidden="true">Express</span>
+                </div>
+
+                <div class="pyramid-layer hidden" role="listitem" data-delay="3">
+                    <span class="skill-label left" aria-hidden="true">MySQL</span>
+                    <div class="block tier-4"></div>
+                    <span class="skill-label right" aria-hidden="true">Prisma</span>
+                </div>
+
+            </div>
+
+        </section>
+
+        <!-- experience figuren -->
+        <div class="tomb-arch" aria-hidden="true">
+            <svg viewBox="0 0 800 120" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+                <!-- Dark stone arch opening -->
+                <path d="M0,120 L0,80 Q400,-40 800,80 L800,120 Z" fill="#050505"/>
+                <!-- Left pillar -->
+                <rect x="0" y="0" width="90" height="120" fill="#0a0a0a"/>
+                <!-- Right pillar -->
+                <rect x="710" y="0" width="90" height="120" fill="#0a0a0a"/>
+                <!-- Stone texture lines on pillars -->
+                <line x1="0" y1="25" x2="90" y2="25" stroke="#1a1a1a" stroke-width="1"/>
+                <line x1="0" y1="55" x2="90" y2="55" stroke="#1a1a1a" stroke-width="1"/>
+                <line x1="0" y1="85" x2="90" y2="85" stroke="#1a1a1a" stroke-width="1"/>
+                <line x1="710" y1="25" x2="800" y2="25" stroke="#1a1a1a" stroke-width="1"/>
+                <line x1="710" y1="55" x2="800" y2="55" stroke="#1a1a1a" stroke-width="1"/>
+                <line x1="710" y1="85" x2="800" y2="85" stroke="#1a1a1a" stroke-width="1"/>
+                <!-- Keystone at top of arch -->
+                <polygon points="385,8 415,8 410,28 390,28" fill="#111111"/>
+            </svg>
+        </div>
+
+        <!-- experience -->
+        <section id="experience" aria-label="Experience — The Tomb">
+            
+            <button id="torch-toggle" class="accessibility-btn" aria-label="Toggle Torchlight Effect">
+                <span class="btn-text">Torch: ON</span>
+            </button>
+
+            <h2 class="section-heading tomb-heading" aria-label="Experience section">
+                <span class="section-glyph" aria-hidden="true">𓂀</span>
+                Inscriptions
+            </h2>
+
+            <div class="tomb-container" role="list">
+
+                <article class="tablet-row hidden-left" role="listitem">
+                    <div class="engraving">
+                        <h3>Junior Software Developer</h3>
+                        <span class="engraving-date">2024 - Present</span>
+                    </div>
+                    <div class="tablet-divider" aria-hidden="true"></div>
+                    <div class="details">
+                        <p>Led penetration testing initiatives and secured enterprise infrastructure against advanced persistent threats using DVWA and Burp Suite.</p>
+                    </div>
+                </article>
+
+                <article class="tablet-row hidden-left" role="listitem">
+                    <div class="engraving">
+                        <h3>IT Support &amp; Web Intern</h3>
+                        <span class="engraving-date">2023 - 2024</span>
+                    </div>
+                    <div class="tablet-divider" aria-hidden="true"></div>
+                    <div class="details">
+                        <p>Built internal dashboards in HTML, CSS, and Bootstrap. Automated weekly reporting with Node.js scripts, saving the team 6+ hours per week.</p>
+                    </div>
+                </article>
+
             </div>
 
         </section>
 
     </main>
-    
+
+    <!-- footer -->
+    <footer id="contact" aria-label="Contact and footer">
+
+        <div class="footer-content">
+            <p class="footer-glyph" aria-hidden="true">𓆣</p>
+            <h2 class="footer-name">Hrishikesh Bajnath</h2>
+            <div class="footer-links">
+                <!-- <a href="mailto:your@email.com" aria-label="Email">your@email.com</a>
+                <span class="footer-sep" aria-hidden="true">·</span> -->
+                <a class="link-github" href="https://github.com/yourusername" target="_blank" rel="noopener" aria-label="GitHub">GitHub</a>
+                <span class="footer-sep" aria-hidden="true">·</span>
+                <a class="link-linkedin" href="https://linkedin.com/in/yourusername" target="_blank" rel="noopener" aria-label="LinkedIn">LinkedIn</a>
+            </div>
+            <p class="footer-copy">© 2025 Hrishikesh Bajnath</p>
+        </div>
+
+        <!-- Lava animation lives here -->
+        <div class="lava-stage" aria-hidden="true">
+            <!-- <div class="lava-rock-surface"></div> -->
+            <div class="lava-flow">
+                <div class="lava-wave wave-a"></div>
+                <div class="lava-wave wave-b"></div>
+                <div class="lava-wave wave-c"></div>
+            </div>
+            <!-- <div class="lava-bar"></div> -->
+            <div class="lava-haze"></div>
+        </div>
+
+    </footer>
+
+    <script src="script.js"></script>
 </body>
 </html>
-
