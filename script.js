@@ -1,12 +1,19 @@
-
-
-
-// script.js — Hrishikesh Bajnath Portfolio
 // Handles two scroll-reveal animations:
 //   1. Pyramid layers (.pyramid-layer): slide up + fade in, staggered
 //   2. Experience rows (.hidden-left):  slide in from left + fade in
 
 document.addEventListener('DOMContentLoaded', () => {
+
+    const navBtn = document.getElementById('nav-btn');
+    const scarabNav = document.getElementById('scarab-nav');
+
+    navBtn.addEventListener('click', () => {
+        // Toggles the slide-down animation
+        scarabNav.classList.toggle('active');
+        
+        // Toggles the tilted glowing state of the beetle icon
+        navBtn.classList.toggle('is-open'); 
+    });
 
     // ── PYRAMID LAYERS ──────────────────────────────────────
     // Each layer has a data-delay attribute (0, 1, 2, 3)
@@ -119,6 +126,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 // Accessibility Toggle
                 if (torchToggle) {
+                    // Touch devices never fire mousemove, so the torch mask
+                    // would otherwise stay permanently dark. Default it off.
+                    if (window.matchMedia('(hover: none)').matches) {
+                        experienceSection.classList.add('no-torch');
+                        torchToggle.querySelector('.btn-text').textContent = 'Torch: OFF';
+                    }
+
                     torchToggle.addEventListener('click', () => {
                         experienceSection.classList.toggle('no-torch');
                         const isOff = experienceSection.classList.contains('no-torch');

@@ -1,4 +1,4 @@
-
+/* ── 1. TOKENS & RESET ─────────────────────────────────── */
 :root {
     --gold:         #ffd700;
     --gold-dim:     rgba(255, 215, 0, 0.25);
@@ -47,33 +47,21 @@ body {
 }
 
 /* ── 3. SCARAB NAV ──────────────────────────────────────── */
-.scarab-nav {
-    position: fixed;
-    top: 28px;
-    left: 36px;
-    z-index: 1000;
-}
+/* ── 3. SCARAB NAV ──────────────────────────────────────── */
 
-/* Hide the default <details> marker */
-.scarab-details {
-    list-style: none;
-}
-.scarab-details > summary {
-    list-style: none;
-}
-.scarab-details > summary::-webkit-details-marker {
-    display: none;
-}
-
+/* The Fixed Beetle Button */
 .scarab-btn {
+    position: fixed;
+    top: 14px;
+    left: 36px;
+    width: 52px;
+    height: 52px;
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 52px;
-    height: 52px;
     cursor: pointer;
+    z-index: 1002; /* Keeps the beetle above the sliding background */
     user-select: none;
-    /* No background — the scarab floats */
 }
 
 .scarab-icon {
@@ -84,54 +72,63 @@ body {
     transition: transform 0.3s ease, text-shadow 0.3s ease;
 }
 
+/* Tilted state when hovered or when menu is open */
 .scarab-btn:hover .scarab-icon,
-.scarab-details[open] .scarab-icon {
+.scarab-btn.is-open .scarab-icon {
     transform: scale(1.18) rotate(-8deg);
     text-shadow: 0 0 28px var(--gold-glow), 0 0 60px rgba(255, 215, 0, 0.4);
 }
 
-/* Menu slides in from left when <details> is open */
-.papyrus-menu {
-    position: absolute;
-    top: 60px;
+/* The Top Navigation Bar (Full Width) */
+.scarab-nav {
+    position: fixed;
+    top: 0;
     left: 0;
+    width: 100%;
+    height: 80px;
+    z-index: 1001;
+    
+    /* Gradient: Black to purple matching the sky */
+    background: linear-gradient(to bottom, #010005 0%, #554774 100%);
+    border-bottom: 2px solid var(--gold-dim);
+    display: flex;
+    align-items: center;
+
+    /* The Scroll Animation Setup */
+    transform: translateY(-100%); /* Hides it above the screen */
+    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* This class will be toggled by JavaScript */
+.scarab-nav.active {
+    transform: translateY(0); /* Slides it down into view */
+}
+
+/* The Horizontal Menu Layout */
+.papyrus-menu {
+    display: flex;
     list-style: none;
-    background: rgba(5, 3, 16, 0.92);
-    border: 1px solid rgba(255, 215, 0, 0.15);
-    border-left: 2px solid var(--gold-dim);
-    padding: 16px 0;
-    min-width: 170px;
-    backdrop-filter: blur(8px);
-
-    /* Slide-in animation driven by <details> open state */
-    animation: menuSlide 0.22s ease both;
+    width: 100%;
+    justify-content: center; /* Centers the links on the page */
+    gap: 6vw; /* Responsive spacing between links */
+    padding-left: 80px; /* Visual offset to account for the beetle on the left */
 }
-
-@keyframes menuSlide {
-    from { opacity: 0; transform: translateX(-14px); }
-    to   { opacity: 1; transform: translateX(0); }
-}
-
-.papyrus-menu li {
-    border-bottom: 1px solid rgba(255, 215, 0, 0.06);
-}
-.papyrus-menu li:last-child { border-bottom: none; }
 
 .papyrus-menu a {
     display: block;
-    padding: 12px 24px;
+    padding: 12px 16px;
     font-family: var(--font-display);
-    font-size: 0.72rem;
+    font-size: 0.85rem;
     letter-spacing: 0.3em;
     text-transform: uppercase;
     color: rgba(255, 215, 0, 0.5);
     text-decoration: none;
-    transition: color 0.2s, padding-left 0.2s;
+    transition: color 0.2s, text-shadow 0.2s;
 }
 
 .papyrus-menu a:hover {
     color: var(--gold);
-    padding-left: 32px;
+    text-shadow: 0 0 12px var(--gold-glow);
 }
 
 /* ── 4. SECTION SHARED STYLES ───────────────────────────── */
@@ -367,6 +364,7 @@ section {
     gap: 4px;
     width: 100%;
     max-width: 640px;
+    position: relative;
 }
 
 /* CSS-only apex triangle */
@@ -381,19 +379,30 @@ section {
     transition: filter 0.3s ease;
 }
 
-/* Each layer row */
+/* Each layer row animation container */
 .pyramid-layer {
     display: flex;
-    align-items: center;
     justify-content: center;
+    align-items: center;
+    width: 100%;
+    transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+/* NEW: Invisible layout wrapper anchoring the popup panels outside the clip-path */
+.tier-wrapper {
     position: relative;
-    /* Reveal animation target — starts hidden via JS */
-    transition: opacity 0.5s ease, transform 0.1s ease;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
 }
 
 /* The trapezoid block */
 .block {
-    /* height: 60px; */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
     clip-path: polygon(8% 0%, 92% 0%, 100% 100%, 0% 100%);
     background: linear-gradient(135deg, #4C4574, #2e2e60);
     box-shadow:
@@ -401,31 +410,106 @@ section {
         0 4px 16px rgba(0,0,0,0.5);
     transition: background 0.35s ease, box-shadow 0.35s ease;
     cursor: default;
-    /* Gold top-edge line */
     border-top: 1px solid rgba(255,215,0,0.15);
 }
 
-.tier-1 { 
-    width: 200px;
-    height: 50px;
-}
-.tier-2 {
-     width: 270px; 
-     height: 60px;
-}
-.tier-3 {
-     width: 345px;
-     height: 70px;
-}
-.tier-4 {
-     width: 445px;
-     height: 80px;
+.block h3 {
+    font-family: var(--font-display);
+    font-size: 0.9rem;
+    color: #ffffff;
+    margin-bottom: 2px;
 }
 
+.block p {
+    font-family: var(--font-body);
+    font-size: 0.72rem;
+    color: rgba(255, 255, 255, 0.6);
+}
 
+.tier-1 { width: 200px; height: 50px; }
+.tier-2 { width: 270px; height: 60px; }
+.tier-3 { width: 345px; height: 70px; }
+.tier-4 { width: 445px; height: 80px; }
 
-/* Hover: ignite in gold */
-.pyramid-layer:hover .block {
+/* ── HOVER POP-OUT: LABEL → CONNECTOR → PANEL ───────────── */
+/* Each side is a flex row. Source order in the HTML controls
+   visual order (nearest-to-block to farthest-from-block), so
+   no flex-direction trickery is needed. */
+.skill-group {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    z-index: 20;
+}
+
+.skill-group.left  { right: calc(100% + 10px); }
+.skill-group.right { left:  calc(100% + 10px); }
+
+/* Stage 1: the short label, sits closest to the block */
+.skill-label {
+    font-family: var(--font-display);
+    font-size: 0.7rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    white-space: nowrap;
+    color: var(--gold-dim);
+    opacity: 0;
+    transition: opacity 0.3s ease, color 0.3s ease, text-shadow 0.3s ease;
+    pointer-events: none;
+}
+
+/* Stage 2: the connector line, grows after the label appears */
+.skill-connector {
+    display: block;
+    height: 1px;
+    width: 0;
+    background: var(--gold-dim);
+    transition: width 0.3s ease 0.15s, background 0.3s ease 0.15s, box-shadow 0.3s ease 0.15s;
+}
+
+/* Stage 3: the detail card, fades in at the far end of the line */
+.skill-panel {
+    width: 160px;
+    background: rgba(15, 12, 24, 0.95);
+    border: 1px solid rgba(255, 215, 0, 0.35);
+    padding: 12px;
+    border-radius: 6px;
+    opacity: 0;
+    transform: translateX(8px);
+    pointer-events: none;
+    text-align: center;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.8);
+    transition: opacity 0.3s ease 0.32s, transform 0.3s ease 0.32s;
+}
+
+.skill-group.left .skill-panel { transform: translateX(-8px); }
+
+.skill-panel h4 {
+    color: var(--gold);
+    font-family: var(--font-display);
+    font-size: 0.8rem;
+    margin: 4px 0 2px 0;
+}
+
+.skill-panel p {
+    font-family: var(--font-body);
+    font-size: 0.7rem;
+    color: #e8dcc8;
+    line-height: 1.3;
+}
+
+.panel-icon {
+    font-size: 1.2rem;
+}
+
+/* ── HOVER / FOCUS STATES TRIGGERED FROM WRAPPER ── */
+
+/* 1. Ignite block in gold */
+.tier-wrapper:hover .block,
+.tier-wrapper:focus-within .block {
     background: linear-gradient(135deg, #c8950a, #ffd700, #e6a800);
     box-shadow:
         0 0 30px rgba(255,215,0,0.5),
@@ -433,26 +517,34 @@ section {
         inset 0 0 10px rgba(255,255,255,0.1);
 }
 
-/* Skill labels — dim by default, glow on hover */
-.skill-label {
-    position: absolute;
-    font-family: var(--font-display);
-    font-size: 0.68rem;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    color: var(--gold-dim);
-    white-space: nowrap;
-    transition: color 0.3s ease, transform 0.3s ease, text-shadow 0.3s ease;
-    pointer-events: none;
-}
-
-.skill-label.left  { right: calc(100% + 20px); text-align: right; }
-.skill-label.right { left:  calc(100% + 20px); }
-
-.pyramid-layer:hover .skill-label {
+/* 2. Label appears first */
+.tier-wrapper:hover .skill-label,
+.tier-wrapper:focus-within .skill-label {
+    opacity: 1;
     color: var(--gold);
     text-shadow: 0 0 12px var(--gold-glow);
-    transform: scale(1.08);
+}
+
+/* 3. Connector line grows next */
+.tier-wrapper:hover .skill-connector,
+.tier-wrapper:focus-within .skill-connector {
+    width: 26px;
+    background: var(--gold);
+    box-shadow: 0 0 8px var(--gold-glow);
+}
+
+/* 4. Detail panel fades in last, at the end of the line */
+.tier-wrapper:hover .skill-panel,
+.tier-wrapper:focus-within .skill-panel {
+    opacity: 1;
+    transform: translateX(0);
+    pointer-events: auto;
+}
+
+.block:focus-visible {
+    outline: 2px solid var(--gold);
+    outline-offset: 4px;
+    border-radius: 2px;
 }
 
 /* JS-controlled visibility states */
@@ -536,8 +628,50 @@ section {
 
 .tablet-row:last-child { border-bottom: none; }
 
-/* Engraving — job title & date */
+/* Engraving — the stone tablet bearing job title & date */
+.engraving {
+    position: relative;
+    padding: 28px 32px;
+    background:
+        radial-gradient(circle at 25% 20%, rgba(255,255,255,0.035) 0%, transparent 45%),
+        radial-gradient(circle at 75% 75%, rgba(255,255,255,0.025) 0%, transparent 50%),
+        linear-gradient(155deg, #3c372f 0%, #221f1a 55%, #2e2a23 100%);
+    border-radius: 16px 5px 14px 6px; /* uneven corners — looks chipped, not machine-cut */
+    box-shadow:
+        inset 0 0 24px rgba(0,0,0,0.6),
+        inset 0 1px 0 rgba(255,255,255,0.05),
+        0 14px 28px rgba(0,0,0,0.55);
+    border: 1px solid rgba(255,255,255,0.05);
+    overflow: hidden;
+    transition: transform 0.4s ease;
+}
+
+/* Faint crack lines across the stone surface */
+.engraving::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: repeating-linear-gradient(
+        118deg,
+        transparent,
+        transparent 22px,
+        rgba(0,0,0,0.14) 23px,
+        transparent 24px
+    );
+    pointer-events: none;
+}
+
+/* Each tablet tilts slightly off-axis so the row doesn't look mass-produced */
+.tablet-row:nth-child(odd)  .engraving { transform: rotate(-0.6deg); }
+.tablet-row:nth-child(even) .engraving { transform: rotate(0.6deg); }
+
+.tablet-row:hover .engraving,
+.tablet-row:focus-within .engraving {
+    transform: rotate(0deg);
+}
+
 .engraving h3 {
+    position: relative;
     font-family: var(--font-display);
     font-size: clamp(1rem, 2.5vw, 1.5rem);
     font-weight: 600;
@@ -547,10 +681,10 @@ section {
         -1px -1px 0 rgba(255,255,255,0.03);
     margin-bottom: 8px;
     transition: color 0.4s ease, text-shadow 0.4s ease;
-    color: rgba(255, 255, 255, 0.05);
 }
 
 .engraving-date {
+    position: relative;
     display: block;
     font-family: var(--font-display);
     font-size: 0.62rem;
@@ -584,26 +718,37 @@ section {
 }
 
 /* ── TORCHLIGHT HOVER MECHANIC ── */
-.tablet-row:hover .engraving h3 {
+.tablet-row:hover .engraving h3,
+.tablet-row:focus-within .engraving h3 {
     color: var(--gold);
     text-shadow: 0 0 20px var(--gold-glow), 0 0 40px rgba(255,215,0,0.2);
 }
 
-.tablet-row:hover .engraving-date {
+.tablet-row:hover .engraving-date,
+.tablet-row:focus-within .engraving-date {
     color: rgba(255,215,0,0.5);
 }
 
-.tablet-row:hover .tablet-divider {
+.tablet-row:hover .tablet-divider,
+.tablet-row:focus-within .tablet-divider {
     background: var(--gold);
     box-shadow: 0 0 12px var(--gold-glow), 0 0 30px rgba(255,215,0,0.3);
 }
 
-.tablet-row:hover .details {
+.tablet-row:hover .details,
+.tablet-row:focus-within .details {
     opacity: 1;
 }
 
-.tablet-row:hover .details p {
+.tablet-row:hover .details p,
+.tablet-row:focus-within .details p {
     color: #c8bca0;
+}
+
+.tablet-row:focus-visible {
+    outline: 2px solid var(--gold);
+    outline-offset: 6px;
+    border-radius: 2px;
 }
 
 /* Slide-in animation for tablet rows (JS adds .visible) */
@@ -699,9 +844,52 @@ summary:focus-visible {
     border-radius: 2px;
 }
 
-/* Mobile: hide side skill labels, show them below block */
+/* Mobile: stack tiers and their detail groups vertically, always visible
+   since there's no hover on touch devices */
 @media (max-width: 640px) {
-    .skill-label { display: none; }
+    .tier-wrapper {
+        flex-direction: column;
+    }
+
+    .skill-group {
+        position: static;
+        transform: none;
+        flex-direction: column;
+        gap: 4px;
+        margin-top: 10px;
+        width: 90%;
+    }
+
+    .skill-label {
+        opacity: 1;
+        color: var(--gold-dim);
+    }
+
+    .skill-connector {
+        width: 1px;
+        height: 12px;
+    }
+
+    .skill-panel {
+        opacity: 1;
+        transform: none !important;
+        pointer-events: auto;
+        width: 100%;
+    }
+
+    /* Experience: no hover on touch, so titles/details need a readable
+       resting state instead of waiting for torchlight */
+    .engraving h3 {
+        color: var(--stone-text);
+    }
+    .engraving-date {
+        color: rgba(255,215,0,0.4);
+    }
+
+    .engraving {
+        padding: 20px 22px;
+        transform: none !important; /* skip the tilt on small screens */
+    }
 
     .tablet-row {
         grid-template-columns: 1fr;
