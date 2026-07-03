@@ -148,4 +148,26 @@ document.addEventListener('DOMContentLoaded', () => {
         tombObserver.observe(row);
     });
 
+
+    // ── GENERIC SCROLL REVEAL (About page: bio, timeline, project cards) ──
+    const revealObserver = new IntersectionObserver(
+        (entries) => {
+            entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                } else {
+                    entry.target.classList.remove('visible');
+                }
+            });
+        },
+        {
+            root: null,
+            threshold: 0.2
+        }
+    );
+
+    document.querySelectorAll('.reveal').forEach((el) => {
+        revealObserver.observe(el);
+    });
+
 });

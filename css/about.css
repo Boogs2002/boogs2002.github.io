@@ -1,5 +1,441 @@
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+
+/* ── GENERIC SCROLL REVEAL (bio, timeline, project cards) ── */
+.reveal {
+    opacity: 0;
+    transition: opacity 0.6s ease, transform 0.6s ease;
+}
+.reveal.from-bottom { transform: translateY(30px); }
+.reveal.from-left    { transform: translateX(-40px); }
+.reveal.from-right   { transform: translateX(40px); }
+.reveal.visible {
+    opacity: 1;
+    transform: translate(0, 0);
+}
+
+/* ── ORIGINS (About Me) ──────────────────────────────────── */
+.about-content {
+    max-width: 700px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.about-content p {
+    font-family: var(--font-body);
+    font-size: 1.05rem;
+    line-height: 1.85;
+    color: #d8cbb0;
+}
+
+.about-tags {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 12px;
+    margin-top: 12px;
+}
+
+.about-tag {
+    font-family: var(--font-display);
+    font-size: 0.64rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--gold);
+    border: 1px solid var(--gold-dim);
+    padding: 8px 16px;
+    border-radius: 3px 12px 3px 12px;
+    background: rgba(255,215,0,0.04);
+}
+
+/* ── FOUNDATIONS (Education Timeline) ───────────────────── */
+#education {
+    padding-top: 60px;
+    padding-bottom: 60px;
+}
+
+.foundation-timeline {
+    position: relative;
+    width: 100%;
+    max-width: 780px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    column-gap: 48px;
+    row-gap: 70px;
+}
+
+.foundation-timeline::before {
+    content: '';
+    position: absolute;
+    left: 50%;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    transform: translateX(-50%);
+    background: linear-gradient(to bottom, transparent, var(--gold-dim) 10%, var(--gold-dim) 90%, transparent);
+}
+
+.timeline-entry {
+    position: relative;
+}
+
+.timeline-entry.left  { grid-column: 1; text-align: right; }
+.timeline-entry.right { grid-column: 2; text-align: left; }
+
+.timeline-node {
+    position: absolute;
+    top: 6px;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: var(--stone-dark);
+    border: 2px solid var(--gold-dim);
+    box-shadow: 0 0 0 5px #050310;
+    z-index: 1;
+}
+
+.timeline-entry.left  .timeline-node { right: -31px; }
+.timeline-entry.right .timeline-node { left:  -31px; }
+
+.timeline-node.current {
+    border-color: var(--gold);
+    box-shadow: 0 0 12px var(--gold-glow), 0 0 0 5px #050310;
+}
+
+.timeline-card {
+    display: inline-block;
+    background: linear-gradient(155deg, #2e2a24 0%, #1a1712 100%);
+    border: 1px solid rgba(255,215,0,0.12);
+    border-radius: 12px 4px 12px 4px;
+    padding: 20px 24px;
+    box-shadow: 0 10px 24px rgba(0,0,0,0.5);
+}
+
+.timeline-card.current {
+    border-color: rgba(255,215,0,0.35);
+    box-shadow: 0 0 24px rgba(255,215,0,0.12), 0 10px 24px rgba(0,0,0,0.5);
+}
+
+.timeline-years {
+    display: block;
+    font-family: var(--font-display);
+    font-size: 0.62rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(255,215,0,0.5);
+    margin-bottom: 8px;
+}
+
+.timeline-years em {
+    font-style: normal;
+    color: rgba(255,140,140,0.75); /* flags unconfirmed years for editing */
+}
+
+.timeline-card h3 {
+    font-family: var(--font-display);
+    font-size: 1.05rem;
+    color: var(--stone-text);
+    margin-bottom: 6px;
+}
+
+.timeline-card p {
+    font-family: var(--font-body);
+    font-size: 0.85rem;
+    line-height: 1.5;
+    color: rgba(200,188,160,0.7);
+}
+
+/* ── EXCAVATIONS (Projects Detail) ──────────────────────── */
+#projects {
+    padding-top: 60px;
+    padding-bottom: 60px;
+}
+
+.project-detail-list {
+    display: flex;
+    flex-direction: column;
+    gap: 60px;
+    width: 100%;
+    max-width: 900px;
+}
+
+.project-detail {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 36px;
+    align-items: center;
+}
+
+.project-detail:nth-child(even) .project-detail-image { order: 2; }
+.project-detail:nth-child(even) .project-detail-text  { order: 1; }
+
+.project-detail-image {
+    border-radius: 14px 4px 12px 4px;
+    overflow: hidden;
+    border: 2px solid rgba(255,215,0,0.2);
+    box-shadow: 0 16px 32px rgba(0,0,0,0.55);
+    aspect-ratio: 4 / 3;
+}
+
+.project-detail-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+/* Reuses .relic-badge from index.css but pinned inline instead
+   of absolutely positioned over an image */
+.relic-badge.static {
+    position: static;
+    display: inline-block;
+    margin-bottom: 14px;
+}
+
+.project-detail-text h3 {
+    font-family: var(--font-display);
+    font-size: 1.4rem;
+    color: var(--gold);
+    text-shadow: 0 0 14px rgba(255,215,0,0.2);
+    margin-bottom: 12px;
+}
+
+.project-detail-text p {
+    font-family: var(--font-body);
+    font-size: 0.95rem;
+    line-height: 1.75;
+    color: #d8cbb0;
+    margin-bottom: 16px;
+}
+
+.project-tech {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.project-tech-tag {
+    font-family: var(--font-display);
+    font-size: 0.6rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: rgba(255,215,0,0.7);
+    border: 1px solid rgba(255,215,0,0.2);
+    padding: 5px 12px;
+    border-radius: 3px;
+}
+
+.project-more-note {
+    margin-top: 40px;
+    font-family: var(--font-display);
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(255,215,0,0.3);
+}
+
+
+/* ── TOMB HALLWAY STRUCTURAL PILLARS ── */
+.tomb-hallway {
+    position: relative;
+    width: 100%;
+    overflow: hidden; /* Keeps things neat on the edges */
+}
+
+/* Base styles for both pillars */
+.tomb-hallway::before,
+.tomb-hallway::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 6vw; /* Responsive pillar width based on viewport size */
+    min-width: 40px;
+    max-width: 90px;
+    z-index: 2;
+    pointer-events: none;
+    
+    /* Solid base stone color blending with your background theme */
+    background-color: #0c0a14;
+    
+    /* Carved horizontal stone/brick blocks via a repeating gradient */
+    background-image: repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 38px,
+        rgba(0, 0, 0, 0.45) 38px,
+        rgba(0, 0, 0, 0.45) 40px
+    );
+    box-shadow: 
+        inset -5px 0 15px rgba(0, 0, 0, 0.6),
+        inset 5px 0 15px rgba(0, 0, 0, 0.6);
+}
+
+/* Left Pillar Placement and inner lighting edge */
+.tomb-hallway::before {
+    left: 0;
+    border-right: 1px solid var(--gold-dim);
+}
+
+/* Right Pillar Placement and inner lighting edge */
+.tomb-hallway::after {
+    right: 0;
+    border-left: 1px solid var(--gold-dim);
+}
+
+/* Responsive adjustment: Slightly dim the pillars on tiny mobile devices */
+@media (max-width: 640px) {
+    .tomb-hallway::before,
+    .tomb-hallway::after {
+        width: 25px;
+        min-width: 25px;
+        opacity: 0.6;
+    }
+}
+
+/* ── INSCRIPTIONS (Work Detail) ─────────────────────────── */
+/* Reuses .tomb-container / .tablet-row / .engraving from
+   index.css, with overrides below to remove the torchlight
+   mask and keep every description permanently visible. */
+#work {
+    background: #050505;
+    padding-top: 80px;
+    padding-bottom: 80px;
+    width: 100%;
+}
+
+.work-detail {
+    -webkit-mask-image: none;
+    mask-image: none;
+    max-width: 820px;
+}
+
+.work-detail .details {
+    opacity: 1;
+}
+
+.work-detail .details p,
+.work-detail .details li {
+    color: #c8bca0;
+}
+
+.work-detail .details ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.work-detail .details li {
+    position: relative;
+    padding-left: 18px;
+    font-family: var(--font-body);
+    font-size: 0.9rem;
+    line-height: 1.65;
+}
+
+.work-detail .details li::before {
+    content: '—';
+    position: absolute;
+    left: 0;
+    color: rgba(255,215,0,0.4);
+}
+
+.work-detail .engraving h3 {
+    color: var(--gold);
+    text-shadow: 0 0 20px var(--gold-glow), 0 0 40px rgba(255,215,0,0.2);
+}
+
+.work-detail .engraving-date {
+    color: rgba(255,215,0,0.5);
+}
+
+.work-detail .tablet-divider {
+    background: var(--gold);
+    box-shadow: 0 0 12px var(--gold-glow), 0 0 30px rgba(255,215,0,0.3);
+}
+
+/* ── MOBILE ──────────────────────────────────────────────── */
+@media (max-width: 640px) {
+    /* Timeline collapses to a single column, line moves to the left */
+    .foundation-timeline {
+        grid-template-columns: 1fr;
+        column-gap: 0;
+        padding-left: 34px;
+    }
+
+    .foundation-timeline::before {
+        left: 8px;
+        transform: none;
+    }
+
+    .timeline-entry.left,
+    .timeline-entry.right {
+        grid-column: 1;
+        text-align: left;
+    }
+
+    .timeline-entry.left .timeline-node,
+    .timeline-entry.right .timeline-node {
+        left: -30px;
+        right: auto;
+    }
+
+    /* Project detail cards stack, image always on top */
+    .project-detail {
+        grid-template-columns: 1fr;
+    }
+
+    .project-detail:nth-child(even) .project-detail-image,
+    .project-detail:nth-child(even) .project-detail-text {
+        order: initial;
+    }
+}
+
+
+/* ── MOVING STARS BACKGROUND FOR ORIGINS ── */
+#about {
+    position: relative;
+    overflow: hidden; /* Keeps the stars from bleeding into other sections */
+}
+
+.origins-stars {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none; /* Allows clicks to pass through to links/text */
+    z-index: 0;
+    opacity: 0.45; /* Soft, ambient glow so it stays in the background */
+    
+    /* Creates a grid of tiny 2px star dots using transparent gradients */
+    background-image: 
+        radial-gradient(2px 2px at 20px 30px, #ffffff, transparent),
+        radial-gradient(2px 2px at 75px 130px, var(--gold), transparent),
+        radial-gradient(1.5px 1.5px at 150px 60px, #ffffff, transparent),
+        radial-gradient(2px 2px at 220px 170px, rgba(255,255,255,0.7), transparent),
+        radial-gradient(2.5px 2.5px at 280px 90px, var(--gold-dim), transparent);
+    
+    /* Defines how large the star pattern tile is before it repeats */
+    background-size: 360px 240px; 
+    
+    /* Infinite horizontal movement */
+    animation: driftStars 45s linear infinite;
+}
+
+/* Ensure the text and tags stay sitting comfortably on top of the stars */
+.about-content, 
+.section-heading {
+    position: relative;
+    z-index: 1;
+}
+
+/* The actual animation moving the background coordinate */
+@keyframes driftStars {
+    0% {
+        background-position: 0px 0px;
+    }
+    100% {
+        background-position: 360px 0px; /* Moves exactly one tile width for seamless looping */
+    }
 }

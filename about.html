@@ -1,22 +1,236 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>About</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/css/about.css">
-    <link rel="stylesheet" href="/css/main.css">
-
+    <title>About | Hrishikesh Bajnath</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=IM+Fell+English:ital@0;1&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/index.css">
+    <link rel="stylesheet" href="css/about.css">
 </head>
 <body>
-    
-    <header id="header-one">
-        <img class="logo" src="/images/icon.jpeg" alt="Logo">
 
-        <nav class="nav-one">
-            <a class="nav-link active" href="/">Home</a>
-            <a class="nav-link" href="/about.html">About</a>
-            <a class="nav-link" href="/work.html">Work</a>
-            <a class="nav-link" href="/contact.html">Contact</a>
-        </nav>
-    </header>
+    <div class="scarab-btn" id="nav-btn">
+        <span class="scarab-icon">𓆣</span>
+    </div>
+
+    <nav class="scarab-nav" id="scarab-nav" aria-label="Main navigation">
+        <ul class="papyrus-menu" role="list">
+            <li><a href="/index.html">Home</a></li>
+            <li><a href="/work.html">Work</a></li>
+            <li><a href="/about.html">About</a></li>
+            <li><a href="/contact.html">Contact</a></li>
+        </ul>
+    </nav>
+
+    <main>
+
+        <!-- About Me -->
+        <section id="about" aria-label="About — Origins">
+
+            <!-- Moving Stars Layer -->
+            <div class="origins-stars" aria-hidden="true"></div>
+
+            <h2 class="section-heading" aria-label="About section">
+                <span class="section-glyph" aria-hidden="true">𓁷</span>
+                Origins
+                <span class="section-subtitle">Profile & Background</span>
+            </h2>
+
+            <div class="about-content">
+                
+                <p class="reveal from-bottom">I didn't start out chasing code. My path began in construction especially my vision about architecture so i began with: — first Natin-Infrastructuur, then Natin-Bouwkunde — learning how physical structures are planned and built. But somewhere between blueprints and site plans, I found I was more curious about the systems running underneath everything else: the software. That curiosity led me to UNASAT, where I'm now in my second year studying Software Engineering.</p>
+
+                <p class="reveal from-bottom">Since then, I've been building — literally. From internal dashboards and automated reporting tools to a medical supply management system and this very site, I like projects that solve a real, specific problem for real people. Lately, that curiosity has pulled me toward the security side of development: understanding not just how to build systems, but how to break them, so I can build them stronger.</p>
+
+                <div class="about-tags reveal from-bottom" role="list">
+                    <span class="about-tag" role="listitem">Software Security</span>
+                    <span class="about-tag" role="listitem">Full-Stack Development</span>
+                    <span class="about-tag" role="listitem">2nd-Year SE Student, UNASAT</span>
+                    <span class="about-tag" role="listitem">Dutch & English</span>
+                </div>
+            </div>
+
+        </section>
+        
+        <div class="tomb-hallway">
+            <!-- Education -->
+            <section id="education" aria-label="Education — Foundations">
+
+                <h2 class="section-heading" aria-label="Education section">
+                    <span class="section-glyph" aria-hidden="true">𓉐</span>
+                    Foundations
+                    <span class="section-subtitle">Education</span>
+                </h2>
+
+                <div class="foundation-timeline">
+
+                    <div class="timeline-entry left reveal from-left">
+                        <span class="timeline-node" aria-hidden="true"></span>
+                        <div class="timeline-card">
+                            <span class="timeline-years">2018 - 2020 <em></em></span>
+                            <h3>Natin — Infrastructuur</h3>
+                            <p>Secondary vocational studies focused on infrastructure fundamentals.</p>
+                        </div>
+                    </div>
+
+                    <div class="timeline-entry right reveal from-right">
+                        <span class="timeline-node" aria-hidden="true"></span>
+                        <div class="timeline-card">
+                            <span class="timeline-years">2020 - 2022 <em></em></span>
+                            <h3>Natin — Bouwkunde</h3>
+                            <p>Continued vocational studies specializing in construction and building design.</p>
+                        </div>
+                    </div>
+
+                    <div class="timeline-entry left reveal from-left">
+                        <span class="timeline-node current" aria-hidden="true"></span>
+                        <div class="timeline-card current">
+                            <span class="timeline-years">2024 - Present</span>
+                            <h3>UNASAT — Software Engineering</h3>
+                            <p>Currently in my second year, building toward a career in full-stack development and software security.</p>
+                        </div>
+                    </div>
+
+                </div>
+
+            </section>
+
+            <!-- Projects -->
+            <section id="projects" aria-label="Projects — Excavations">
+
+                <h2 class="section-heading" aria-label="Projects section">
+                    <span class="section-glyph" aria-hidden="true">𓋹</span>
+                    Excavations
+                    <span class="section-subtitle">Projects</span>
+                </h2>
+
+                <div class="project-detail-list">
+
+                    <article class="project-detail reveal from-bottom">
+                        <div class="project-detail-image">
+                            <img src="/images/rkz.png" alt="Screenshot of the RKZ Voorraadbeheer dashboard">
+                        </div>
+                        <div class="project-detail-text">
+                            <span class="relic-badge static">Web App</span>
+                            <h3>RKZ Voorraadbeheer</h3>
+                            <p>A dashboard built to help hospital staff track medical supply inventory in real time. It includes a priority-based emergency request system for urgent supply needs, a critical stock overview with searchable filters, and a notifications panel to keep staff informed of low-stock alerts — reducing the time it takes to locate and request supplies during time-sensitive situations.</p>
+                            <div class="project-tech" role="list">
+                                <span class="project-tech-tag" role="listitem">Node.js</span>
+                                <span class="project-tech-tag" role="listitem">Express</span>
+                                <span class="project-tech-tag" role="listitem">MySQL</span>
+                                <span class="project-tech-tag" role="listitem">Prisma</span>
+                                <span class="project-tech-tag" role="listitem">HTML</span>
+                                <span class="project-tech-tag" role="listitem">CSS</span>
+                                <span class="project-tech-tag" role="listitem">JavaScript</span>
+                            </div>
+                        </div>
+                    </article>
+
+                    <article class="project-detail reveal from-bottom">
+                        <div class="project-detail-image">
+                            <img src="/images/wallpaper 1.png" alt="Preview of this portfolio site">
+                        </div>
+                        <div class="project-detail-text">
+                            <span class="relic-badge static">Website</span>
+                            <h3>Portfolio Site</h3>
+                            <p>This Egyptian-themed portfolio, built from the ground up with vanilla HTML, CSS, and JavaScript. Every section follows a literal descent — from a moonlit desert hero, through a pyramid of skills, into a torch-lit tomb of work experience — using scroll-triggered animations, an interactive hover system, and hand-built CSS effects instead of a UI framework.</p>
+                            <div class="project-tech" role="list">
+                                <span class="project-tech-tag" role="listitem">HTML</span>
+                                <span class="project-tech-tag" role="listitem">CSS</span>
+                                <span class="project-tech-tag" role="listitem">JavaScript</span>
+                            </div>
+                        </div>
+                    </article>
+
+                </div>
+
+                <p class="project-more-note reveal from-bottom">More excavations are underway — check back soon.</p>
+
+            </section>
+        </div>
+
+        <!-- Work -->
+        <section id="work" aria-label="Work — Inscriptions">
+
+            <h2 class="section-heading" aria-label="Work section">
+                <span class="section-glyph" aria-hidden="true">𓂀</span>
+                Inscriptions
+                <span class="section-subtitle">Work Experience</span>
+            </h2>
+
+            <div class="tomb-container work-detail" role="list">
+
+
+
+                  <article class="tablet-row hidden-left" role="listitem" tabindex="0">
+                    <div class="engraving">
+                        <h3>Administration & Sales</h3>
+                        <span class="engraving-date">STR Trading VBA, Aruba · Sept 2023 - Apr 2024</span>
+                    </div>
+                    <div class="tablet-divider" aria-hidden="true"></div>
+                    <div class="details">
+                        <ul>
+                            <li>Responsible for the store's daily opening and secure closing procedures.</li>
+                            <li>Managed the administrative workflow, including digitizing and organizing invoices, bank statements, and shipment records for accountancy.</li>
+                            <li>Optimized sales by preparing up-to-date price lists and handling client correspondence by mail, phone, and in person.</li>
+                            <li>Maintained a clean, representative store environment for the best possible customer experience.</li>
+                        </ul>
+                    </div>
+                </article>
+
+
+                <article class="tablet-row hidden-left" role="listitem" tabindex="0">
+                    <div class="engraving">
+                        <h3>Callcenter Agent</h3>
+                        <span class="engraving-date">Yource, Suriname · Jun 2024 - Aug 2024</span>
+                    </div>
+                    <div class="tablet-divider" aria-hidden="true"></div>
+                    <div class="details">
+                        <ul>
+                            <li>Supported customers with a wide range of inquiries, focused on service quality and effective communication.</li>
+                            <li>Registered and processed customer data and interactions in the designated systems.</li>
+                            <li>Analyzed customer issues to reach quick, effective solutions.</li>
+                        </ul>
+                    </div>
+                </article>
+
+              
+
+            </div>
+
+        </section>
+
+    </main>
+
+    <!-- footer -->
+    <footer id="contact" aria-label="Contact and footer">
+
+        <div class="footer-content">
+            <p class="footer-glyph" aria-hidden="true">𓆣</p>
+            <h2 class="footer-name">Hrishikesh Bajnath</h2>
+            <div class="footer-links">
+                <a class="link-github" href="https://github.com/Boogs2002" target="_blank" rel="noopener" aria-label="GitHub">GitHub</a>
+                <span class="footer-sep" aria-hidden="true">·</span>
+                <a class="link-linkedin" href="https://linkedin.com/in/yourusername" target="_blank" rel="noopener" aria-label="LinkedIn">LinkedIn</a>
+            </div>
+            <p class="footer-copy">© 2025 Hrishikesh Bajnath</p>
+        </div>
+
+        <!-- Lava animation lives here -->
+        <div class="lava-stage" aria-hidden="true">
+            <div class="lava-flow">
+                <div class="lava-wave wave-a"></div>
+                <div class="lava-wave wave-b"></div>
+                <div class="lava-wave wave-c"></div>
+            </div>
+            <div class="lava-haze"></div>
+        </div>
+
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

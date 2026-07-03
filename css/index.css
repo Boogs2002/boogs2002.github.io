@@ -155,11 +155,27 @@ section {
     display: flex;
     align-items: center;
     gap: 16px;
+    flex-wrap: wrap;
+    justify-content: center;
 }
 
 .section-glyph {
     font-size: 1.4rem;
     opacity: 0.6;
+}
+
+.section-subtitle {
+    display: block; 
+    width: 100%;
+    flex-basis: 100%; 
+    text-align: center;
+    font-family: var(--font-body);
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 4px;
+    color: var(--gold-dim);
+    margin-top: 10px; 
+    padding-left: 4px; 
 }
 
 /* ── 5. HERO SECTION ────────────────────────────────────── */
@@ -501,8 +517,20 @@ section {
     line-height: 1.3;
 }
 
+/* Styling the container and the icon inside it */
 .panel-icon {
-    font-size: 1.2rem;
+    display: inline-block;
+    font-size: 1.8rem; /* Makes the icons a great scannable size */
+    margin-bottom: 6px;
+    color: var(--stone-text); /* Matches your resting text stone shade */
+    transition: color 0.3s ease, transform 0.3s ease;
+}
+
+/* When the parent skill-panel transitions into focus/hover */
+.skill-panel:hover .panel-icon {
+    color: var(--gold); /* Ignites to golden-glyph status */
+    transform: scale(1.1); /* Subtle visual pop forward */
+    filter: drop-shadow(0 0 6px var(--gold-glow));
 }
 
 /* ── HOVER / FOCUS STATES TRIGGERED FROM WRAPPER ── */
@@ -551,6 +579,201 @@ section {
 .hidden  { opacity: 0; transform: translateY(40px); }
 .visible { opacity: 1; transform: translateY(0); }
 
+/* ── 7B. PROJECTS GALLERY (EXCAVATIONS) ─────────────────── */
+#projects-preview {
+    padding-top: 20px;
+}
+
+.relic-gallery {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    gap: 48px;
+    width: 100%;
+    max-width: 1000px;
+}
+
+.relic-frame {
+    position: relative;
+    width: 280px;
+    display: flex;
+    flex-direction: column;
+    text-decoration: none;
+    color: inherit;
+    transition: transform 0.35s ease;
+}
+
+.relic-frame.filled:hover,
+.relic-frame.filled:focus-visible {
+    transform: translateY(-8px);
+}
+
+.relic-frame.filled:focus-visible .frame-border {
+    outline: 2px solid var(--gold);
+    outline-offset: 4px;
+}
+
+/* The carved stone frame holding each screenshot */
+.frame-border {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    border-radius: 14px 4px 12px 4px; /* uneven, chipped-stone corners */
+    overflow: hidden;
+    border: 2px solid rgba(255, 215, 0, 0.25);
+    background: linear-gradient(155deg, #3c372f 0%, #221f1a 100%);
+    box-shadow:
+        0 0 0 6px rgba(10, 8, 6, 0.6),
+        0 16px 32px rgba(0,0,0,0.6),
+        inset 0 0 20px rgba(0,0,0,0.5);
+    transition: border-color 0.35s ease, box-shadow 0.35s ease;
+}
+
+.relic-frame.filled:hover .frame-border,
+.relic-frame.filled:focus-visible .frame-border {
+    border-color: var(--gold);
+    box-shadow:
+        0 0 0 6px rgba(10, 8, 6, 0.6),
+        0 0 30px rgba(255,215,0,0.35),
+        0 16px 32px rgba(0,0,0,0.6),
+        inset 0 0 20px rgba(0,0,0,0.5);
+}
+
+.relic-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: top;
+    filter: sepia(0.25) brightness(0.85) contrast(1.05);
+    transition: filter 0.35s ease, transform 0.4s ease;
+}
+
+.relic-frame.filled:hover .relic-image,
+.relic-frame.filled:focus-visible .relic-image {
+    filter: sepia(0) brightness(1) contrast(1);
+    transform: scale(1.04);
+}
+
+.relic-badge {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    font-family: var(--font-display);
+    font-size: 0.6rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--stone-dark);
+    background: var(--gold);
+    padding: 5px 12px;
+    border-radius: 3px 10px 3px 10px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+}
+
+.relic-caption {
+    padding: 16px 4px 0;
+    text-align: center;
+}
+
+.relic-caption h3 {
+    font-family: var(--font-display);
+    font-size: 1.05rem;
+    color: var(--gold);
+    text-shadow: 0 0 12px rgba(255,215,0,0.2);
+    margin-bottom: 6px;
+}
+
+.relic-caption p {
+    font-family: var(--font-body);
+    font-size: 0.82rem;
+    line-height: 1.5;
+    color: rgba(200,188,160,0.75);
+}
+
+/* Small bone accents at opposite corners of each filled frame —
+   decorative flourish for the "relic frame" concept */
+.bone-accent {
+    position: absolute;
+    font-size: 1.1rem;
+    opacity: 0.4;
+    z-index: 2;
+    pointer-events: none;
+    filter: drop-shadow(0 2px 4px rgba(0,0,0,0.6));
+    transition: opacity 0.35s ease;
+}
+
+.bone-accent.top-left     { top: -10px; left: -10px; transform: rotate(-35deg); }
+.bone-accent.bottom-right { bottom: -10px; right: -10px; transform: rotate(145deg); }
+
+.relic-frame.filled:hover .bone-accent,
+.relic-frame.filled:focus-visible .bone-accent {
+    opacity: 0.85;
+}
+
+/* The empty "More Coming" frame — deliberately dimmer and unfinished-looking */
+.relic-frame.empty .frame-border {
+    aspect-ratio: 4 / 3;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    background: repeating-linear-gradient(
+        135deg,
+        rgba(255,255,255,0.015),
+        rgba(255,255,255,0.015) 10px,
+        transparent 10px,
+        transparent 20px
+    ), #161310;
+    border: 2px dashed rgba(255, 215, 0, 0.12);
+    box-shadow: inset 0 0 24px rgba(0,0,0,0.7);
+}
+
+.relic-empty-glyph {
+    font-size: 1.8rem;
+    opacity: 0.3;
+}
+
+.relic-empty-text {
+    font-family: var(--font-display);
+    font-size: 0.68rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: rgba(255,215,0,0.22);
+}
+
+/* ── SHARED "MORE" BUTTON (used by Projects & Work sections) ── */
+.section-more-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 48px;
+    padding: 12px 30px;
+    font-family: var(--font-display);
+    font-size: 0.72rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--gold);
+    border: 1px solid var(--gold-dim);
+    text-decoration: none;
+    transition: background 0.3s ease, box-shadow 0.3s ease, letter-spacing 0.3s ease;
+}
+
+.section-more-btn:hover,
+.section-more-btn:focus-visible {
+    background: var(--gold-dim);
+    box-shadow: 0 0 20px var(--gold-glow);
+    letter-spacing: 0.36em;
+}
+
+/* Sits below the torchlight-masked tomb-container, so it stays
+   visible regardless of the mask/torch state */
+.tomb-more-btn {
+    position: relative;
+    z-index: 5;
+    margin-top: 60px;
+}
+
 /* ── 8. TOMB ARCH (pyramid → tomb transition) ───────────── */
 .tomb-arch {
     width: 100%;
@@ -566,9 +789,68 @@ section {
     display: block;
 }
 
+/* ── TOMB HALLWAY STRUCTURAL PILLARS ── */
+.tomb-hallway {
+    position: relative;
+    width: 100%;
+    overflow: hidden; /* Keeps things neat on the edges */
+}
+
+/* Base styles for both pillars */
+.tomb-hallway::before,
+.tomb-hallway::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 6vw; /* Responsive pillar width based on viewport size */
+    min-width: 40px;
+    max-width: 90px;
+    z-index: 2;
+    pointer-events: none;
+    
+    /* Solid base stone color blending with your background theme */
+    background-color: #0c0a14;
+    
+    /* Carved horizontal stone/brick blocks via a repeating gradient */
+    background-image: repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 38px,
+        rgba(0, 0, 0, 0.45) 38px,
+        rgba(0, 0, 0, 0.45) 40px
+    );
+    box-shadow: 
+        inset -5px 0 15px rgba(0, 0, 0, 0.6),
+        inset 5px 0 15px rgba(0, 0, 0, 0.6);
+}
+
+/* Left Pillar Placement and inner lighting edge */
+.tomb-hallway::before {
+    left: 0;
+    border-right: 1px solid var(--gold-dim);
+}
+
+/* Right Pillar Placement and inner lighting edge */
+.tomb-hallway::after {
+    right: 0;
+    border-left: 1px solid var(--gold-dim);
+}
+
+/* Responsive adjustment: Slightly dim the pillars on tiny mobile devices */
+@media (max-width: 640px) {
+    .tomb-hallway::before,
+    .tomb-hallway::after {
+        width: 25px;
+        min-width: 25px;
+        opacity: 0.6;
+    }
+}
+
 /* ── 9. EXPERIENCE / TOMB ───────────────────────────────── */
 #experience {
     background: #050505; 
+    /* background: linear-gradient(to bottom, #050505 80%, #0c0602 100%); */
     padding: 100px 0;
     width: 100%;
     position: relative; /* Keep this for the absolute button */
@@ -765,7 +1047,7 @@ section {
 /* ── 10. FOOTER ──────────────────────────────────────────── */
 #contact {
     position: relative;
-    padding: 80px 8% 40px;
+    padding: 20px 8% 10px;
     text-align: center;
     overflow: hidden;
     background: radial-gradient(circle at 50% 100%, #3d1a00 0%, #1a0a00 50%, #050505 100%);
@@ -785,16 +1067,35 @@ section {
     padding-bottom: 40px;
 }
 
-/* --- Keep your .footer-glyph, .footer-name, .footer-links, .footer-copy styles as they were --- */
-.footer-glyph { font-size: 2rem; color: var(--gold-dim); margin-bottom: 14px; }
-.footer-name { font-family: var(--font-display); color: var(--gold); text-shadow: 0 0 15px rgba(255, 69, 0, 0.6); margin-bottom: 20px; }
-.footer-links { display: flex; justify-content: center; align-items: center; gap: 16px; flex-wrap: wrap; margin-bottom: 24px; }
+.footer-glyph { 
+    font-size: 2rem; 
+    color: var(--gold-dim); 
+    margin-bottom: 8px; /* Was 14px */
+}
+
+.footer-name { 
+    font-family: var(--font-display); 
+    color: var(--gold); 
+    text-shadow: 0 0 15px rgba(255, 69, 0, 0.6); 
+    margin-bottom: 12px; /* Was 20px */
+}
+
+.footer-links { 
+    display: flex; 
+    justify-content: center; 
+    align-items: center; 
+    gap: 16px; 
+    flex-wrap: wrap; 
+    margin-bottom: 16px; /* Was 24px */
+}
+
 .link-github { color: #716e6e; }   /* Example: Neutral Grey */
 .link-linkedin { color: #716e6e; } /* Example: Classic LinkedIn Blue */
 .link-github:hover, 
 .link-linkedin:hover {
     color: var(--gold); /* Or your --lava-hot variable */
     text-shadow: 0 0 10px var(--gold-glow);}
+
 .footer-sep { color: rgba(255,215,0,0.15); }
 .footer-copy { font-size: 0.68rem; letter-spacing: 0.15em; color: rgba(255,215,0,0.12); }
 
@@ -808,17 +1109,18 @@ section {
     pointer-events: none;
     overflow: hidden;
     /* Soften the very top edge so it blends into the black */
-    mask-image: linear-gradient(to top, rgba(0,0,0,1) 0%, transparent 100%);
+    mask-image: linear-gradient(to top, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 70%, transparent 100%);
+    -webkit-mask-image: linear-gradient(to top, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 70%, transparent 100%);
 }
 
 .lava-wave {
     position: absolute;
     bottom: -50px;
     width: 200%;
-    height: 200px;
+    height: 100px;
     background: var(--lava-hot);
     border-radius: 40%;
-    filter: blur(80px); /* Heavy blur to make it look like a glow, not a line */
+    filter: blur(100px); /* Heavy blur to make it look like a glow, not a line */
     opacity: 0.3;
     mix-blend-mode: screen;
     animation: lavaFlow 15s infinite ease-in-out;
@@ -908,6 +1210,15 @@ summary:focus-visible {
     .tomb-arch svg { height: 70px; }
 
     .shaft { height: 100px; }
+
+    .relic-gallery {
+        gap: 32px;
+    }
+
+    .relic-frame {
+        width: 100%;
+        max-width: 320px;
+    }
 }
 
 @media (max-width: 400px) {
