@@ -12,6 +12,15 @@
 </head>
 <body>
 
+    
+
+    <div class="comet-riddle-container">
+        <div class="comet-riddle">
+            <!-- Choose your favorite riddle here -->
+            <span>" The path forward is locked in gold. Awaken the scarab to see the navbar unfold..."</span>
+        </div>
+    </div>
+
     <div class="scarab-btn" id="nav-btn">
         <span class="scarab-icon">𓆣</span>
     </div>
@@ -19,7 +28,7 @@
     <nav class="scarab-nav" id="scarab-nav" aria-label="Main navigation">
         <ul class="papyrus-menu" role="list">
             <li><a href="/index.html">Home</a></li>
-            <li><a href="/index.html#experience">Work</a></li>
+            <li><a href="/work.html">Work</a></li>
             <li><a href="/about.html">About</a></li>
             <li><a href="/contact.html">Contact</a></li>
         </ul>
@@ -27,16 +36,18 @@
 
     <main>
 
+
+
         <!-- Home -->
         <section id="hero" aria-label="Hero — The Surface">
 
                     <div class="moon-frame" aria-label="Profile photo">
-                        <img src="/images/icon.jpeg" alt="Hrishikesh Bajnath" class="moon-photo">            
+                        <img src="/images/full-moon-glow-illustration-material_391639-3896.avif" alt="Hrishikesh Bajnath" class="moon-photo">            
                     </div>
 
                     <div class="hero-content">
                         <h1>Hrishikesh Bajnath</h1>
-                        <h2>Software Security & Full-Stack Web Development</h2>
+                        <h2>Description</h2>
                     </div>
 
                     <a href="#skills" class="scroll-indicator" aria-label="Scroll down to skills">
@@ -46,14 +57,39 @@
 
         </section>
 
-                        <!-- Tunnel -->
-                        <div class="shaft" aria-hidden="true">
-                            <div class="shaft-wall left"></div>
-                            <div class="shaft-wall right"></div>
-                        </div>
+        <!-- Tunnel -->
+        <div class="shaft" aria-hidden="true">
+            <div class="shaft-wall left"></div>
+            <div class="shaft-wall right"></div>
+        </div>
 
-                        <!-- skills -->
-        <div class="tomb-hallway">                 
+         <!-- skills -->
+        <div class="tomb-hallway"> 
+
+            <div class="chamber-shroud" aria-hidden="true"></div>
+            
+
+            <div class="hallway-matrix-bg" aria-hidden="true">
+                <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+                    <defs>
+                        <pattern id="vertical-matrix" width="360" height="600" patternUnits="userSpaceOnUse" x="50%" patternTransform="translate(-180, 0)">
+                            
+                            <line x1="60" y1="0" x2="60" y2="600" class="matrix-line pulse-slow" stroke-width="1.5" />
+                            <line x1="180" y1="0" x2="180" y2="600" class="matrix-line pulse-fast" stroke-width="1.5" />
+                            <line x1="300" y1="0" x2="300" y2="600" class="matrix-line pulse-med" stroke-width="1.5" />
+                            
+                            <text x="120" y="150" class="matrix-glyph pulse-fast" text-anchor="middle">𓇳</text>
+                            <text x="240" y="280" class="matrix-glyph pulse-med" text-anchor="middle">𓋹</text>
+                            <text x="120" y="420" class="matrix-glyph pulse-slow" text-anchor="middle">𓂀</text>
+                            <text x="240" y="530" class="matrix-glyph pulse-fast" text-anchor="middle">𓆣</text>
+                            
+                            <path d="M 45 150 H 75 M 165 280 H 195 M 285 420 H 315" class="matrix-line" style="opacity: 0.3;" stroke-width="1" />
+                        </pattern>
+                    </defs>
+                    <rect width="100%" height="100%" fill="url(#vertical-matrix)" />
+                </svg>
+            </div>
+                      
             <section id="skills" aria-label="Skills — The Pyramid">
 
                 <h2 class="section-heading" aria-label="Skills section">
@@ -172,7 +208,12 @@
 
                 </div>
 
+                <a href="/about.html#expansion" class="section-more-btn">More info <span aria-hidden="true">→</span></a>
+
+
             </section>
+
+            
 
             <!-- projects -->
             <section id="projects-preview" aria-label="Projects — The Excavation">
@@ -186,7 +227,7 @@
                 <div class="relic-gallery" role="list">
 
                     <a href="/about.html#projects" class="relic-frame filled" role="listitem">
-                        <span class="bone-accent top-left" aria-hidden="true">🦴</span>
+                        <span class="bone-accent top-left" aria-hidden="true"></span>
                         <div class="frame-border">
                             <img src="/images/rkz.png" alt="Screenshot of the RKZ Voorraadbeheer dashboard" class="relic-image">
                             <span class="relic-badge">Web App</span>
@@ -195,11 +236,11 @@
                             <h3>RKZ Voorraadbeheer</h3>
                             <p>A medical supply management dashboard for tracking stock, emergency requests, and alerts.</p>
                         </div>
-                        <span class="bone-accent bottom-right" aria-hidden="true">🦴</span>
+                        <span class="bone-accent bottom-right" aria-hidden="true"></span>
                     </a>
 
                     <a href="/about.html#projects" class="relic-frame filled" role="listitem">
-                        <span class="bone-accent top-left" aria-hidden="true">🦴</span>
+                        <span class="bone-accent top-left" aria-hidden="true"></span>
                         <div class="frame-border">
                             <img src="/images/wallpaper 1.png" alt="Preview of this portfolio site" class="relic-image">
                             <span class="relic-badge">Website</span>
@@ -208,7 +249,7 @@
                             <h3>Portfolio Site</h3>
                             <p>This very site — an Egyptian-themed portfolio built from scratch with HTML, CSS, and JavaScript.</p>
                         </div>
-                        <span class="bone-accent bottom-right" aria-hidden="true">🦴</span>
+                        <span class="bone-accent bottom-right" aria-hidden="true"></span>
                     </a>
 
                     <div class="relic-frame empty" role="listitem" aria-label="More projects coming soon">

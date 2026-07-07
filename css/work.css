@@ -1,0 +1,554 @@
+/* ── GENERIC SCROLL REVEAL ── */
+.reveal {
+    opacity: 0;
+    transition: opacity 0.6s ease, transform 0.6s ease;
+}
+.reveal.from-bottom { transform: translateY(30px); }
+.reveal.from-left    { transform: translateX(-40px); }
+.reveal.from-right   { transform: translateX(40px); }
+.reveal.visible {
+    opacity: 1;
+    transform: translate(0, 0);
+}
+
+/* ── TOMB HALLWAY STRUCTURAL PILLARS ── */
+.tomb-hallway {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+}
+
+.tomb-hallway::before,
+.tomb-hallway::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 6vw;
+    min-width: 40px;
+    max-width: 90px;
+    z-index: 2;
+    pointer-events: none;
+    background-color: #0c0a14;
+    background-image: repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 38px,
+        rgba(0, 0, 0, 0.45) 38px,
+        rgba(0, 0, 0, 0.45) 40px
+    );
+    box-shadow: inset -5px 0 15px rgba(0, 0, 0, 0.6), inset 5px 0 15px rgba(0, 0, 0, 0.6);
+}
+
+.tomb-hallway::before { left: 0; border-right: 1px solid var(--gold-dim); }
+.tomb-hallway::after { right: 0; border-left: 1px solid var(--gold-dim); }
+
+/* ── HALLWAY THRESHOLD CAPS ── */
+/* Same entrance treatment as the About page's hallway — a wider
+   capital flares at the very top, then steps back down through the
+   collar bands to meet the normal pillar width. */
+.hallway-cap {
+    position: absolute;
+    top: 0;
+    width: calc(10vw + 120px);
+    min-width: 140px;
+    max-width: 260px;
+    height: 40px;
+    background-color: #0c0a14;
+    border-bottom: 2px solid var(--gold-dim);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.8);
+    z-index: 3;
+    pointer-events: none;
+}
+
+.hallway-cap.left {
+    left: 0;
+    clip-path: polygon(0 0, 100% 0, 75% 100%, 0 100%);
+}
+
+.hallway-cap.right {
+    right: 0;
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 25% 100%);
+}
+
+.hallway-collar {
+    position: absolute;
+    top: 40px;
+    display: flex;
+    flex-direction: column;
+    z-index: 3;
+    pointer-events: none;
+}
+
+.hallway-collar.left  { left: 0; align-items: flex-start; }
+.hallway-collar.right { right: 0; align-items: flex-end; }
+
+.hallway-collar span {
+    display: block;
+    height: 24px;
+    background-color: #0c0a14;
+    border-bottom: 2px solid rgba(255, 215, 0, 0.16);
+}
+
+.hallway-collar span:nth-child(1) { width: calc(8vw + 60px); min-width: 110px; max-width: 190px; }
+.hallway-collar span:nth-child(2) { width: calc(7vw + 50px); min-width: 95px;  max-width: 160px; }
+.hallway-collar span:nth-child(3) { width: calc(7vw + 40px); min-width: 80px;  max-width: 130px; }
+.hallway-collar span:nth-child(4) { width: calc(6vw + 30px); min-width: 65px;  max-width: 100px; }
+.hallway-collar span:nth-child(5) { width: calc(6vw + 20px); min-width: 50px;  max-width: 80px; }
+
+/* ── EXCAVATIONS (Projects Detail) ──────────────────────── */
+#projects {
+    padding-top: 60px;
+    padding-bottom: 60px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Lava-warmed heading glyphs — the only two spots on this page that
+   borrow the footer's lava tones, so the warmth up top and the lava
+   pool at the very bottom feel like the same vein of colour */
+#projects .section-heading .section-glyph {
+    color: var(--lava-mid);
+    text-shadow: 0 0 10px rgba(255, 136, 0, 0.5), 0 0 22px rgba(255, 69, 0, 0.25);
+}
+
+.project-detail-list {
+    display: flex;
+    flex-direction: column;
+    gap: 60px;
+    width: 100%;
+    max-width: 900px;
+}
+
+.project-detail {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 36px;
+    align-items: center;
+}
+
+.project-detail:nth-child(even) .project-detail-image { order: 2; }
+.project-detail:nth-child(even) .project-detail-text  { order: 1; }
+
+.project-detail-image {
+    position: relative;
+    border-radius: 14px 4px 12px 4px;
+    overflow: hidden;
+    border: 2px solid rgba(255,215,0,0.2);
+    box-shadow: 0 16px 32px rgba(0,0,0,0.55);
+    aspect-ratio: 4 / 3;
+}
+
+.project-detail-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+/* ── DUST-REVEAL HOVER ── */
+/* Each screenshot sits under a sandy overlay by default — like an
+   artifact still half-buried. Hovering "brushes" it away left to
+   right, revealing the image underneath. */
+.project-detail-image::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    background:
+        radial-gradient(circle at 20% 25%, rgba(255,255,255,0.08), transparent 55%),
+        radial-gradient(circle at 75% 70%, rgba(0,0,0,0.18), transparent 60%),
+        repeating-linear-gradient(
+            112deg,
+            #cdb27f 0px,
+            #b8996a 4px,
+            #d4bb8a 8px,
+            #c2a476 12px
+        );
+    background-size: 160% 160%, 160% 160%, 100% 100%;
+    clip-path: inset(0 0 0 0);
+    transition: clip-path 1s cubic-bezier(0.65, 0, 0.35, 1);
+    /* Idle sand drift — a slow, faint shift so the overlay reads as
+       loose sediment rather than a flat painted texture, even before
+       anyone hovers to brush it away */
+    animation: sandDrift 10s ease-in-out infinite;
+}
+
+@keyframes sandDrift {
+    0%, 100% { background-position: 20% 25%, 75% 70%, 0 0; }
+    50%      { background-position: 30% 15%, 65% 80%, 0 0; }
+}
+
+.project-detail-image::after {
+    content: '𓋹 Uncover';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 3;
+    font-family: var(--font-display);
+    font-size: 0.72rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(40, 30, 15, 0.55);
+    transition: opacity 0.5s ease;
+    pointer-events: none;
+}
+
+/* .uncovered is added by script.js on touch devices, where :hover
+   never fires — the image reveals itself once as it scrolls into
+   view instead of waiting for a hover that can't happen */
+.project-detail-image:hover::before,
+.project-detail-image.uncovered::before {
+    clip-path: inset(0 0 0 100%);
+}
+
+.project-detail-image:hover::after,
+.project-detail-image.uncovered::after {
+    opacity: 0;
+}
+
+.relic-badge.static {
+    position: static;
+    display: inline-block;
+    margin-bottom: 14px;
+}
+
+/* ── 1ST PLACE RIBBON (Arduino project) ── */
+.project-ribbon {
+    position: absolute;
+    top: 20px;
+    right: -36px;
+    z-index: 4;
+    overflow: hidden;
+    transform: rotate(45deg);
+    background: linear-gradient(135deg, #ffe066, var(--gold));
+    color: #1a1712;
+    font-family: var(--font-display);
+    font-size: 0.62rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 6px 42px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.45);
+    pointer-events: none;
+}
+
+/* One-time gleam that sweeps across the ribbon once its card enters
+   view — plays alongside the existing reveal, doesn't loop */
+.project-ribbon::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -60%;
+    width: 35%;
+    height: 100%;
+    background: linear-gradient(115deg, transparent, rgba(255,255,255,0.75), transparent);
+    opacity: 0;
+}
+
+.project-detail.reveal.visible .project-ribbon::after {
+    animation: ribbonGleam 1.3s ease-in-out 0.4s 1;
+}
+
+@keyframes ribbonGleam {
+    0%   { left: -60%; opacity: 0; }
+    12%  { opacity: 1; }
+    55%  { opacity: 1; }
+    100% { left: 140%; opacity: 0; }
+}
+
+/* Special framing for the image that holds the 1st-place ribbon —
+   its border and glow read a shade warmer than the rest, borrowing
+   from the ribbon's gold so the accolade feels built into the card */
+.project-detail-image:has(.project-ribbon) {
+    border-color: rgba(255, 215, 0, 0.5);
+    box-shadow: 0 16px 32px rgba(0,0,0,0.55), 0 0 26px rgba(255,215,0,0.2);
+}
+
+.project-detail-text h3 {
+    font-family: var(--font-display);
+    font-size: 1.4rem;
+    color: var(--gold);
+    text-shadow: 0 0 14px rgba(255,215,0,0.2);
+    margin-bottom: 12px;
+}
+
+/* Small per-project glyph — a quiet signature mark unique to each
+   piece, echoing the glyph system already used in section headings */
+.project-glyph {
+    display: inline-block;
+    margin-right: 10px;
+    font-size: 0.85em;
+    opacity: 0.65;
+}
+
+.project-detail-text p {
+    font-family: var(--font-body);
+    font-size: 0.95rem;
+    line-height: 1.75;
+    color: #d8cbb0;
+    margin-bottom: 16px;
+}
+
+.project-tech {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.project-tech-tag {
+    font-family: var(--font-display);
+    font-size: 0.6rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: rgba(255,215,0,0.7);
+    border: 1px solid rgba(255,215,0,0.2);
+    padding: 5px 12px;
+    border-radius: 3px;
+    transition: color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
+}
+
+.project-tech-tag:hover {
+    color: #fff2c8;
+    border-color: rgba(255,215,0,0.6);
+    background: rgba(255,215,0,0.06);
+    box-shadow: 0 0 10px rgba(255,215,0,0.25);
+}
+
+.project-more-note {
+    margin-top: 40px;
+    font-family: var(--font-display);
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(255,215,0,0.3);
+}
+
+.note-glyph {
+    display: inline-block;
+    margin-right: 8px;
+    animation: glyphPulse 2.6s ease-in-out infinite;
+}
+
+@keyframes glyphPulse {
+    0%, 100% { opacity: 0.3; text-shadow: 0 0 4px rgba(255,215,0,0.15); }
+    50%      { opacity: 0.9; text-shadow: 0 0 10px rgba(255,215,0,0.5); }
+}
+
+/* ── THRESHOLD ARCH (Excavations → Inscriptions) ─────────── */
+.inscription-arch {
+    width: 100%;
+    max-width: 900px;
+    margin: 0 auto;
+    overflow: hidden;
+    line-height: 0;
+    position: relative;
+    z-index: 1;
+    /* Pulls it flush against the section above and below it, same
+       trick as the Home page's arch, so there's no seam gap */
+    margin-top: -2px;
+    margin-bottom: -2px;
+}
+
+.inscription-arch svg {
+    width: 100%;
+    height: 110px;
+    display: block;
+}
+
+/* ── INSCRIPTIONS (Work Detail) ─────────────────────────── */
+#work {
+    position: relative;
+    /* Layered instead of flat: a faint warm glow pooling near the top
+       (as if all the now-lit tablet torches are casting it upward),
+       plus a whisper-thin stone coursing so the black reads as a
+       carved chamber wall rather than an empty rectangle */
+    background:
+        radial-gradient(ellipse 900px 420px at 50% 0%, rgba(255, 140, 20, 0.07), transparent 65%),
+        repeating-linear-gradient(0deg, rgba(255,255,255,0.014), rgba(255,255,255,0.014) 1px, transparent 1px, transparent 30px),
+        #050505;
+    padding-top: 80px;
+    padding-bottom: 80px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#work .section-heading,
+#work .work-detail {
+    position: relative;
+    z-index: 1;
+}
+
+#work .section-heading .section-glyph {
+    color: var(--lava-pale);
+    text-shadow: 0 0 8px rgba(255, 204, 0, 0.4);
+}
+
+.work-detail {
+    -webkit-mask-image: none;
+    mask-image: none;
+    max-width: 820px;
+    width: 100%;
+}
+
+.work-detail .details {
+    opacity: 1;
+}
+
+.work-detail .details p,
+.work-detail .details li {
+    color: #c8bca0;
+}
+
+.work-detail .details ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.work-detail .details li {
+    position: relative;
+    padding-left: 18px;
+    font-family: var(--font-body);
+    font-size: 0.9rem;
+    line-height: 1.65;
+}
+
+.work-detail .details li::before {
+    content: '—';
+    position: absolute;
+    left: 0;
+    color: rgba(255,215,0,0.4);
+}
+
+.work-detail .engraving h3 {
+    color: var(--gold);
+    text-shadow: 0 0 20px var(--gold-glow), 0 0 40px rgba(255,215,0,0.2);
+}
+
+.work-detail .engraving-date {
+    color: rgba(255,215,0,0.5);
+}
+
+.work-detail .tablet-divider {
+    background: var(--gold);
+    box-shadow: 0 0 12px var(--gold-glow), 0 0 30px rgba(255,215,0,0.3);
+    /* Unlike the home page's hover-lit torches, every inscription here
+       is already permanently lit — so instead of an ignite moment,
+       it gets a slow, living flicker like a torch that's been
+       burning a while */
+    animation: inscriptionFlicker 3.6s ease-in-out infinite;
+}
+
+@keyframes inscriptionFlicker {
+    0%, 100% { box-shadow: 0 0 12px var(--gold-glow), 0 0 30px rgba(255,215,0,0.3); }
+    50%      { box-shadow: 0 0 16px var(--gold-glow), 0 0 38px rgba(255,215,0,0.42); }
+}
+
+/* ── MOBILE ── */
+@media (max-width: 640px) {
+    .tomb-hallway::before,
+    .tomb-hallway::after {
+        width: 25px;
+        min-width: 25px;
+        opacity: 0.6;
+    }
+    .hallway-cap {
+        width: 130px;
+        min-width: 100px;
+        height: 24px;
+    }
+    .hallway-collar {
+        top: 24px;
+    }
+    .hallway-collar span {
+        height: 14px;
+    }
+    .hallway-collar span:nth-child(1) { width: 85px; min-width: 85px; }
+    .hallway-collar span:nth-child(2) { width: 70px; min-width: 70px; }
+    .hallway-collar span:nth-child(3) { width: 55px; min-width: 55px; }
+    .hallway-collar span:nth-child(4) { width: 40px; min-width: 40px; }
+    .hallway-collar span:nth-child(5) { width: 30px; min-width: 30px; }
+    .inscription-arch svg {
+        height: 60px;
+    }
+    .project-detail {
+        grid-template-columns: 1fr;
+    }
+    .project-detail:nth-child(even) .project-detail-image,
+    .project-detail:nth-child(even) .project-detail-text {
+        order: initial;
+    }
+}
+
+
+/* ── GEOMETRIC LABYRINTH BACKGROUND ─────────────────────── */
+
+.index-labyrinth-zone {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+}
+
+.labyrinth-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    pointer-events: none;
+    /* Soft blend into your dark midnight background */
+    opacity: 0.8; 
+    mix-blend-mode: screen; 
+}
+
+/* Ensure your text and panels sit above the grid */
+#foundations, 
+#excavations {
+    position: relative;
+    z-index: 2;
+}
+
+/* ── ANIMATED PULSING LINES ── */
+
+.circuit-line {
+    stroke: var(--gold);
+    transition: all 0.5s ease;
+}
+
+@keyframes circuitPulse {
+    0%, 100% {
+        opacity: 0.1;
+        stroke: var(--gold-dim);
+        filter: drop-shadow(0 0 0px transparent);
+    }
+    50% {
+        opacity: 0.3;
+        stroke: var(--gold);
+        filter: drop-shadow(0 0 6px var(--gold-glow));
+    }
+}
+
+/* Assigning different durations creates an asynchronous, 
+  organic wave of light traveling through the grid.
+*/
+.pulse-fast {
+    animation: circuitPulse 5s infinite ease-in-out;
+    animation-delay: 0s;
+}
+
+.pulse-med {
+    animation: circuitPulse 7.5s infinite ease-in-out;
+    animation-delay: 2s;
+}
+
+.pulse-slow {
+    animation: circuitPulse 11s infinite ease-in-out;
+    animation-delay: 4s;
+}

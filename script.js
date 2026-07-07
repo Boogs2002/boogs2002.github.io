@@ -4,16 +4,89 @@
 
 document.addEventListener('DOMContentLoaded', () => {
 
-    const navBtn = document.getElementById('nav-btn');
-    const scarabNav = document.getElementById('scarab-nav');
+    // ── CINEMATIC TOMB DESCENT SCROLL ──
+    function smoothScrollTo(targetSelector, duration) {
+        const target = document.querySelector(targetSelector);
+        if (!target) return;
 
-    navBtn.addEventListener('click', () => {
-        // Toggles the slide-down animation
-        scarabNav.classList.toggle('active');
-        
-        // Toggles the tilted glowing state of the beetle icon
-        navBtn.classList.toggle('is-open'); 
+        // 1. Temporarily disable native 'scroll-behavior: smooth' to allow pixel-perfect JS control
+        const htmlElement = document.documentElement;
+        const originalScrollBehavior = htmlElement.style.scrollBehavior;
+        htmlElement.style.scrollBehavior = 'auto';
+
+        const targetPosition = target.getBoundingClientRect().top + window.scrollY;
+        const startPosition = window.scrollY;
+        const distance = targetPosition - startPosition;
+        let startTime = null;
+
+        // Cinematic quintic curve: slow start, rapid drop, gentle cushion halt
+        function easeInOutQuint(t, b, c, d) {
+            t /= d / 2;
+            if (t < 1) return c / 2 * t * t * t * t * t + b;
+            t -= 2;
+            return c / 2 * (t * t * t * t * t + 2) + b;
+        }
+
+        function animation(currentTime) {
+            if (startTime === null) startTime = currentTime;
+            const timeElapsed = currentTime - startTime;
+            const run = easeInOutQuint(timeElapsed, startPosition, distance, duration);
+            
+            // Programmatically update the coordinates instantly
+            window.scrollTo(0, run);
+            
+            if (timeElapsed < duration) {
+                requestAnimationFrame(animation);
+            } else {
+                window.scrollTo(0, targetPosition); // Secure the final frame lock
+                
+                // 2. Restore the native CSS smooth scroll behavior for normal link clicks
+                htmlElement.style.scrollBehavior = originalScrollBehavior;
+            }
+        }
+        requestAnimationFrame(animation);
+    }
+
+    // Bind custom scroll to all scroll-indicator links (works on Home & About pages)
+    document.querySelectorAll('.scroll-indicator').forEach(indicator => {
+        indicator.addEventListener('click', (e) => {
+            e.preventDefault();
+            const targetId = indicator.getAttribute('href');
+            // 2200ms (2.2s) represents a slow, deliberate cinematic transition
+            smoothScrollTo(targetId, 2200);
+        });
     });
+
+    // ── CHAMBER THRESHOLD REVEAL ──────────────────────────
+    // ── RESPONSIVE CHAMBER REVEAL OBSERVER ──
+    const skillsSection = document.getElementById('skills');
+    const hallway = document.querySelector('.tomb-hallway');
+
+    if (skillsSection && hallway) {
+        // Measure heights: if section is taller than the viewport (like on stacked mobile views),
+        // trigger as soon as 10% enters the screen. Otherwise, maintain the suspense threshold (40%).
+        const sectionHeight = skillsSection.offsetHeight;
+        const viewportHeight = window.innerHeight;
+        const thresholdVal = (sectionHeight > viewportHeight) ? 0.1 : 0.4;
+
+        const chamberObserver = new IntersectionObserver((entries) => {
+            entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                    hallway.classList.add('chamber-revealed');
+                } else {
+                    // Re-shroud when scrolling back up past the threshold toward the hero
+                    if (entry.boundingClientRect.top > 0) {
+                        hallway.classList.remove('chamber-revealed');
+                    }
+                }
+            });
+        }, {
+            root: null,
+            threshold: thresholdVal
+        });
+
+        chamberObserver.observe(skillsSection);
+    }
 
     // ── PYRAMID LAYERS ──────────────────────────────────────
     // Each layer has a data-delay attribute (0, 1, 2, 3)
@@ -169,5 +242,68 @@ document.addEventListener('DOMContentLoaded', () => {
     document.querySelectorAll('.reveal').forEach((el) => {
         revealObserver.observe(el);
     });
+
+
+    // ── BLUEPRINT DOORS (About page) ────────────────────────
+    // On desktop, the two stone doors only swing open once the
+    // ENTIRE blueprint-container frame is visible on screen. On
+    // smaller screens the container is often taller than the
+    // viewport, so it can never actually reach full visibility —
+    // there the doors trigger as soon as half the frame is on
+    // screen instead. Either way, they swing shut again as soon as
+    // that threshold is no longer met, whether the person scrolls
+    // further down or back up.
+    const blueprintContainer = document.querySelector('.blueprint-container');
+
+    if (blueprintContainer) {
+        const isSmallScreen = () => window.matchMedia('(max-width: 640px)').matches;
+
+        const doorObserver = new IntersectionObserver(
+            (entries) => {
+                entries.forEach((entry) => {
+                    const requiredRatio = isSmallScreen() ? 0.5 : 0.999;
+                    if (entry.intersectionRatio >= requiredRatio) {
+                        blueprintContainer.classList.add('doors-open');
+                    } else {
+                        blueprintContainer.classList.remove('doors-open');
+                    }
+                });
+            },
+            {
+                root: null,
+                threshold: [0, 0.1, 0.25, 0.4, 0.5, 0.6, 0.75, 0.9, 0.999, 1]
+            }
+        );
+
+        doorObserver.observe(blueprintContainer);
+    }
+
+
+    // ── PROJECT DUST REVEAL (Work page, touch fallback) ─────
+    // The sandy overlay is designed to clear on :hover, but touch
+    // devices don't really have a hover state — so there, each
+    // image uncovers itself automatically as it scrolls into view
+    // instead of waiting for a hover that will never come.
+    if (window.matchMedia('(hover: none)').matches) {
+        const dustObserver = new IntersectionObserver(
+            (entries) => {
+                entries.forEach((entry) => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('uncovered');
+                    } else {
+                        entry.target.classList.remove('uncovered');
+                    }
+                });
+            },
+            {
+                root: null,
+                threshold: 0.4
+            }
+        );
+
+        document.querySelectorAll('.project-detail-image').forEach((img) => {
+            dustObserver.observe(img);
+        });
+    }
 
 });

@@ -1,22 +1,257 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Projects</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/css/projects.css">
-    <link rel="stylesheet" href="/css/main.css">
-
+    <title>Work | Hrishikesh Bajnath</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=IM+Fell+English:ital@0;1&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/index.css">
+    <link rel="stylesheet" href="css/work.css">
 </head>
 <body>
-    
-    <header id="header-one">
-        <img class="logo" src="/images/icon.jpeg" alt="Logo">
 
-        <nav class="nav-one">
-            <a class="nav-link active" href="/">Home</a>
-            <a class="nav-link" href="/about.html">About</a>
-            <a class="nav-link" href="/work.html">Work</a>
-            <a class="nav-link" href="/contact.html">Contact</a>
-        </nav>
-    </header>
+    <div class="scarab-btn" id="nav-btn">
+        <span class="scarab-icon">𓆣</span>
+    </div>
+
+    <nav class="scarab-nav" id="scarab-nav" aria-label="Main navigation">
+        <ul class="papyrus-menu" role="list">
+            <li><a href="/index.html">Home</a></li>
+            <li><a href="/work.html">Work</a></li>
+            <li><a href="/about.html">About</a></li>
+            <li><a href="/contact.html">Contact</a></li>
+        </ul>
+    </nav>
+
+    <main>
+
+        <div class="tomb-hallway">
+
+            <!-- Threshold caps: same entrance treatment as the About
+                 page's hallway, so both pages' corridors match -->
+            <span class="hallway-cap left" aria-hidden="true"></span>
+            <span class="hallway-cap right" aria-hidden="true"></span>
+
+            <span class="hallway-collar left" aria-hidden="true">
+                <span></span><span></span><span></span><span></span><span></span>
+            </span>
+            <span class="hallway-collar right" aria-hidden="true">
+                <span></span><span></span><span></span><span></span><span></span>
+            </span>
+
+         <div class="index-labyrinth-zone">
+
+            <div class="labyrinth-container" aria-hidden="true">
+                <svg class="labyrinth-svg" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%">
+                    <defs>
+                        <pattern id="tomb-circuit" x="0" y="0" width="240" height="240" patternUnits="userSpaceOnUse">
+                            
+                            <g fill="none" stroke-linecap="square">
+                                <path d="M 20 20 H 220 V 100 H 140 V 220 H 60 V 140 H 20 Z" 
+                                    stroke="var(--gold-dim)" stroke-width="1" opacity="0.2" />
+                                
+                                <path d="M 100 0 V 60 H 240" 
+                                    stroke="var(--gold-dim)" stroke-width="1" opacity="0.15" />
+
+                                <path d="M 40 40 H 200 V 80" 
+                                    class="circuit-line pulse-fast" stroke-width="2" />
+                                    
+                                <path d="M 120 120 V 200 H 80" 
+                                    class="circuit-line pulse-slow" stroke-width="1.5" />
+                                    
+                                <path d="M 0 160 H 40 V 200" 
+                                    class="circuit-line pulse-med" stroke-width="1.5" />
+                                    
+                                <path d="M 180 140 V 180 H 240" 
+                                    class="circuit-line pulse-fast" stroke-width="2" />
+                            </g>
+                        </pattern>
+                    </defs>
+
+                    <rect x="0" y="0" width="100%" height="100%" fill="url(#tomb-circuit)" />
+                </svg>
+            </div> 
+
+            <!-- Projects Part (Excavations) -->
+            <section id="projects" aria-label="Projects — Excavations">
+
+                <h2 class="section-heading" aria-label="Projects section">
+                    <span class="section-glyph" aria-hidden="true">𓋹</span>
+                    Excavations
+                    <span class="section-subtitle">Projects</span>
+                </h2>
+
+                <div class="project-detail-list">
+
+                    <article class="project-detail reveal from-bottom">
+                        <div class="project-detail-image">
+                            <img src="/images/rkz.png" alt="Screenshot of the RKZ Voorraadbeheer dashboard">
+                        </div>
+                        <div class="project-detail-text">
+                            <span class="relic-badge static">Web App</span>
+                            <h3><span class="project-glyph" aria-hidden="true">𓋹</span>MedSupply Management System</h3>
+                            <p>A dashboard built to help hospital staff track medical supply inventory in real time. It includes a priority-based emergency request system for urgent supply needs, a critical stock overview with searchable filters, and a notifications panel to keep staff informed of low-stock alerts — reducing the time it takes to locate and request supplies during time-sensitive situations.</p>
+                            <div class="project-tech" role="list">
+                                <span class="project-tech-tag" role="listitem">Node.js</span>
+                                <span class="project-tech-tag" role="listitem">Express</span>
+                                <span class="project-tech-tag" role="listitem">MySQL</span>
+                                <span class="project-tech-tag" role="listitem">Prisma</span>
+                                <span class="project-tech-tag" role="listitem">HTML</span>
+                                <span class="project-tech-tag" role="listitem">CSS</span>
+                                <span class="project-tech-tag" role="listitem">JavaScript</span>
+                            </div>
+                        </div>
+                    </article>
+
+                    <article class="project-detail reveal from-bottom">
+                        <div class="project-detail-image">
+                            <img src="/images/wallpaper 1.png" alt="Preview of this portfolio site">
+                        </div>
+                        <div class="project-detail-text">
+                            <span class="relic-badge static">Website</span>
+                            <h3><span class="project-glyph" aria-hidden="true">𓆣</span>Portfolio Site</h3>
+                            <p>This Egyptian-themed portfolio, built from the ground up with vanilla HTML, CSS, and JavaScript. Every section follows a literal descent — from a moonlit desert hero, through a pyramid of skills, into a torch-lit tomb of work experience — using scroll-triggered animations, an interactive hover system, and hand-built CSS effects instead of a UI framework.</p>
+                            <div class="project-tech" role="list">
+                                <span class="project-tech-tag" role="listitem">HTML</span>
+                                <span class="project-tech-tag" role="listitem">CSS</span>
+                                <span class="project-tech-tag" role="listitem">JavaScript</span>
+                            </div>
+                        </div>
+                    </article>
+
+                    <article class="project-detail reveal from-bottom">
+                        <div class="project-detail-image">
+                            <!-- TODO: swap in a real screenshot/photo of the
+                                Arduino project — this is still the moon icon
+                                placeholder from the hero section -->
+                            <span class="project-ribbon" aria-hidden="true">1st Place</span>
+                            <img src="/images/moon.png" alt="Screenshot of the Arduino WaterGarbage Collector">
+                        </div>
+                        <div class="project-detail-text">
+                            <span class="relic-badge static">Prototype</span>
+                            <h3><span class="project-glyph" aria-hidden="true">𓊪</span>Arduino WaterGarbage Collector</h3>
+                            <p>An Arduino-based prototype designed to automatically detect and collect floating debris from the surface of the water. The system uses an ultrasonic sensor mounted on a servo motor to scan its surroundings and detect objects. Once debris is detected, multiple servo motors control the movement of the sensor, collection door, and fan mechanism to gather the waste efficiently. To ensure safe navigation, the prototype is equipped with infrared (IR) sensors that detect nearby walls and obstacles, preventing collisions while operating.</p>
+                            <div class="project-tech" role="list">
+                                <span class="project-tech-tag" role="listitem">C++</span>
+                                <span class="project-tech-tag" role="listitem">Ultrasonic Sensor</span>
+                                <span class="project-tech-tag" role="listitem">Infrared Sensor</span>
+                                <span class="project-tech-tag" role="listitem">Servo Motor</span>
+
+                            </div>
+                        </div>
+                    </article>
+
+                </div>
+
+                <p class="project-more-note reveal from-bottom"><span class="note-glyph" aria-hidden="true">𓋹</span>Site 03 of 03 logged — more excavations underway, check back soon.</p>
+
+            </section>
+
+        <!-- Threshold into the Inscriptions chamber. Deliberately NOT
+             the same silhouette as the Home page's pyramid→tomb arch:
+             this one is a flared pylon-style doorway (temple-gate
+             towers rather than a plain rounded stone arch), with a
+             gold frieze and a glowing keystone glyph, so the two
+             pages read as the same world without repeating the same
+             piece of art. -->
+        <div class="inscription-arch" aria-hidden="true">
+            <svg viewBox="0 0 800 120" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+                <!-- Doorway opening -->
+                <path d="M0,120 L0,70 Q400,-30 800,70 L800,120 Z" fill="#050505"/>
+                <!-- Left pylon tower: flared, wider at the base -->
+                <polygon points="0,0 100,0 122,120 0,120" fill="#0a0a0a"/>
+                <!-- Right pylon tower -->
+                <polygon points="800,0 700,0 678,120 800,120" fill="#0a0a0a"/>
+                <!-- Gold frieze marks on the towers -->
+                <line x1="18" y1="16" x2="14" y2="106" stroke="rgba(255,215,0,0.16)" stroke-width="1"/>
+                <line x1="44" y1="16" x2="41" y2="106" stroke="rgba(255,215,0,0.16)" stroke-width="1"/>
+                <line x1="70" y1="16" x2="68" y2="106" stroke="rgba(255,215,0,0.16)" stroke-width="1"/>
+                <line x1="782" y1="16" x2="786" y2="106" stroke="rgba(255,215,0,0.16)" stroke-width="1"/>
+                <line x1="756" y1="16" x2="759" y2="106" stroke="rgba(255,215,0,0.16)" stroke-width="1"/>
+                <line x1="730" y1="16" x2="732" y2="106" stroke="rgba(255,215,0,0.16)" stroke-width="1"/>
+                <!-- Glowing keystone glyph at the apex of the doorway -->
+                <text x="400" y="26" text-anchor="middle" font-size="22" fill="rgba(255,215,0,0.45)" font-family="Georgia, serif">𓋹</text>
+            </svg>
+        </div>
+
+        <!-- Work Experience Part (Inscriptions) -->
+        <section id="work" aria-label="Work — Inscriptions">
+
+            <h2 class="section-heading" aria-label="Work section">
+                <span class="section-glyph" aria-hidden="true">𓂀</span>
+                Inscriptions
+                <span class="section-subtitle">Work Experience</span>
+            </h2>
+
+            <div class="tomb-container work-detail" role="list">
+
+                <article class="tablet-row hidden-left" role="listitem" tabindex="0">
+                    <div class="engraving">
+                        <h3>Administration & Sales</h3>
+                        <span class="engraving-date">STR Trading VBA, Aruba · Sept 2023 - Apr 2024</span>
+                    </div>
+                    <div class="tablet-divider" aria-hidden="true"></div>
+                    <div class="details">
+                        <ul>
+                            <li>Responsible for the store's daily opening and secure closing procedures.</li>
+                            <li>Managed the administrative workflow, including digitizing and organizing invoices, bank statements, and shipment records for accountancy.</li>
+                            <li>Optimized sales by preparing up-to-date price lists and handling client correspondence by mail, phone, and in person.</li>
+                            <li>Maintained a clean, representative store environment for the best possible customer experience.</li>
+                        </ul>
+                    </div>
+                </article>
+
+                <article class="tablet-row hidden-left" role="listitem" tabindex="0">
+                    <div class="engraving">
+                        <h3>Callcenter Agent</h3>
+                        <span class="engraving-date">Yource, Suriname · Jun 2024 - Aug 2024</span>
+                    </div>
+                    <div class="tablet-divider" aria-hidden="true"></div>
+                    <div class="details">
+                        <ul>
+                            <li>Supported customers with a wide range of inquiries, focused on service quality and effective communication.</li>
+                            <li>Registered and processed customer data and interactions in the designated systems.</li>
+                            <li>Analyzed customer issues to reach quick, effective solutions.</li>
+                        </ul>
+                    </div>
+                </article>
+
+            </div>
+
+        </section>
+
+        </div>
+
+    </main>
+
+    <!-- footer -->
+    <footer id="contact" aria-label="Contact and footer">
+
+        <div class="footer-content">
+            <p class="footer-glyph" aria-hidden="true">𓆣</p>
+            <h2 class="footer-name">Hrishikesh Bajnath</h2>
+            <div class="footer-links">
+                <a class="link-github" href="https://github.com/Boogs2002" target="_blank" rel="noopener" aria-label="GitHub">GitHub</a>
+                <span class="footer-sep" aria-hidden="true">·</span>
+                <a class="link-linkedin" href="https://linkedin.com/in/yourusername" target="_blank" rel="noopener" aria-label="LinkedIn">LinkedIn</a>
+            </div>
+            <p class="footer-copy">© 2025 Hrishikesh Bajnath</p>
+        </div>
+
+        <!-- Lava animation lives here -->
+        <div class="lava-stage" aria-hidden="true">
+            <div class="lava-flow">
+                <div class="lava-wave wave-a"></div>
+                <div class="lava-wave wave-b"></div>
+                <div class="lava-wave wave-c"></div>
+            </div>
+            <div class="lava-haze"></div>
+        </div>
+
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

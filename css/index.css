@@ -46,8 +46,52 @@ body {
     min-height: 100vh;
 }
 
-/* ── 3. SCARAB NAV ──────────────────────────────────────── */
-/* ── 3. SCARAB NAV ──────────────────────────────────────── */
+/* ── TECH-HIEROGLYPHIC NAV HINT ── */
+/* ── COMET RIDDLE ANIMATION ── */
+.comet-riddle-container {
+    position: relative;
+    top: 15vh; /* Adjust this to position it nicely in your desert sky */
+    left: 0;
+    width: 100%;
+    overflow: hidden;
+    pointer-events: none; /* Prevents it from blocking clicks */
+    z-index: 5;
+}
+
+.comet-riddle {
+    display: inline-block;
+    white-space: nowrap;
+    font-family: 'Cinzel', serif; /* Keeps your architectural theme */
+    font-size: 0.85rem;
+    letter-spacing: 3px;
+    color: rgba(255, 215, 0, 0.9);
+    
+    /* Creates the glowing "comet" effect on the text */
+    text-shadow: 
+        2px 0 8px rgba(255, 215, 0, 0.8), 
+        -15px 0 20px rgba(255, 215, 0, 0.3); 
+    
+    /* 25 seconds for a slow, readable pass. Linear keeps the speed constant */
+    animation: cometSlide 35s linear infinite; 
+}
+
+
+@keyframes cometSlide {
+    0%   { transform: translateX(100vw); opacity: 0; }
+    2%   { opacity: 1; }
+    38%  { opacity: 1; }
+    40% { transform: translateX(-100%); opacity: 0; }
+
+    100% { transform: translateX(100vw); opacity: 0; }
+}
+
+/* Speed it up slightly on mobile so users don't have to wait too long */
+@media (max-width: 640px) {
+    .comet-riddle {
+        font-size: 0.7rem;
+        animation: cometSlideLeftToRight 25s linear infinite;
+    }
+}
 
 /* The Fixed Beetle Button */
 .scarab-btn {
@@ -67,7 +111,7 @@ body {
 .scarab-icon {
     font-size: 2.4rem;
     color: var(--gold);
-    text-shadow: 0 0 18px var(--gold-glow), 0 0 40px rgba(255, 215, 0, 0.25);
+    text-shadow: 0 0 18px var(--gold-glow), 0 0 40px #ffd70040;
     display: block;
     transition: transform 0.3s ease, text-shadow 0.3s ease;
 }
@@ -76,7 +120,7 @@ body {
 .scarab-btn:hover .scarab-icon,
 .scarab-btn.is-open .scarab-icon {
     transform: scale(1.18) rotate(-8deg);
-    text-shadow: 0 0 28px var(--gold-glow), 0 0 60px rgba(255, 215, 0, 0.4);
+    text-shadow: 0 0 28px var(--gold-glow), 0 0 60px #ffd70066;
 }
 
 /* The Top Navigation Bar (Full Width) */
@@ -87,12 +131,18 @@ body {
     width: 100%;
     height: 80px;
     z-index: 1001;
-    
-    /* Gradient: Black to purple matching the sky */
-    background: linear-gradient(to bottom, #010005 0%, #554774 100%);
-    border-bottom: 2px solid var(--gold-dim);
     display: flex;
     align-items: center;
+    
+
+    
+    background: rgba(12, 10, 20, 0.35); 
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px); /* Needed for Safari support */
+    
+    border: 1px solid rgba(255, 215, 0, 0.15); 
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5);
+    color: #ffffff;
 
     /* The Scroll Animation Setup */
     transform: translateY(-100%); /* Hides it above the screen */
@@ -121,7 +171,7 @@ body {
     font-size: 0.85rem;
     letter-spacing: 0.3em;
     text-transform: uppercase;
-    color: rgba(255, 215, 0, 0.5);
+    color: #ffd70080;
     text-decoration: none;
     transition: color 0.2s, text-shadow 0.2s;
 }
@@ -178,17 +228,21 @@ section {
     padding-left: 4px; 
 }
 
+
+
 /* ── 5. HERO SECTION ────────────────────────────────────── */
 #hero {
     /* Wallpaper image layers over the body gradient for this section only */
-    background-image: url('../images/wallpaper\ 1.png');
-    background-size: cover;
+    background-image: url('../images/wallpaper 1.png');
+    /* background-size: cover; */
     background-position: center bottom;
-    background-repeat: no-repeat;
+    /* background-repeat: no-repeat; */
     /* No background-attachment here — fixed is on body,
        this image scrolls naturally with the section */
     text-align: center;
-    gap: 32px;
+    gap: 40px;
+    position: relative;
+    z-index: 1;
 }
 
 /* Subtle vignette so text reads over the image */
@@ -247,9 +301,9 @@ section {
 
 /* Subtle ambient light behind the moon */
 .moon-frame::before {
-    content: '';
+    /* content: ''; */
     position: absolute;
-    inset: -20px;
+    /* inset: 20px; */
     border-radius: 50%;
     background: radial-gradient(circle, rgba(220,210,180,0.12) 0%, transparent 70%);
     z-index: 0;
@@ -257,8 +311,8 @@ section {
 }
 
 .moon-photo {
-    width: 100%;
-    height: 100%;
+    width: 10%;
+    height: 10%;
     object-fit: cover;
     object-position: top;
     position: relative;
@@ -273,6 +327,65 @@ section {
     opacity: 0.6;
     /* Replace this div with your <img> once you have the photo */
 }
+
+/* ── TOMB ENTRANCE PORTAL CAP ───────────────────────────── */
+
+.tomb-entrance-gate {
+    position: relative;
+    width: 100%;
+    padding: 0; /* Changed from "0 6.5vw" to stretch edge-to-edge */
+    z-index: 12;
+    margin-top: 0;
+}
+
+/* Adjust the SVG wrapper for the new slimmer, minimalist layout */
+.egyptian-gate-svg {
+    width: 100%;
+    height: auto;
+    max-height: 80px; /* Reduced from 160px for a more low-profile visual cap */
+    display: block;
+    filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.75));
+}
+
+/* The shroud layer masking the skills section until activated */
+.chamber-shroud {
+    position: absolute;
+    inset: 0;
+    background-color: #030107; /* Blends with the deep purple/midnight background */
+    z-index: 10;
+    opacity: 1; /* Completely dark by default */
+    transition: opacity 1.8s cubic-bezier(0.25, 1, 0.5, 1);
+    pointer-events: none;
+}
+
+/* Initial hidden/shadowed states for matrix background and content */
+.hallway-matrix-bg {
+    opacity: 0;
+    filter: brightness(0) blur(12px);
+    transition: opacity 2s cubic-bezier(0.25, 1, 0.5, 1), filter 2.5s ease;
+}
+
+#skills {
+    opacity: 0;
+    filter: brightness(0.08) blur(6px);
+    transition: opacity 1.8s cubic-bezier(0.25, 1, 0.5, 1), filter 2.2s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+/* Active entered states (Classes handled smoothly by JS observer) */
+.tomb-hallway.chamber-revealed .chamber-shroud {
+    opacity: 0;
+}
+
+.tomb-hallway.chamber-revealed .hallway-matrix-bg {
+    opacity: 0.35; /* Gently transitions matrix lines to baseline opacity */
+    filter: brightness(1) blur(0px);
+}
+
+.tomb-hallway.chamber-revealed #skills {
+    opacity: 1;
+    filter: brightness(1) blur(0px);
+}
+
 
 /* ── HERO TEXT ── */
 .hero-content {
@@ -346,12 +459,12 @@ section {
 }
 
 .shaft-wall {
-    width: 38%;
+    width: 50%;
     background: linear-gradient(
         to bottom,
         transparent 0%,
-        rgba(10,8,20,0.5) 40%,
-        rgba(10,8,20,0.85) 100%
+        #0000002e 40%,
+        #0000002e 100%
     );
     /* Stone texture via repeating gradient */
     background-image:
@@ -359,14 +472,14 @@ section {
             0deg,
             transparent,
             transparent 28px,
-            rgba(0,0,0,0.18) 28px,
-            rgba(0,0,0,0.18) 30px
+            #0000002e 28px,
+            #0000002e 30px
         ),
-        linear-gradient(to bottom, transparent 0%, rgba(10,8,20,0.85) 100%);
+        linear-gradient(to top, transparent 0%, #514674 300%);
 }
 
-.shaft-wall.left  { border-right: 1px solid rgba(255,215,0,0.06); }
-.shaft-wall.right { border-left:  1px solid rgba(255,215,0,0.06); }
+.shaft-wall.left  { border-right: 1px solid #ffd7000f; }
+.shaft-wall.right { border-left:  1px solid #ffd7000f; }
 
 /* ── 7. SKILLS / PYRAMID ────────────────────────────────── */
 #skills {
@@ -387,10 +500,10 @@ section {
 .pyramid-apex {
     width: 0;
     height: 0;
-    border-left:  70px solid transparent;
-    border-right: 70px solid transparent;
+    border-left:  120px solid transparent;
+    border-right: 120px solid transparent;
     border-bottom: 60px solid #4C4574;
-    filter: drop-shadow(0 -4px 14px rgba(255, 217, 0, 0.423));
+    filter: drop-shadow(0 -4px 14px #ffd9006c);
     margin-bottom: 2px;
     transition: filter 0.3s ease;
 }
@@ -442,10 +555,10 @@ section {
     color: rgba(255, 255, 255, 0.6);
 }
 
-.tier-1 { width: 200px; height: 50px; }
-.tier-2 { width: 270px; height: 60px; }
-.tier-3 { width: 345px; height: 70px; }
-.tier-4 { width: 445px; height: 80px; }
+.tier-1 { width: 300px; height: 50px; }
+.tier-2 { width: 370px; height: 60px; }
+.tier-3 { width: 445px; height: 70px; }
+.tier-4 { width: 540px; height: 80px; }
 
 /* ── HOVER POP-OUT: LABEL → CONNECTOR → PANEL ───────────── */
 /* Each side is a flex row. Source order in the HTML controls
@@ -579,6 +692,51 @@ section {
 .hidden  { opacity: 0; transform: translateY(40px); }
 .visible { opacity: 1; transform: translateY(0); }
 
+.blueprint-card {
+    background: linear-gradient(135deg, rgba(20, 18, 30, 0.95), rgba(12, 10, 20, 0.95));
+    border: 1px solid var(--gold-dim, #cca43b);
+    border-radius: 8px;
+    padding: 2.5rem;
+    margin: 3rem auto;
+    max-width: 900px;
+    box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.6);
+}
+
+.blueprint-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    margin-top: 2rem;
+}
+
+.blueprint-col h4 {
+    color: var(--gold-bright, #ffd700);
+    font-family: 'Cinzel', serif; /* Or your custom heading font */
+    border-bottom: 1px solid rgba(255, 215, 0, 0.2);
+    padding-bottom: 0.5rem;
+    margin-bottom: 1rem;
+}
+
+.blueprint-col ul {
+    list-style: none;
+    padding: 0;
+}
+
+.blueprint-col li {
+    color: #c4c1d4;
+    margin-bottom: 0.75rem;
+    font-size: 0.95rem;
+    line-height: 1.4;
+}
+
+/* Stack them vertically on mobile devices */
+@media (max-width: 640px) {
+    .blueprint-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+}
+
 /* ── 7B. PROJECTS GALLERY (EXCAVATIONS) ─────────────────── */
 #projects-preview {
     padding-top: 20px;
@@ -621,7 +779,7 @@ section {
     aspect-ratio: 4 / 3;
     border-radius: 14px 4px 12px 4px; /* uneven, chipped-stone corners */
     overflow: hidden;
-    border: 2px solid rgba(255, 215, 0, 0.25);
+    border: 2px solid #ffd70040;
     background: linear-gradient(155deg, #3c372f 0%, #221f1a 100%);
     box-shadow:
         0 0 0 6px rgba(10, 8, 6, 0.6),
@@ -794,7 +952,9 @@ section {
     position: relative;
     width: 100%;
     overflow: hidden; /* Keeps things neat on the edges */
+    background: transparent;
 }
+
 
 /* Base styles for both pillars */
 .tomb-hallway::before,
@@ -809,7 +969,7 @@ section {
     z-index: 2;
     pointer-events: none;
     
-    /* Solid base stone color blending with your background theme */
+    /* Solid base stone color  */
     background-color: #0c0a14;
     
     /* Carved horizontal stone/brick blocks via a repeating gradient */
@@ -817,8 +977,8 @@ section {
         0deg,
         transparent,
         transparent 38px,
-        rgba(0, 0, 0, 0.45) 38px,
-        rgba(0, 0, 0, 0.45) 40px
+        #463e1180 45px,
+        #00000073 40px
     );
     box-shadow: 
         inset -5px 0 15px rgba(0, 0, 0, 0.6),
@@ -1237,4 +1397,153 @@ summary:focus-visible {
         animation-iteration-count: 1 !important;
         transition-duration: 0.01ms !important;
     }
+}
+
+/* ── VERTICAL INSCRIPTION TRACKS ── */
+.vertical-track {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 40px;
+    z-index: 1; /* Sits behind content cards but clearly on the background layer */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    pointer-events: none; /* Allows user to click items near the edge safely */
+}
+
+/* Hugs perfectly against your existing 6vw side stone pillars */
+.vertical-track.left {
+    left: 6.5vw; 
+}
+
+.vertical-track.right {
+    right: 6.5vw;
+}
+
+/* The vertical conduit wire anchoring the glyphs */
+.track-line {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 1px;
+    background: linear-gradient(
+        to bottom,
+        transparent,
+        rgba(255, 215, 0, 0.12) 8%,
+        rgba(255, 215, 0, 0.12) 92%,
+        transparent
+    );
+    box-shadow: 0 0 8px rgba(255, 215, 0, 0.05);
+}
+
+/* Spreads your symbols evenly down the full scroll height */
+.track-glyphs {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 20vh 0; /* Keeps symbols nicely spread relative to screen height */
+    align-items: center;
+}
+
+.track-glyphs span {
+    font-size: 1.4rem;
+    font-family: var(--font-display);
+    user-select: none;
+    /* Living, breathing torchlight flickering animation */
+    animation: glyphTrackFlicker 4s ease-in-out infinite;
+}
+
+/* Staggering the glows organically so the tomb looks active */
+.track-glyphs span:nth-child(1) { animation-delay: 0s; }
+.track-glyphs span:nth-child(2) { animation-delay: 1.4s; }
+.track-glyphs span:nth-child(3) { animation-delay: 2.8s; }
+.track-glyphs span:nth-child(4) { animation-delay: 0.7s; }
+.track-glyphs span:nth-child(5) { animation-delay: 2.1s; }
+.track-glyphs span:nth-child(6) { animation-delay: 3.3s; }
+
+/* Inscription Flicker Animation tailored for Text Glyphs */
+@keyframes glyphTrackFlicker {
+    0%, 100% {
+        color: rgba(255, 215, 0, 0.22);
+        text-shadow: 0 0 6px rgba(255, 215, 0, 0.15);
+        transform: scale(0.97);
+    }
+    50% {
+        color: var(--gold);
+        text-shadow: 
+            0 0 12px var(--gold-glow), 
+            0 0 22px rgba(255, 215, 0, 0.35);
+        transform: scale(1.03);
+    }
+}
+
+/* RESPONSIVE FILTER: Completely hide on smaller screens 
+   to prioritize text reading area over background decoration */
+@media (max-width: 1024px) {
+    .vertical-track {
+        display: none;
+    }
+}
+
+.hallway-matrix-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;             /* Keeps the pattern on the background layer */
+    pointer-events: none;   /* Allows links/cards on top to remain fully clickable */
+    opacity: 0.35;          /* Ambient opacity so it doesn't overpower your content */
+    mix-blend-mode: screen; /* Merges the golden light seamlessly into your gradient */
+}
+
+/* Forces your actual skills pyramid and project panels to stay on top of the grid lines */
+#skills, 
+#projects-preview {
+    position: relative;
+    z-index: 2;
+}
+
+/* ── SVG PATTERN STYLING ── */
+
+.matrix-line {
+    stroke: var(--gold);
+    fill: none;
+}
+
+.matrix-glyph {
+    fill: var(--gold);
+    font-family: var(--font-display);
+    font-size: 3.2rem;      /* Large mystical weight for the hieroglyphs */
+}
+
+/* ── ASYNCHRONOUS GLOW MATRIX TIMINGS ── */
+
+@keyframes matrixGlow {
+    0%, 100% {
+        opacity: 0.08;
+        filter: drop-shadow(0 0 0px transparent);
+    }
+    50% {
+        opacity: 0.3;
+        filter: drop-shadow(0 0 10px var(--gold-glow));
+    }
+}
+
+.pulse-fast {
+    animation: matrixGlow 5s infinite ease-in-out;
+}
+
+.pulse-med {
+    animation: matrixGlow 8.5s infinite ease-in-out;
+    animation-delay: 2s;
+}
+
+.pulse-slow {
+    animation: matrixGlow 12s infinite ease-in-out;
+    animation-delay: 4.5s;
 }
