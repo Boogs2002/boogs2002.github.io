@@ -1,22 +1,165 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Contact</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/css/contacts.css">
-    <link rel="stylesheet" href="/css/main.css">
-
+    <title>Contact | Hrishikesh Bajnath</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=IM+Fell+English:ital@0;1&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/index.css">
+    <link rel="stylesheet" href="css/contact.css">
 </head>
 <body>
-    
-    <header id="header-one">
-        <img class="logo" src="/images/icon.jpeg" alt="Logo">
 
-        <nav class="nav-one">
-            <a class="nav-link active" href="/">Home</a>
-            <a class="nav-link" href="/about.html">About</a>
-            <a class="nav-link" href="/work.html">Work</a>
-            <a class="nav-link" href="/contact.html">Contact</a>
-        </nav>
-    </header>
+    <div class="scarab-btn" id="nav-btn">
+        <span class="scarab-icon">𓆣</span>
+    </div>
+
+    <nav class="scarab-nav" id="scarab-nav" aria-label="Main navigation">
+        <ul class="papyrus-menu" role="list">
+            <li><a href="/index.html">Home</a></li>
+            <li><a href="/about.html">About</a></li>
+            <li><a href="/work.html">Work</a></li>
+            <li><a href="/contact.html">Contact</a></li>
+        </ul>
+    </nav>
+
+    <main>
+
+        <!-- THE SANCTUM CHAMBER -->
+        <section class="final-chamber" aria-label="Contact — The Ceremonial Altar">
+
+            <!-- Stacked Stone Pillars spanning the full vertical height of the page -->
+            <div class="side-pillar left" aria-hidden="true"></div>
+            <div class="side-pillar right" aria-hidden="true"></div>
+
+            <!-- Faded Minimalist Wall Paintings (Vector-drawn background) -->
+            <div class="chamber-mural" aria-hidden="true">
+                <svg class="mural-drawings" viewBox="0 0 1000 800" xmlns="http://www.w3.org/2000/svg">
+                    <g fill="none" stroke="rgba(255, 215, 0, 0.018)" stroke-width="1.5">
+                        <circle cx="150" cy="150" r="1.5" fill="rgba(255,215,0,0.1)" />
+                        <circle cx="220" cy="180" r="1.5" fill="rgba(255,215,0,0.1)" />
+                        <line x1="150" y1="150" x2="220" y2="180" />
+                        <path d="M 120,400 C 120,350 170,350 170,400 C 170,450 120,450 120,400 Z" />
+                        <path d="M 145,435 L 145,550 M 110,470 L 180,470" />
+                        <path d="M 820,300 C 850,280 880,280 910,300 C 880,330 850,330 820,300" />
+                        <circle cx="865" cy="303" r="10" />
+                        <path d="M 855,315 L 850,340 L 875,320" />
+                    </g>
+                </svg>
+            </div>
+
+            <!-- Dark gradient vignette overlay -->
+            <div class="chamber-vignette" aria-hidden="true"></div>
+
+            <h2 class="section-heading chamber-heading" aria-label="Contact section">
+                <span class="section-glyph" aria-hidden="true">𓊹</span>
+                Sanctum
+                <span class="section-subtitle">Send a Message</span>
+            </h2>
+
+            <div class="chamber-body">
+
+                <!-- Pharaoh Guardian Stele -->
+                <aside class="chamber-guardian left" aria-hidden="true">
+                    <img src="/images/contact/left painting.png" alt="Pharaoh relief engraving" class="guardian-img">
+                </aside>
+
+                <!-- Minimalist Offering Altar Tablet (Contact Form) -->
+                <div class="altar-tablet">
+                    <div class="altar-header">
+                        <h3>Offerings & Alliance</h3>
+                        <p>Inscribe your intent upon the basalt tablet to open a channel.</p>
+                    </div>
+
+                    <form class="sanctum-form" id="sanctum-form" action="#" method="POST" novalidate>
+                        <div class="altar-input-group">
+                            <span class="input-symbol">𓋹</span>
+                            <input type="text" id="name" name="name" required placeholder=" " autocomplete="off">
+                            <label for="name">Your Identity (Name)</label>
+                            <span class="chiselled-line"></span>
+                        </div>
+
+                        <div class="altar-input-group">
+                            <span class="input-symbol">𓂀</span>
+                            <input type="email" id="email" name="email" required placeholder=" " autocomplete="off">
+                            <label for="email">Digital Conduit (Email)</label>
+                            <span class="chiselled-line"></span>
+                        </div>
+
+                        <div class="altar-input-group">
+                            <span class="input-symbol">𓆣</span>
+                            <textarea id="message" name="message" rows="4" required placeholder=" " autocomplete="off"></textarea>
+                            <label for="message">Inscription (Message)</label>
+                            <span class="chiselled-line"></span>
+                        </div>
+
+                        <div class="altar-submit-wrapper">
+                            <button type="submit" class="ceremonial-seal-btn" aria-label="Cast Offering">
+                                <span class="seal-icon" aria-hidden="true">𓇳</span>
+                                <span class="seal-text">Cast Offering</span>
+                            </button>
+                        </div>
+                    </form>
+
+                    <div class="altar-confirmation" id="altar-confirmation" role="status">
+                        <span class="confirmation-seal" aria-hidden="true">𓇳</span>
+                        <h4>Sealed</h4>
+                        <p>Your inscription has been cast into the sanctum. I'll respond soon.</p>
+                    </div>
+                </div>
+
+                <!-- Horus Guardian Stele -->
+                <aside class="chamber-guardian right" aria-hidden="true">
+                    <img src="/images/contact/right painting.png" alt="Horus relief engraving" class="guardian-img">
+                </aside>
+
+            </div>
+
+            <!-- Minimalist Social Links -->
+            <div class="chamber-socials">
+                <p class="socials-title">Establish Alliance Via Networks</p>
+                <div class="social-icons-row">
+                    <a href="https://instagram.com/yourusername" target="_blank" rel="noopener" class="social-icon-link" aria-label="Instagram">
+                        <span class="icon-glyph">𓅓</span><span>Instagram</span>
+                    </a>
+                    <a href="https://facebook.com/yourusername" target="_blank" rel="noopener" class="social-icon-link" aria-label="Facebook">
+                        <span class="icon-glyph">𓆑</span><span>Facebook</span>
+                    </a>
+                    <a href="https://tiktok.com/@yourusername" target="_blank" rel="noopener" class="social-icon-link" aria-label="TikTok">
+                        <span class="icon-glyph">𓁟</span><span>TikTok</span>
+                    </a>
+                </div>
+            </div>
+
+        </section>
+
+    </main>
+
+    <!-- footer -->
+    <footer id="contact" aria-label="Contact and footer">
+        <div class="footer-content">
+            <p class="footer-glyph" aria-hidden="true">𓆣</p>
+            <h2 class="footer-name">Hrishikesh Bajnath</h2>
+            <div class="footer-links">
+                <a class="link-github" href="https://github.com/Boogs2002" target="_blank" rel="noopener" aria-label="GitHub">GitHub</a>
+                <span class="footer-sep" aria-hidden="true">·</span>
+                <a class="link-linkedin" href="https://linkedin.com/in/yourusername" target="_blank" rel="noopener" aria-label="LinkedIn">LinkedIn</a>
+            </div>
+            <p class="footer-copy">© 2025 Hrishikesh Bajnath</p>
+        </div>
+
+        <div class="lava-stage" aria-hidden="true">
+            <div class="lava-flow">
+                <div class="lava-wave wave-a"></div>
+                <div class="lava-wave wave-b"></div>
+                <div class="lava-wave wave-c"></div>
+            </div>
+            <div class="lava-haze"></div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

@@ -1,5 +1,710 @@
-* {
-    margin: 0;
-    padding: 0;
+/* ══════════════════════════════════════════════════════════
+   THE FINAL CHAMBER — Dynamic Stacked Stone Pillars
+   ══════════════════════════════════════════════════════════ */
+
+.final-chamber {
+    position: relative;
+    width: 100%;
+    min-height: 100vh;
+    overflow: hidden;
+    background-color: #050408;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 130px 24px 80px;
+}
+
+/* ── PILLAR FLANKING WRAPPERS ─────────────────────────── */
+
+.pillar-guardian-wrapper {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 120px; /* Adjusted slightly to fit the pure pillar architecture */
+    height: 600px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 2;
+    pointer-events: none;
+}
+
+.left-side { left: 6%; }
+.right-side { right: 6%; }
+
+/* The Reconstructed Broken Pillar */
+.broken-pillar {
+    position: relative;
+    width: 80px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 12px; /* Gaps mimic ancient mortar erosion */
+    opacity: 0.55;
+    transition: opacity 0.3s ease;
+}
+
+/* Base style for stone layers */
+.stone-chunk {
+    background-color: #15111c;
+    border: 2px solid #282136;
+    border-radius: 2px;
     box-sizing: border-box;
+}
+
+.capital-block { height: 45px; width: 120%; transform: translateX(-10%); }
+.base-block    { height: 55px; width: 130%; transform: translateX(-15%); }
+
+/* Structural rows handling block segments */
+.stone-block-row {
+    display: flex;
+    width: 100%;
+    height: 110px; /* Height of individual column sections */
+}
+
+/* Alignment utilities to force missing side chunks */
+.stone-block-row.gap-left  { justify-content: flex-end; }
+.stone-block-row.gap-right { justify-content: flex-start; }
+
+/* Shaft Segments and fractional sizes */
+.shaft-segment {
+    width: 70%; /* Missing 30% of the block width on the side */
+    height: 100%;
+}
+
+.full-chunk {
+    width: 100%;
+}
+
+.narrow-chunk {
+    width: 45%; /* Deep fracture/heavily broken block */
+}
+
+/* Broken crumbling offsets */
+.shifted-left  { transform: translateX(-12px) rotate(-3deg); }
+.shifted-right { transform: translateX(12px) rotate(3deg); }
+
+/* ── CHAMBER MURAL & BACKGROUND PAINTINGS ── */
+/* ── CHAMBER MURAL & BACKGROUND PAINTINGS ── */
+.chamber-mural {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    /* Subtle stone scan-line texture kept on the parent */
+    background: repeating-linear-gradient(
+        0deg,
+        rgba(255, 255, 255, 0.003) 0px,
+        rgba(255, 255, 255, 0.003) 1px,
+        transparent 1px,
+        transparent 30px
+    );
+}
+
+/* ── THE ACTUAL MURAL IMAGE — between the pillars ── */
+.chamber-mural::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+
+    /* Mirror the pillar width exactly so the image starts where stone ends */
+    left: clamp(50px, 6vw, 90px);
+    right: clamp(50px, 6vw, 90px);
+
+    background-image: url('/images/contact/mural.jpg');
+    background-size: cover;
+    background-position: center top;
+    background-repeat: no-repeat;
+
+    /*
+     * Aged fresco treatment:
+     * sepia warms it to torchlit sandstone
+     * low brightness buries it in shadow so content stays readable
+     * contrast sharpens the carved relief lines
+     */
+    filter: sepia(0.55) brightness(0.2) contrast(1.25) saturate(0.75);
+    opacity: 0.75;
+
+    /*
+     * Feather left & right edges so the mural dissolves into the
+     * pillars rather than cutting sharply against the stone.
+     * The existing .chamber-vignette already handles top/bottom fading.
+     */
+    -webkit-mask-image: linear-gradient(
+        to right,
+        transparent 0%,
+        black 7%,
+        black 93%,
+        transparent 100%
+    );
+    mask-image: linear-gradient(
+        to right,
+        transparent 0%,
+        black 7%,
+        black 93%,
+        transparent 100%
+    );
+}
+
+/* ── SLOW GOLD BREATHE SHIMMER over the mural ── */
+.chamber-mural::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: clamp(50px, 6vw, 90px);
+    right: clamp(50px, 6vw, 90px);
+    pointer-events: none;
+
+    /* Central glow — mimics torchlight catching the wall paintings */
+    background: radial-gradient(
+        ellipse 70% 55% at 50% 42%,
+        rgba(255, 215, 0, 0.04) 0%,
+        transparent 70%
+    );
+    animation: mural-breathe 7s ease-in-out infinite;
+}
+
+@keyframes mural-breathe {
+    0%, 100% { opacity: 0.5; }
+    50%       { opacity: 1; }
+}
+
+.mural-drawings {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    pointer-events: none;
+    opacity: 0.85;
+}
+
+.chamber-vignette {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+    background:
+        linear-gradient(to bottom, #030206 0%, transparent 15%, transparent 85%, #050409 100%),
+        radial-gradient(circle 80% 50% at 50% 50%, transparent 10%, rgba(3, 2, 5, 0.75) 100%);
+}
+
+/* ── HEADING ── */
+.chamber-heading {
+    position: relative;
+    z-index: 2;
+    margin-bottom: 40px;
+}
+
+/* ── PAGE-WIDE STACKED STONE PILLARS ── */
+/* ══════════════════════════════════════════════════════════
+   THE FINAL CHAMBER — Flanking Ruined Stone Pillars
+   ══════════════════════════════════════════════════════════ */
+
+.side-pillar {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 80px; /* Explicit, crisp structural width */
+    z-index: 3;
+    pointer-events: none;
+    background-color: #211a14; /* Deep, matte ancient basalt/sandstone base */
+    
+    /* Matte Brick Coursing (No gradients that cause artificial glowing) */
+    background-image:
+        /* Crisp horizontal mortar joints every 70px down the page */
+        repeating-linear-gradient(to bottom, transparent 0px, transparent 70px, #050408 70px, #050408 75px),
+        /* Alternating vertical block seams to create running bond brickwork */
+        repeating-linear-gradient(to right, transparent 0px, transparent 40px, rgba(5, 4, 8, 0.5) 40px, rgba(5, 4, 8, 0.5) 42px),
+        /* Subtle stone face highlight line on the top edge of each course */
+        linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+    
+    /* Inward depth shadows keep the pillar looking set into the wall.
+       The outward gold glow is handled separately below, per side,
+       via filter: drop-shadow() so it traces the jagged erosion
+       silhouette rather than the pillar's rectangular bounding box. */
+    box-shadow: 
+        inset -12px 0 25px rgba(0, 0, 0, 0.95),
+        inset 12px 0 25px rgba(0, 0, 0, 0.95);
+}
+
+/* ── LEFT FLANKING PILLAR (With crisp missing blocks) ── */
+.side-pillar.left {
+    left: 0;
+    border-right: 1.5px solid rgba(255, 215, 0, 0.15);
+
+    /* drop-shadow (not box-shadow) so the glow traces the jagged
+       erosion silhouette left by the clip-path below, instead of
+       just the pillar's rectangular bounding box */
+    filter: drop-shadow(10px 0 16px rgba(255, 215, 0, 0.14));
+    animation: pillarGlowLeft 6s ease-in-out infinite;
+
+    /* * The clip-path uses hard right angles tracking the 70px block increments.
+     * This physically cuts entire rectangular bricks completely out of the pillar layout,
+     * revealing the dark chamber atmosphere behind them.
+     */
+    clip-path: polygon(
+        0% 0%, 100% 0%,
+        100% 12%, 45% 12%, 45% 19%, 100% 19%, /* Missing Brick Chunk 1 */
+        100% 42%, 30% 42%, 30% 49%, 100% 49%, /* Deep Ruined Erosion Gap 2 */
+        100% 74%, 60% 74%, 60% 81%, 100% 81%, /* Missing Brick Chunk 3 */
+        100% 100%, 0% 100%
+    );
+}
+
+@keyframes pillarGlowLeft {
+    0%, 100% { filter: drop-shadow(10px 0 16px rgba(255, 215, 0, 0.14)); }
+    50%      { filter: drop-shadow(10px 0 26px rgba(255, 215, 0, 0.24)); }
+}
+
+/* ── RIGHT FLANKING PILLAR (Mirrored & Staggered) ── */
+.side-pillar.right {
+    right: 0;
+    border-left: 1.5px solid rgba(255, 215, 0, 0.15);
+
+    filter: drop-shadow(-10px 0 16px rgba(255, 215, 0, 0.14));
+    animation: pillarGlowRight 6s ease-in-out infinite;
+
+    /* Alternated heights for the right side so the erosion looks organic and unsymmetrical */
+    clip-path: polygon(
+        100% 0%, 0% 0%,
+        0% 23%, 55% 23%, 55% 30%, 0% 30%, /* Missing Brick Chunk 1 */
+        0% 56%, 40% 56%, 40% 63%, 0% 63%, /* Deep Ruined Erosion Gap 2 */
+        0% 85%, 65% 85%, 65% 92%, 0% 92%, /* Missing Brick Chunk 3 */
+        0% 100%, 100% 100%
+    );
+}
+
+@keyframes pillarGlowRight {
+    0%, 100% { filter: drop-shadow(-10px 0 16px rgba(255, 215, 0, 0.14)); }
+    50%      { filter: drop-shadow(-10px 0 26px rgba(255, 215, 0, 0.24)); }
+}
+
+
+/* ── RESPONSIVE ADAPTATION ── */
+@media (max-width: 640px) {
+    .side-pillar {
+        width: 35px; /* Scales down elegantly for mobile viewports */
+    }
+    /* Simple jagged notches for tight screens */
+    .side-pillar.left {
+        clip-path: polygon(0% 0%, 100% 0%, 100% 20%, 50% 20%, 50% 30%, 100% 30%, 100% 70%, 50% 70%, 50% 80%, 100% 100%, 0% 100%);
+    }
+    .side-pillar.right {
+        clip-path: polygon(100% 0%, 0% 0%, 0% 40%, 50% 40%, 50% 50%, 0% 50%, 0% 85%, 50% 85%, 50% 95%, 0% 100%, 100% 100%);
+    }
+}
+
+/* ── THREE-COLUMN BODY ASSEMBLY ── */
+.chamber-body {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    max-width: 1200px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 28px;
+    margin: 20px 0;
+}
+
+/* ── STATUE GUARDIANS (FLANKING THE ALTAR) ── */
+.chamber-guardian {
+    /* 1. Free up the width limits so height can take control */
+    flex: 0 1 auto;   
+    max-width: none;   
+    height: 450px;       
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+/* ── CRITICAL: Flip the asset scaling so it doesn't distort ── */
+.chamber-guardian svg,
+.chamber-guardian img {
+    height: 100%;        /* Forces the artwork to fill your custom height completely */
+    width: auto;         /* Automatically calculates the perfect width so the figures don't get squished */
+    object-fit: contain;
+}
+.chamber-guardian:hover {
+    transform: scale(1.04);
+}
+
+.guardian-img {
+    width: 100%;
+    height: auto;
+    max-height: 480px;
+    object-fit: contain;
+    /* Styles drawings as carved basalt and dim gold relief */
+    filter: grayscale(1) sepia(1) brightness(0.35) contrast(1.15) drop-shadow(0 0 4px rgba(255, 215, 0, 0.12));
+    transition: filter 0.6s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.6s ease;
+    opacity: 0.85;
+}
+
+.chamber-guardian:hover .guardian-img {
+    /* Engraving fires to glowing gold when hovered */
+    filter: grayscale(0) sepia(0.18) brightness(0.95) contrast(1.05) drop-shadow(0 0 20px rgba(255, 215, 0, 0.45));
+    opacity: 1;
+}
+
+/* ── OFFERING ALTAR TABLET (Form) ── */
+.altar-tablet {
+    position: relative;
+    flex: 1 1 440px;
+    max-width: 480px;
+    background: linear-gradient(135deg, #100d17 0%, #07050a 100%);
+    border: 1px solid rgba(255, 215, 0, 0.08);
+    border-radius: 4px;
+    padding: 40px 32px;
+    box-shadow: 
+        0 20px 50px rgba(0,0,0,0.85),
+        inset 0 0 15px rgba(255, 215, 0, 0.02);
+}
+
+.altar-header {
+    text-align: center;
+    margin-bottom: 34px;
+}
+
+.altar-header h3 {
+    font-family: var(--font-display);
+    color: var(--gold);
+    font-size: 1.6rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+}
+
+.altar-header p {
+    font-family: var(--font-body);
+    color: rgba(200, 188, 160, 0.6);
+    font-size: 0.88rem;
+    line-height: 1.5;
+}
+
+.sanctum-form {
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+}
+
+/* ── CHISELLED-LINE FLOATING INPUTS ── */
+.altar-input-group {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.input-symbol {
+    position: absolute;
+    left: 4px;
+    bottom: 10px;
+    font-size: 1.15rem;
+    color: rgba(255, 215, 0, 0.35);
+    font-family: var(--font-display);
+    pointer-events: none;
+    transition: color 0.35s ease;
+}
+
+.altar-input-group input,
+.altar-input-group textarea {
+    width: 100%;
+    padding: 10px 10px 10px 32px;
+    background: transparent;
+    border: none;
+    outline: none;
+    color: #e8dcc8;
+    font-family: var(--font-body);
+    font-size: 0.95rem;
+}
+
+.chiselled-line {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 1px;
+    background: rgba(255, 215, 0, 0.12);
+    transition: background 0.35s ease;
+}
+
+.chiselled-line::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    width: 0;
+    height: 1.5px;
+    background: var(--gold);
+    box-shadow: 0 0 8px var(--gold-glow);
+    transition: width 0.4s cubic-bezier(0.25, 1, 0.5, 1), left 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.altar-input-group label {
+    position: absolute;
+    left: 32px;
+    bottom: 10px;
+    font-family: var(--font-display);
+    font-size: 0.76rem;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: rgba(200, 188, 160, 0.45);
+    pointer-events: none;
+    transition: transform 0.35s cubic-bezier(0.25, 1, 0.5, 1), color 0.35s ease, font-size 0.35s ease;
+}
+
+/* Floating label triggers */
+.altar-input-group input:focus ~ label,
+.altar-input-group input:not(:placeholder-shown) ~ label,
+.altar-input-group textarea:focus ~ label,
+.altar-input-group textarea:not(:placeholder-shown) ~ label {
+    transform: translateY(-24px);
+    font-size: 0.64rem;
+    color: var(--gold);
+}
+
+.altar-input-group input:focus ~ .input-symbol,
+.altar-input-group textarea:focus ~ .input-symbol {
+    color: var(--gold);
+    text-shadow: 0 0 6px var(--gold-glow);
+}
+
+.altar-input-group input:focus ~ .chiselled-line::after,
+.altar-input-group textarea:focus ~ .chiselled-line::after {
+    width: 100%;
+    left: 0;
+}
+
+/* ── VALIDATION: CRACK FLASH ── */
+/* script.js runs its own required-field check on submit (the form has
+   novalidate so the browser's native red-outline popup never shows)
+   and adds .field-error to any empty group — the chiselled line flashes
+   like a hairline crack in the stone instead. */
+.altar-input-group.field-error .chiselled-line {
+    animation: crackFlash 0.5s ease;
+}
+
+@keyframes crackFlash {
+    0%, 100% { background: rgba(255, 215, 0, 0.12); }
+    30%      { background: #ff5a4d; box-shadow: 0 0 8px rgba(255, 60, 40, 0.55); }
+}
+
+.altar-input-group.field-error .input-symbol {
+    animation: symbolShake 0.4s ease;
+}
+
+@keyframes symbolShake {
+    0%, 100% { transform: translateX(0); }
+    25%      { transform: translateX(-3px); }
+    75%      { transform: translateX(3px); }
+}
+
+/* ── CEREMONIAL CAST OFFERING BUTTON ── */
+.altar-submit-wrapper {
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+}
+
+.ceremonial-seal-btn {
+    position: relative;
+    cursor: pointer;
+    background: transparent;
+    border: 1px solid rgba(255, 215, 0, 0.22);
+    padding: 12px 30px;
+    border-radius: 2px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    transition: border-color 0.4s ease, box-shadow 0.4s ease;
+    overflow: hidden;
+}
+
+.seal-icon {
+    font-size: 1.3rem;
+    color: var(--gold);
+    font-family: var(--font-display);
+    text-shadow: 0 0 4px var(--gold-glow);
+    transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.seal-text {
+    font-family: var(--font-display);
+    color: #ffffff;
+    font-size: 0.78rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+}
+
+.ceremonial-seal-btn:hover {
+    border-color: var(--gold);
+    box-shadow: 
+        0 0 16px rgba(255, 215, 0, 0.15),
+        inset 0 0 10px rgba(255, 215, 0, 0.1);
+}
+
+.ceremonial-seal-btn:hover .seal-icon {
+    transform: rotate(360deg);
+}
+
+/* ── SUBMIT: SEALING & CONFIRMATION ── */
+/* script.js adds .is-sealing to the form right on submit (spins the
+   seal icon and glows the button), then swaps .is-hidden onto the
+   form and .visible onto .altar-confirmation once that plays out. */
+.sanctum-form.is-sealing {
+    pointer-events: none;
+}
+
+.sanctum-form.is-sealing .ceremonial-seal-btn {
+    border-color: var(--gold);
+    box-shadow:
+        0 0 20px rgba(255, 215, 0, 0.3),
+        inset 0 0 14px rgba(255, 215, 0, 0.15);
+}
+
+.sanctum-form.is-sealing .seal-icon {
+    animation: sealSpin 0.65s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+@keyframes sealSpin {
+    to { transform: rotate(360deg) scale(1.2); }
+}
+
+.sanctum-form.is-hidden {
+    display: none;
+}
+
+.altar-confirmation {
+    display: none;
+    text-align: center;
+    padding: 12px 0 4px;
+}
+
+.altar-confirmation.visible {
+    display: block;
+    animation: confirmationRise 0.6s ease forwards;
+}
+
+@keyframes confirmationRise {
+    from { opacity: 0; transform: translateY(10px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+.confirmation-seal {
+    display: block;
+    font-size: 2.2rem;
+    color: var(--gold);
+    margin-bottom: 14px;
+    animation: sealPulse 2.6s ease-in-out infinite;
+}
+
+@keyframes sealPulse {
+    0%, 100% { text-shadow: 0 0 18px var(--gold-glow), 0 0 34px rgba(255, 215, 0, 0.28); }
+    50%      { text-shadow: 0 0 26px var(--gold-glow), 0 0 50px rgba(255, 215, 0, 0.42); }
+}
+
+.altar-confirmation h4 {
+    font-family: var(--font-display);
+    color: var(--gold);
+    font-size: 1.15rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+}
+
+.altar-confirmation p {
+    font-family: var(--font-body);
+    color: rgba(200, 188, 160, 0.65);
+    font-size: 0.88rem;
+    line-height: 1.6;
+}
+
+/* ── SOCIALS ── */
+.chamber-socials {
+    position: relative;
+    z-index: 2;
+    margin-top: 40px;
+    text-align: center;
+}
+
+.socials-title {
+    font-family: var(--font-display);
+    color: rgba(200, 188, 160, 0.35);
+    font-size: 0.7rem;
+    letter-spacing: 2px;
+    margin-bottom: 12px;
+    text-transform: uppercase;
+}
+
+.social-icons-row {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    row-gap: 12px;
+    gap: 20px;
+}
+
+.social-icon-link {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    text-decoration: none;
+    color: rgba(200, 188, 160, 0.65);
+    font-family: var(--font-body);
+    font-size: 0.88rem;
+    transition: color 0.3s;
+}
+
+.social-icon-link:hover {
+    color: var(--gold);
+}
+
+.icon-glyph {
+    color: var(--gold);
+    font-size: 1.1rem;
+    text-shadow: 0 0 0 transparent;
+    transition: text-shadow 0.3s ease;
+}
+
+.social-icon-link:hover .icon-glyph {
+    text-shadow: 0 0 8px var(--gold-glow);
+}
+
+/* ── RESPONSIVE RESPONSES ── */
+@media (max-width: 900px) {
+    /* Guardians shrink and dim rather than vanishing outright, so the
+       chamber still reads as flanked at tablet widths. They're fully
+       hidden further down, at the 640px mobile breakpoint, where
+       there's genuinely no room left for them. */
+    .chamber-guardian {
+        height: 200px;
+        opacity: 0.5;
+    }
+}
+
+@media (max-width: 640px) {
+    .final-chamber {
+        padding: 100px 16px 60px;
+    }
+
+    /* Pillars scale gracefully in width to mimic your Home/About setups */
+    .side-pillar {
+        width: 25px;
+        min-width: 25px;
+    }
+
+    .chamber-guardian {
+        display: none;
+    }
+
+    .altar-tablet {
+        padding: 30px 20px;
+    }
+
+    .altar-header h3 {
+        font-size: 1.3rem;
+    }
 }

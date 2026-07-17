@@ -19,8 +19,8 @@
     <nav class="scarab-nav" id="scarab-nav" aria-label="Main navigation">
         <ul class="papyrus-menu" role="list">
             <li><a href="/index.html">Home</a></li>
-            <li><a href="/work.html">Work</a></li>
             <li><a href="/about.html">About</a></li>
+            <li><a href="/work.html">Work</a></li>
             <li><a href="/contact.html">Contact</a></li>
         </ul>
     </nav>
@@ -45,7 +45,7 @@
                     My journey into engineering didn't begin on a screen—it began with blueprints. At NATIN, I discovered a passion for structural design, utilizing AutoCAD to plan, scale, and map out physical houses. This early immersion in structural geometry shaped how I view the digital world. To me, a webpage isn't just code; it is a digital structure requiring pristine foundations, balanced grids, and exceptional spatial awareness.
                 </p>
                 <p>
-                    Today, as a Software Engineering student at UNASAT, I have translated those architectural principles into Full-Stack Web Development and Software Security. Whether collaborating with a team to build an award-winning, first-place automatic water-garbage prototype using Arduino, or auditing environments for security flaws, I treat code as an enduring artifact built to last.
+                    Today, as a Software Engineering student at UNASAT, I have translated those architectural principles into Full-Stack Web Development. Whether collaborating with a team to build an award-winning, first-place automatic water-garbage prototype using Arduino, or designing intuitive user experiences, I treat code as an enduring artifact built to last.
                 </p>
                 <p>
                     As a frontend freelancer and full-stack creator, I dedicate myself to bridging the gap between backend logic and beautiful, user-centered interfaces.
@@ -53,7 +53,6 @@
 
             
                 <div class="about-tags reveal from-bottom" role="list">
-                    <span class="about-tag" role="listitem">Software Security</span>
                     <span class="about-tag" role="listitem">Full-Stack Development</span>
                     <span class="about-tag" role="listitem">2nd-Year SE Student, UNASAT</span>
                     <span class="about-tag" role="listitem">Dutch & English</span>
@@ -87,37 +86,150 @@
             <div class="tomb-excavation-zone">
 
                 <div class="constellation-container" aria-hidden="true">
-                    <svg class="constellation-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000" preserveAspectRatio="none">
+                    <svg class="constellation-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 2000" preserveAspectRatio="xMidYMin slice">
                         <defs>
+                            <!-- Glow effect filter for the transport energy particles -->
+                            <filter id="particle-glow" x="-50%" y="-50%" width="200%" height="200%">
+                                <feGaussianBlur stdDeviation="4" result="blur" />
+                                <feMerge>
+                                    <feMergeNode in="blur" />
+                                    <feMergeNode in="SourceGraphic" />
+                                </feMerge>
+                            </filter>
+
+                            <!-- Node Symbol 1: Classic Eye Glyph -->
                             <g id="glyph-eye">
                                 <circle cx="0" cy="0" r="7" />
                                 <circle cx="0" cy="0" r="3" fill="none" stroke-width="2"/>
                             </g>
+
+                            <!-- Node Symbol 2: Sacred Triangle -->
                             <g id="glyph-triangle">
                                 <polygon points="0,-9 -9,7 9,7" />
                             </g>
+
+                            <!-- Node Symbol 3: Minimalist 8-Point Star -->
+                            <g id="glyph-star">
+                                <path d="M 0,-10 L 2,-3 L 9,-3 L 4,1 L 6,8 L 0,4 L -6,8 L -4,1 L -9,-3 L -2,-3 Z" />
+                            </g>
                         </defs>
 
+                        <!-- Static Background Lines (The structural skeleton) -->
                         <g class="network-lines">
-                            <line x1="200" y1="100" x2="400" y2="250" />
-                            <line x1="400" y1="250" x2="300" y2="500" />
-                            <line x1="400" y1="250" x2="700" y2="200" />
-                            <line x1="700" y1="200" x2="850" y2="450" />
-                            <line x1="300" y1="500" x2="600" y2="650" />
-                            <line x1="700" y1="200" x2="600" y2="650" />
-                            <line x1="600" y1="650" x2="800" y2="850" />
-                            <line x1="300" y1="500" x2="150" y2="800" />
+                            <!-- First Tier Connections -->
+                            <path d="M 200,100 L 400,250" />
+                            <path d="M 200,100 L 150,400" />
+                            <path d="M 400,250 L 700,200" />
+                            <path d="M 700,200 L 850,450" />
+                            
+                            <!-- Second Tier Connections -->
+                            <path d="M 150,400 L 500,500" />
+                            <path d="M 400,250 L 500,500" />
+                            <path d="M 500,500 L 300,650" />
+                            <path d="M 850,450 L 600,750" />
+                            <path d="M 300,650 L 600,750" />
+                            
+                            <!-- Third Tier Connections -->
+                            <path d="M 300,650 L 250,1000" />
+                            <path d="M 600,750 L 800,900" />
+                            <path d="M 800,900 L 750,1150" />
+                            <path d="M 250,1000 L 450,1200" />
+                            
+                            <!-- Fourth Tier Connections -->
+                            <path d="M 450,1200 L 150,1350" />
+                            <path d="M 750,1150 L 600,1450" />
+                            <path d="M 450,1200 L 600,1450" />
+                            
+                            <!-- Fifth Tier Connections -->
+                            <path d="M 150,1350 L 350,1750" />
+                            <path d="M 600,1450 L 850,1650" />
+                            <path d="M 350,1750 L 500,1900" />
+                            <path d="M 850,1650 L 500,1900" />
                         </g>
 
+                        <!-- Glow Transports (Energy packets gliding along designated line pathways) -->
+                        <g class="glow-transports">
+                            <!-- Channel 1: 200,100 to 400,250 -->
+                            <circle r="4" fill="var(--gold)" filter="url(#particle-glow)">
+                                <animateMotion dur="4.5s" repeatCount="indefinite" path="M 200,100 L 400,250" />
+                            </circle>
+
+                            <!-- Channel 2: 700,200 to 400,250 (Reverse flow) -->
+                            <circle r="4" fill="var(--gold)" filter="url(#particle-glow)">
+                                <animateMotion dur="5s" repeatCount="indefinite" path="M 700,200 L 400,250" />
+                            </circle>
+
+                            <!-- Channel 3: 150,400 to 500,500 -->
+                            <circle r="4" fill="var(--gold)" filter="url(#particle-glow)">
+                                <animateMotion dur="6s" repeatCount="indefinite" path="M 150,400 L 500,500" />
+                            </circle>
+
+                            <!-- Channel 4: 850,450 to 600,750 -->
+                            <circle r="4" fill="var(--gold)" filter="url(#particle-glow)">
+                                <animateMotion dur="4s" repeatCount="indefinite" path="M 850,450 L 600,750" />
+                            </circle>
+
+                            <!-- Channel 5: 300,650 to 600,750 -->
+                            <circle r="4" fill="var(--gold)" filter="url(#particle-glow)">
+                                <animateMotion dur="7s" repeatCount="indefinite" path="M 300,650 L 600,750" />
+                            </circle>
+
+                            <!-- Channel 6: 800,900 to 750,1150 -->
+                            <circle r="4" fill="var(--gold)" filter="url(#particle-glow)">
+                                <animateMotion dur="5.5s" repeatCount="indefinite" path="M 800,900 L 750,1150" />
+                            </circle>
+
+                            <!-- Channel 7: 250,1000 to 450,1200 -->
+                            <circle r="4" fill="var(--gold)" filter="url(#particle-glow)">
+                                <animateMotion dur="4.8s" repeatCount="indefinite" path="M 250,1000 L 450,1200" />
+                            </circle>
+
+                            <!-- Channel 8: 450,1200 to 600,1450 -->
+                            <circle r="4" fill="var(--gold)" filter="url(#particle-glow)">
+                                <animateMotion dur="6.5s" repeatCount="indefinite" path="M 450,1200 L 600,1450" />
+                            </circle>
+
+                            <!-- Channel 9: 150,1350 to 350,1750 -->
+                            <circle r="4" fill="var(--gold)" filter="url(#particle-glow)">
+                                <animateMotion dur="5.2s" repeatCount="indefinite" path="M 150,1350 L 350,1750" />
+                            </circle>
+
+                            <!-- Channel 10: 850,1650 to 500,1900 -->
+                            <circle r="4" fill="var(--gold)" filter="url(#particle-glow)">
+                                <animateMotion dur="4.2s" repeatCount="indefinite" path="M 850,1650 L 500,1900" />
+                            </circle>
+                        </g>
+
+                        <!-- Interactive Symbols (Structured elegantly along the 2000px height span) -->
                         <g class="network-nodes">
-                            <use href="#glyph-eye" x="200" y="100" class="node speed-fast" />
+                            <!-- Tier 1 -->
+                            <use href="#glyph-star" x="200" y="100" class="node speed-fast" />
                             <use href="#glyph-triangle" x="400" y="250" class="node speed-slow" />
-                            <use href="#glyph-eye" x="300" y="500" class="node speed-medium" />
-                            <use href="#glyph-triangle" x="700" y="200" class="node speed-fast" />
-                            <use href="#glyph-eye" x="850" y="450" class="node speed-slow" />
-                            <use href="#glyph-eye" x="600" y="650" class="node speed-medium" />
-                            <use href="#glyph-triangle" x="800" y="850" class="node speed-fast" />
-                            <use href="#glyph-triangle" x="150" y="800" class="node speed-slow" />
+                            <use href="#glyph-eye" x="700" y="200" class="node speed-medium" />
+                            
+                            <!-- Tier 2 -->
+                            <use href="#glyph-eye" x="150" y="400" class="node speed-medium" />
+                            <use href="#glyph-star" x="850" y="450" class="node speed-slow" />
+                            <use href="#glyph-star" x="500" y="500" class="node speed-fast" />
+                            
+                            <!-- Tier 3 -->
+                            <use href="#glyph-triangle" x="300" y="650" class="node speed-slow" />
+                            <use href="#glyph-eye" x="600" y="750" class="node speed-medium" />
+                            <use href="#glyph-triangle" x="800" y="900" class="node speed-fast" />
+                            
+                            <!-- Tier 4 -->
+                            <use href="#glyph-star" x="250" y="1000" class="node speed-fast" />
+                            <use href="#glyph-eye" x="450" y="1200" class="node speed-medium" />
+                            <use href="#glyph-star" x="750" y="1150" class="node speed-slow" />
+                            
+                            <!-- Tier 5 -->
+                            <use href="#glyph-triangle" x="150" y="1350" class="node speed-slow" />
+                            <use href="#glyph-eye" x="600" y="1450" class="node speed-medium" />
+                            
+                            <!-- Tier 6 -->
+                            <use href="#glyph-triangle" x="850" y="1650" class="node speed-fast" />
+                            <use href="#glyph-star" x="350" y="1750" class="node speed-slow" />
+                            <use href="#glyph-eye" x="500" y="1900" class="node speed-medium" />
                         </g>
                     </svg>
                 </div>
@@ -139,7 +251,7 @@
                             <div class="blueprint-icon">𓉞</div>
                             <h3>The Vault Vision</h3>
                             <p>
-                                I want to build digital work that lasts — interfaces with the same care and precision as a well-planned structure, backed by security that holds up under pressure.
+                                I want to build digital work that lasts — interfaces crafted with the same care, precision, and durability as a well-planned structural foundation.
                             </p>
                         </div>
 
@@ -201,7 +313,7 @@
                             <div class="timeline-card current unasat">
                                 <span class="timeline-years">2024 - Present</span>
                                 <h3>UNASAT — Software Engineering</h3>
-                                <p>Currently in my second year, building toward a career in full-stack development and software security.</p>
+                                <p>Currently in my second year, building toward a career in full-stack development.</p>
                             </div>
                         </div>
 
@@ -219,34 +331,42 @@
                     </h2>
 
                     <div class="expansion-card reveal from-bottom">
-                        <div class="expansion-icon">📜</div>
-                        <p class="expansion-intro">
-                            Every great structure requires constant architectural expansion. Here are the technologies I've explored in foundational work, or am actively integrating right now.
-                        </p>
+                        
+                        <!-- The Trigger Button -->
+                        <button class="expansion-trigger" aria-expanded="false" aria-controls="expansion-content">
+                            <span class="trigger-text">Unearth Details</span>
+                            <svg class="expansion-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polyline points="6 9 12 15 18 9"></polyline>
+                            </svg>
+                        </button>
 
-                        <div class="expansion-grid">
+                        <!-- The Collapsible Wrapper -->
+                        <div id="expansion-content" class="expansion-content" aria-hidden="true">
+                            <div class="expansion-grid">
 
-                            <div class="expansion-col">
-                                <h4>Familiar Ground</h4>
-                                <ul>
-                                    <li><strong>Java</strong> — Built simple terminal-based game logic.</li>
-                                    <li><strong>Arduino (C++)</strong> — Hardware automation prototyping (1st Place Project).</li>
-                                </ul>
+                                <div class="expansion-col">
+                                    <h4>Familiar Ground</h4>
+                                    <ul>
+                                        <li><strong>Java</strong> — Built simple terminal-based game logic.</li>
+                                        <li><strong>Arduino (C++)</strong> — Hardware automation prototyping (1st Place Project).</li>
+                                    </ul>
+                                </div>
+
+                                <div class="expansion-col">
+                                    <h4>Active Excavations
+                                        <span class="expansion-col-tag">MedSupply v2 Stack</span>
+                                    </h4>
+                                    <ul>
+                                        <li><strong>Frontend:</strong> React, Vite, Tailwind CSS</li>
+                                        <li><strong>State & Routing:</strong> TanStack Query, TanStack Router</li>
+                                        <li><strong>Backend & DB:</strong> Hono API, Drizzle ORM, PostgreSQL</li>
+                                        <li><strong>Security & Validation:</strong> Better Auth, Zod Type-Safety</li>
+                                    </ul>
+                                </div>
+
                             </div>
-
-                            <div class="expansion-col">
-                                <h4>Active Excavations
-                                    <span class="expansion-col-tag">MedSupply v2 Stack</span>
-                                </h4>
-                                <ul>
-                                    <li><strong>Frontend:</strong> React, Vite, Tailwind CSS</li>
-                                    <li><strong>State & Routing:</strong> TanStack Query, TanStack Router</li>
-                                    <li><strong>Backend & DB:</strong> Hono API, Drizzle ORM, PostgreSQL</li>
-                                    <li><strong>Security & Validation:</strong> Better Auth, Zod Type-Safety</li>
-                                </ul>
-                            </div>
-
                         </div>
+                        
                     </div>
 
                 </section>

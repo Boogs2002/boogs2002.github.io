@@ -141,10 +141,23 @@
 }
 
 .project-detail-image img {
+    position: absolute;
+    inset: 0;
     width: 100%;
     height: 100%;
     object-fit: cover;
     display: block;
+    opacity: 0;
+    z-index: 0;
+    /* Plain dissolve between slides — no spike trap here, just a
+       quiet crossfade so it doesn't compete with the dust-reveal
+       hover happening on the same image. */
+    transition: opacity 1s ease;
+}
+
+.project-detail-image img.active {
+    opacity: 1;
+    z-index: 1;
 }
 
 /* ── DUST-REVEAL HOVER ── */
@@ -207,6 +220,43 @@
 .project-detail-image:hover::after,
 .project-detail-image.uncovered::after {
     opacity: 0;
+}
+
+/* ── SLIDESHOW POSITION DOTS ── */
+/* Stays hidden while the sand overlay is covering the photo — only
+   appears once the image is actually revealed, so it reads as "here's
+   what you're looking at" rather than a distraction while buried. */
+.slide-dots {
+    position: absolute;
+    bottom: 12px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 4;
+    display: flex;
+    gap: 6px;
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    pointer-events: none;
+}
+
+.project-detail-image:hover .slide-dots,
+.project-detail-image.uncovered .slide-dots {
+    opacity: 1;
+}
+
+.slide-dots .dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.35);
+    box-shadow: 0 0 4px rgba(0, 0, 0, 0.6);
+    transition: background 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
+}
+
+.slide-dots .dot.active {
+    background: var(--gold);
+    box-shadow: 0 0 8px var(--gold-glow);
+    transform: scale(1.25);
 }
 
 .relic-badge.static {
