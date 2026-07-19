@@ -1,3 +1,8 @@
+/* ── 0. SHARED SVG DEFS (hidden, referenced via url()) ───── */
+.svg-defs {
+    position: absolute;
+}
+
 /* ── 1. HERO SECTION ────────────────────────────────────── */
 #hero {
     position: relative;
@@ -995,6 +1000,10 @@
 .matrix-line {
     stroke: var(--gold);
     fill: none;
+}
+
+.matrix-line-dim {
+    opacity: 0.3;
 }
 
 .matrix-glyph {
