@@ -43,10 +43,7 @@
 .tomb-hallway::before { left: 0; border-right: 1px solid var(--gold-dim); }
 .tomb-hallway::after { right: 0; border-left: 1px solid var(--gold-dim); }
 
-/* ── HALLWAY THRESHOLD CAPS ── */
-/* Same entrance treatment as the About page's hallway — a wider
-   capital flares at the very top, then steps back down through the
-   collar bands to meet the normal pillar width. */
+/* ── HALLWAY THRESHOLD CAPS (matches About page's hallway entrance) ── */
 .hallway-cap {
     position: absolute;
     top: 0;
@@ -105,9 +102,6 @@
     align-items: center;
 }
 
-/* Lava-warmed heading glyphs — the only two spots on this page that
-   borrow the footer's lava tones, so the warmth up top and the lava
-   pool at the very bottom feel like the same vein of colour */
 #projects .section-heading .section-glyph {
     color: var(--lava-mid);
     text-shadow: 0 0 10px rgba(255, 136, 0, 0.5), 0 0 22px rgba(255, 69, 0, 0.25);
@@ -149,10 +143,7 @@
     display: block;
     opacity: 0;
     z-index: 0;
-    /* Plain dissolve between slides — no spike trap here, just a
-       quiet crossfade so it doesn't compete with the dust-reveal
-       hover happening on the same image. */
-    transition: opacity 1s ease;
+    transition: opacity 1s ease; /* plain crossfade between slides */
 }
 
 .project-detail-image img.active {
@@ -160,11 +151,7 @@
     z-index: 1;
 }
 
-/* ── AUTOMATIC DOOR REVEAL ── */
-/* Each screenshot sits under a sandy "door" overlay. On a timer
-   (driven by script.js) the door closes over the photo, the slide
-   underneath is swapped while hidden, then the door opens again to
-   reveal the new image — no hover required. */
+/* ── AUTOMATIC DOOR REVEAL: script.js toggles .door-closed on a timer ── */
 .project-detail-image::before {
     content: '';
     position: absolute;
@@ -181,12 +168,8 @@
             #c2a476 12px
         );
     background-size: 160% 160%, 160% 160%, 100% 100%;
-    /* Open by default so the photo is visible on load — the door
-       only swings shut when script.js adds .door-closed */
-    clip-path: inset(0 0 0 100%);
+    clip-path: inset(0 0 0 100%); /* open by default; script.js adds .door-closed */
     transition: clip-path 0.9s cubic-bezier(0.65, 0, 0.35, 1);
-    /* Idle sand drift — a slow, faint shift so the overlay reads as
-       loose sediment rather than a flat painted texture */
     animation: sandDrift 10s ease-in-out infinite;
 }
 
@@ -212,9 +195,6 @@
     pointer-events: none;
 }
 
-/* .door-closed is toggled automatically by script.js on a timer —
-   this is the moment the sand sweeps back over the photo right
-   before the slide underneath changes */
 .project-detail-image.door-closed::before {
     clip-path: inset(0 0 0 0);
 }
@@ -223,9 +203,7 @@
     opacity: 1;
 }
 
-/* ── SLIDESHOW POSITION DOTS ── */
-/* Hidden while the door is closed over the photo — only visible
-   once the image is actually uncovered */
+/* ── SLIDESHOW POSITION DOTS (hidden while the door is closed) ── */
 .slide-dots {
     position: absolute;
     bottom: 12px;
@@ -284,8 +262,6 @@
     pointer-events: none;
 }
 
-/* One-time gleam that sweeps across the ribbon once its card enters
-   view — plays alongside the existing reveal, doesn't loop */
 .project-ribbon::after {
     content: '';
     position: absolute;
@@ -308,9 +284,6 @@
     100% { left: 140%; opacity: 0; }
 }
 
-/* Special framing for the image that holds the 1st-place ribbon —
-   its border and glow read a shade warmer than the rest, borrowing
-   from the ribbon's gold so the accolade feels built into the card */
 .project-detail-image:has(.project-ribbon) {
     border-color: rgba(255, 215, 0, 0.5);
     box-shadow: 0 16px 32px rgba(0,0,0,0.55), 0 0 26px rgba(255,215,0,0.2);
@@ -324,8 +297,6 @@
     margin-bottom: 12px;
 }
 
-/* Small per-project glyph — a quiet signature mark unique to each
-   piece, echoing the glyph system already used in section headings */
 .project-glyph {
     display: inline-block;
     margin-right: 10px;
@@ -395,9 +366,7 @@
     line-height: 0;
     position: relative;
     z-index: 1;
-    /* Pulls it flush against the section above and below it, same
-       trick as the Home page's arch, so there's no seam gap */
-    margin-top: -2px;
+    margin-top: -2px; /* flush against sections above/below, no seam gap */
     margin-bottom: -2px;
 }
 
@@ -410,10 +379,6 @@
 /* ── INSCRIPTIONS (Work Detail) ─────────────────────────── */
 #work {
     position: relative;
-    /* Layered instead of flat: a faint warm glow pooling near the top
-       (as if all the now-lit tablet torches are casting it upward),
-       plus a whisper-thin stone coursing so the black reads as a
-       carved chamber wall rather than an empty rectangle */
     background:
         radial-gradient(ellipse 900px 420px at 50% 0%, rgba(255, 140, 20, 0.07), transparent 65%),
         repeating-linear-gradient(0deg, rgba(255,255,255,0.014), rgba(255,255,255,0.014) 1px, transparent 1px, transparent 30px),
@@ -487,10 +452,6 @@
 .work-detail .tablet-divider {
     background: var(--gold);
     box-shadow: 0 0 12px var(--gold-glow), 0 0 30px rgba(255,215,0,0.3);
-    /* Unlike the home page's hover-lit torches, every inscription here
-       is already permanently lit — so instead of an ignite moment,
-       it gets a slow, living flicker like a torch that's been
-       burning a while */
     animation: inscriptionFlicker 3.6s ease-in-out infinite;
 }
 
@@ -535,7 +496,6 @@
     }
 }
 
-
 /* ── GEOMETRIC LABYRINTH BACKGROUND ─────────────────────── */
 
 .index-labyrinth-zone {
@@ -552,13 +512,11 @@
     height: 100%;
     z-index: 0;
     pointer-events: none;
-    /* Soft blend into your dark midnight background */
-    opacity: 0.8; 
-    mix-blend-mode: screen; 
+    opacity: 0.8;
+    mix-blend-mode: screen;
 }
 
-/* Ensure your text and panels sit above the grid */
-#foundations, 
+#foundations,
 #excavations {
     position: relative;
     z-index: 2;
@@ -584,9 +542,7 @@
     }
 }
 
-/* Assigning different durations creates an asynchronous, 
-  organic wave of light traveling through the grid.
-*/
+/* Staggered durations/delays create a wave of light across the grid */
 .pulse-fast {
     animation: circuitPulse 5s infinite ease-in-out;
     animation-delay: 0s;

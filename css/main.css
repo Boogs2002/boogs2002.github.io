@@ -1,0 +1,671 @@
+@import url('https://fonts.googleapis.com/css2?family=Almendra+Display:ital,wght@0,400;0,700;1,400&family=Cinzel+Decorative:wght@400;700&display=swap');
+
+/* ── 1. TOKENS & RESET ─────────────────────────────────── */
+:root {
+    --gold:         #ffd700;
+    --gold-dim:     rgba(255, 215, 0, 0.25);
+    --gold-glow:    rgba(255, 215, 0, 0.55);
+    --stone-dark:   #1a1814;
+    --stone-mid:    #2e2a24;
+    --stone-text:   #4a4540;
+    --lava-hot:     #ff4500;
+    --lava-mid:     #ff8800;
+    --lava-pale:    #ffcc00;
+    --font-display: 'Cinzel', Georgia, serif;
+    --font-body:    'IM Fell English', Georgia, serif;
+}
+
+*, *::before, *::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+/* ── 2. THE MASTER CONTINUOUS GRADIENT ─────────────────── */
+body {
+    background: linear-gradient(
+        to bottom,
+        #3a3058 0%,      
+        #261e45 12%,     
+        #160f38 28%,     
+        #0e0824 44%,     
+        #080518 58%,     
+        #050310 74%,     
+        #020108 88%,     
+        #010005 100%     
+    );
+    background-attachment: fixed; 
+    color: #e8dcc8;
+    font-family: var(--font-body);
+    overflow-x: hidden;
+    min-height: 100vh;
+}
+
+/* ── 3. NAVIGATION BAR & CENTERING MECHANICS ─────────────────── */
+.scarab-nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 90px;
+    z-index: 1001;
+    display: flex;
+    align-items: center;
+    background: rgba(12, 10, 20, 0.35); 
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(255, 215, 0, 0.15); 
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5);
+    transition: background 0.5s ease, border-color 0.5s ease, box-shadow 0.5s ease;
+}
+
+.papyrus-menu {
+    display: flex;
+    list-style: none;
+    width: 100%;
+    justify-content: center; 
+    align-items: center;    
+    gap: 5vw;               
+    padding: 0 40px;
+}
+
+.nav-link-item {
+    transition: opacity 0.4s cubic-bezier(0.4, 0, 0.2, 1), 
+                transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.papyrus-menu a {
+    display: block;
+    padding: 12px 16px;
+    font-family: var(--font-display);
+    font-size: 0.85rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: #ffd70080;
+    text-decoration: none;
+    transition: color 0.2s, text-shadow 0.2s;
+}
+
+.papyrus-menu a:hover {
+    color: var(--gold);
+    text-shadow: 0 0 12px var(--gold-glow);
+}
+
+.nav-logo-item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    outline: none;
+    z-index: 1002; 
+}
+
+.nav-logo-placeholder {
+    height: 60px;
+    width: 60px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #1c172e, #0c0914);
+    border: 1px solid rgba(255, 215, 0, 0.3);
+    color: var(--gold);
+    font-size: 1.6rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.6);
+    transition: transform 0.4s ease, border-color 0.4s ease, box-shadow 0.4s ease;
+    user-select: none;
+    overflow: hidden;
+}
+
+.nav-logo-placeholder img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    pointer-events: none;
+    user-select: none;
+    transform: scale(1.45);
+}
+
+.nav-logo-item:hover .nav-logo-placeholder {
+    transform: scale(1.08) rotate(5deg);
+    border-color: var(--gold);
+    box-shadow: 0 0 20px var(--gold-dim);
+}
+
+.scarab-nav.is-closed {
+    background: rgba(0, 0, 0, 0);
+    border-bottom-color: transparent;
+    box-shadow: none;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    pointer-events: none; 
+}
+
+.scarab-nav.is-closed .nav-link-item {
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(-15px);
+}
+
+.scarab-nav.is-closed .nav-logo-item {
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.4s ease;
+}
+
+.scarab-nav.is-closed.on-hero .nav-logo-item {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.scarab-nav.is-closed.on-hero .nav-logo-placeholder {
+    border-color: var(--gold);
+    transform: scale(1.05);
+    animation: ancientSunFlare 2.5s infinite alternate ease-in-out;
+}
+
+@keyframes ancientSunFlare {
+    0% {
+        box-shadow: 
+            0 0 15px rgba(255, 215, 0, 0.2),
+            0 0 30px rgba(255, 215, 0, 0.1);
+        filter: drop-shadow(0 0 2px transparent);
+    }
+    100% {
+        box-shadow: 
+            0 0 30px var(--gold-glow),
+            0 0 60px rgba(255, 215, 0, 0.25),
+            0 0 90px rgba(214, 136, 201, 0.15); 
+        filter: drop-shadow(0 0 8px var(--gold-glow));
+    }
+}
+
+@media (max-width: 640px) {
+    .scarab-nav {
+        height: auto;
+    }
+    .scarab-nav.is-closed {
+        background: transparent;
+    }
+    .papyrus-menu {
+        flex-direction: column;
+        padding: 20px 0;
+        gap: 20px;
+    }
+    .nav-logo-item {
+        order: -1; 
+    }
+}
+
+/* ── 4. SECTION SHARED STYLES ───────────────────────────── */
+section {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 100px 8%;
+    background: transparent;
+}
+
+.section-heading {
+    font-family: var(--font-display);
+    font-size: clamp(1.1rem, 2.5vw, 1.5rem);
+    font-weight: 400;
+    letter-spacing: 0.45em;
+    text-transform: uppercase;
+    color: var(--gold) !important;
+    text-shadow: 0 0 15px var(--gold-glow), 0 0 30px rgba(255, 215, 0, 0.2);
+    margin-bottom: 60px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.section-glyph {
+    font-size: 1.4rem;
+    opacity: 0.6;
+}
+
+.section-subtitle {
+    display: block; 
+    width: 100%;
+    flex-basis: 100%; 
+    text-align: center;
+    font-family: var(--font-body);
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 4px;
+    color: rgba(255, 215, 0, 0.6) !important;
+    text-shadow: 0 0 8px rgba(255, 215, 0, 0.15);
+    margin-top: 10px; 
+    padding-left: 4px; 
+}
+
+/* ── 5. SCROLL INDICATORS ───────────────────────────────── */
+.scroll-indicator {
+    position: absolute;
+    bottom: 40px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    text-decoration: none;
+    z-index: 10; 
+    animation: bounce 2.4s ease-in-out infinite;
+}
+
+.descend-text {
+    font-family: 'Cinzel Decorative', serif;
+    font-size: 0.62rem;
+    letter-spacing: 0.45em;
+    text-transform: uppercase;
+    color: rgba(255, 215, 0, 0.5);
+}
+
+.descend-arrow {
+    font-size: 1.3rem;
+    color: rgba(255, 215, 0, 0.4);
+}
+
+@keyframes bounce {
+    0%, 60%, 100% { transform: translateX(-50%) translateY(0); }
+    30%            { transform: translateX(-50%) translateY(-10px); }
+    45%            { transform: translateX(-50%) translateY(-4px); }
+}
+
+/* ── 6. TOMB HALLWAY STRUCTURAL PILLARS ─────────────────── */
+.tomb-hallway {
+    position: relative;
+    width: 100%;
+    overflow: hidden; 
+    background: transparent;
+}
+
+.tomb-hallway::before,
+.tomb-hallway::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 6vw; 
+    min-width: 40px;
+    max-width: 90px;
+    z-index: 2;
+    pointer-events: none;
+    background-color: #0c0a14;
+    background-image: repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 38px,
+        #463e1180 45px,
+        #00000073 40px
+    );
+    box-shadow: 
+        inset -5px 0 15px rgba(0, 0, 0, 0.6),
+        inset 5px 0 15px rgba(0, 0, 0, 0.6);
+    mask-image: linear-gradient(to bottom, transparent 0, black 140px);
+    -webkit-mask-image: linear-gradient(to bottom, transparent 0, black 140px);
+}
+
+.tomb-hallway::before {
+    left: 0;
+    border-right: 1px solid var(--gold-dim);
+}
+
+.tomb-hallway::after {
+    right: 0;
+    border-left: 1px solid var(--gold-dim);
+}
+
+@media (max-width: 640px) {
+    .tomb-hallway::before,
+    .tomb-hallway::after {
+        width: 25px;
+        min-width: 25px;
+        opacity: 0.6;
+    }
+}
+
+/* ── 7. TABLET ROW COMPONENTS ───────────────────────────── */
+.tomb-container {
+    width: 100%;
+    max-width: 900px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    -webkit-mask-image: radial-gradient(circle 350px at var(--cursor-x) var(--cursor-y), black 20%, transparent 100%);
+    mask-image: radial-gradient(circle 350px at var(--cursor-x) var(--cursor-y), black 20%, transparent 100%);
+}
+
+.tablet-row {
+    display: grid;
+    grid-template-columns: 1fr 2px 1.5fr;
+    align-items: center;
+    gap: 0 32px;
+    padding: 44px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+    transition: opacity 0.75s ease, transform 0.75s ease;
+}
+
+.tablet-row:last-child { border-bottom: none; }
+
+.engraving {
+    position: relative;
+    padding: 28px 32px;
+    background:
+        radial-gradient(circle at 25% 20%, rgba(255,255,255,0.035) 0%, transparent 45%),
+        radial-gradient(circle at 75% 75%, rgba(255,255,255,0.025) 0%, transparent 50%),
+        linear-gradient(155deg, #3c372f 0%, #221f1a 55%, #2e2a23 100%);
+    border-radius: 16px 5px 14px 6px; 
+    box-shadow:
+        inset 0 0 24px rgba(0,0,0,0.6),
+        inset 0 1px 0 rgba(255,255,255,0.05),
+        0 14px 28px rgba(0,0,0,0.55);
+    border: 1px solid rgba(255,255,255,0.05);
+    overflow: hidden;
+    transition: transform 0.4s ease;
+}
+
+.engraving::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: repeating-linear-gradient(
+        118deg,
+        transparent,
+        transparent 22px,
+        rgba(0,0,0,0.14) 23px,
+        transparent 24px
+    );
+    pointer-events: none;
+}
+
+.tablet-row:nth-child(odd)  .engraving { transform: rotate(-0.6deg); }
+.tablet-row:nth-child(even) .engraving { transform: rotate(0.6deg); }
+
+.tablet-row:hover .engraving,
+.tablet-row:focus-within .engraving {
+    transform: rotate(0deg);
+}
+
+.engraving h3 {
+    position: relative;
+    font-family: var(--font-display);
+    font-size: clamp(1rem, 2.5vw, 1.5rem);
+    font-weight: 600;
+    color: var(--stone-text); 
+    text-shadow:
+        1px 1px 0 rgba(0,0,0,0.9),
+        -1px -1px 0 rgba(255,255,255,0.03);
+    margin-bottom: 8px;
+    transition: color 0.4s ease, text-shadow 0.4s ease;
+}
+
+.engraving-date {
+    position: relative;
+    display: block;
+    font-family: var(--font-display);
+    font-size: 0.62rem;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: rgba(255,215,0,0.18);
+    transition: color 0.4s ease;
+}
+
+.tablet-divider {
+    width: 2px;
+    height: 70px;
+    background: #1a1a1a;
+    align-self: center;
+    transition: background 0.4s ease, box-shadow 0.4s ease;
+}
+
+.details {
+    opacity: 0;
+    transition: opacity 0.4s ease;
+}
+
+.details p {
+    font-family: var(--font-body);
+    font-size: 0.9rem;
+    line-height: 1.75;
+    color: rgba(200, 188, 160, 0.0); 
+    transition: color 0.4s ease;
+}
+
+.tablet-row:hover .engraving h3,
+.tablet-row:focus-within .engraving h3 {
+    color: var(--gold);
+    text-shadow: 0 0 20px var(--gold-glow), 0 0 40px rgba(255,215,0,0.2);
+}
+
+.tablet-row:hover .engraving-date,
+.tablet-row:focus-within .engraving-date {
+    color: rgba(255,215,0,0.5);
+}
+
+.tablet-row:hover .tablet-divider,
+.tablet-row:focus-within .tablet-divider {
+    background: var(--gold);
+    box-shadow: 0 0 12px var(--gold-glow), 0 0 30px rgba(255,215,0,0.3);
+}
+
+.tablet-row:hover .details,
+.tablet-row:focus-within .details {
+    opacity: 1;
+}
+
+.tablet-row:hover .details p,
+.tablet-row:focus-within .details p {
+    color: #c8bca0;
+}
+
+.tablet-row:focus-visible {
+    outline: 2px solid var(--gold);
+    outline-offset: 6px;
+    border-radius: 2px;
+}
+
+.hidden-left {
+    opacity: 0;
+    transform: translateX(-60px);
+}
+
+.hidden-left.visible {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+.relic-badge {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    z-index: 4;
+    font-family: var(--font-display);
+    font-size: 0.6rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--stone-dark);
+    background: var(--gold);
+    padding: 5px 12px;
+    border-radius: 3px 10px 3px 10px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+}
+
+/* ── 8. FOOTER & EASTER EGG ─────────────────────────────── */
+#contact {
+    position: relative;
+    padding: 20px 8% 10px;
+    text-align: center;
+    overflow: hidden;
+    background: radial-gradient(circle at 50% 100%, #3d1a00 0%, #1a0a00 50%, #050505 100%);
+    z-index: 1;
+    animation: breathe 5s ease-in-out infinite;
+}
+
+@keyframes breathe {
+    0% { filter: brightness(1); }
+    50% { filter: brightness(1.2); }
+    100% { filter: brightness(1); }
+}
+
+.footer-content {
+    position: relative;
+    z-index: 2;
+    padding-bottom: 40px;
+}
+
+.footer-glyph { 
+    font-size: 2rem; 
+    color: var(--gold-dim); 
+    margin-bottom: 8px; 
+}
+
+.footer-name { 
+    font-family: var(--font-display); 
+    color: var(--gold); 
+    text-shadow: 0 0 15px rgba(255, 69, 0, 0.6); 
+    margin-bottom: 12px; 
+}
+
+.footer-links { 
+    display: flex; 
+    justify-content: center; 
+    align-items: center; 
+    gap: 16px; 
+    flex-wrap: wrap; 
+    margin-bottom: 16px; 
+}
+
+.link-github { color: #716e6e; }   
+.link-linkedin { color: #716e6e; } 
+.link-github:hover, 
+.link-linkedin:hover {
+    color: var(--gold); 
+    text-shadow: 0 0 10px var(--gold-glow);
+}
+
+.footer-sep { color: rgba(255,215,0,0.15); }
+.footer-copy { font-size: 0.68rem; letter-spacing: 0.15em; color: rgba(255,215,0,0.12); }
+
+footer#contact {
+    position: relative; 
+}
+
+footer#contact::before {
+    content: '';
+    position: absolute;
+    top: -40px; 
+    left: 0;
+    width: 100%;
+    height: 80px; 
+    background: linear-gradient(
+        to bottom, 
+        transparent 0%, 
+        #050408 50%, 
+        transparent 100%
+    );
+    pointer-events: none; 
+    z-index: 4; 
+}
+
+.lava-stage {
+    position: absolute;
+    bottom: 0; left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    pointer-events: none;
+    overflow: hidden;
+    mask-image: linear-gradient(to top, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 70%, transparent 100%);
+    -webkit-mask-image: linear-gradient(to top, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 70%, transparent 100%);
+}
+
+.lava-wave {
+    position: absolute;
+    bottom: -50px;
+    width: 200%;
+    height: 100px;
+    background: var(--lava-hot);
+    border-radius: 40%;
+    filter: blur(100px); 
+    opacity: 0.3;
+    mix-blend-mode: screen;
+    animation: lavaFlow 15s infinite ease-in-out;
+}
+
+.wave-a { left: -50%; }
+.wave-b { left: -20%; animation-delay: -5s; opacity: 0.2; }
+.wave-c { left: -80%; animation-delay: -10s; opacity: 0.25; }
+
+@keyframes lavaFlow {
+    0%   { transform: translateX(0%) translateY(0%); }
+    50%  { transform: translateX(-25%) translateY(-20px); }
+    100% { transform: translateX(0%) translateY(0%); }
+}
+
+.footer-beetle-btn {
+    display: inline-block;
+    text-decoration: none;
+    cursor: pointer;
+    margin-bottom: 1rem;
+    position: relative;
+    z-index: 10;
+    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.footer-beetle-btn .beetle-glyph {
+    font-size: 2.2rem;
+    color: var(--gold-dim, rgba(255, 215, 0, 0.35));
+    transition: color 0.4s ease, text-shadow 0.4s ease;
+}
+
+.footer-beetle-btn:hover {
+    transform: translateY(-5px) scale(1.1);
+}
+
+.footer-beetle-btn:hover .beetle-glyph {
+    color: var(--gold, #ffd700);
+    text-shadow: 
+        0 0 12px var(--gold-glow, rgba(255, 215, 0, 0.6)), 
+        0 0 24px rgba(255, 215, 0, 0.3);
+}
+
+@keyframes beetleDrift {
+    0% { transform: translateY(0); }
+    100% { transform: translateY(-3px); }
+}
+
+.footer-beetle-btn:active {
+    transform: translateY(2px) scale(0.95);
+}
+
+/* ── 9. ACCESSIBILITY & RESPONSIVE ─────────────────────── */
+a:focus-visible,
+summary:focus-visible {
+    outline: 2px solid var(--gold);
+    outline-offset: 4px;
+    border-radius: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}

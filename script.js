@@ -19,23 +19,29 @@ document.addEventListener('DOMContentLoaded', () => {
         return lastSegment;
     }
 
+    // currentPath is computed here (outside the introGate check) because it's
+    // also needed below for the Work/Contact navbar-collapse fix.
+    const currentPath = normalizePath(window.location.pathname);
+
     if (introGate) {
-        const currentPath = normalizePath(window.location.pathname);
         const lastPage = normalizePath(sessionStorage.getItem('lastPage'));
 
         if (lastPage && lastPage !== currentPath) {
-            introGate.style.display = 'none'; 
-            document.body.style.overflow = ''; 
+            introGate.style.display = 'none';
+            document.body.style.overflow = '';
         } else {
             document.body.style.overflow = 'hidden';
         }
-
-        // Record this page so that navigating to a DIFFERENT page later in the
-        // same tab session correctly skips the gate. Without this line the key
-        // was never written, so the gate's on/off state depended entirely on
-        // whatever was left over in sessionStorage from earlier testing.
-        sessionStorage.setItem('lastPage', currentPath);
     }
+
+    // Records this page on EVERY page (not just index.html) so that a later
+    // navigation back to Home always sees an accurate "lastPage" and knows
+    // you came from elsewhere, instead of only re-showing the gate on an
+    // actual refresh. Previously this line lived inside `if (introGate)`,
+    // so visiting Work/About/Contact never updated it — leaving "lastPage"
+    // stuck at "index.html" and causing the gate to wrongly reappear every
+    // time you navigated back to Home.
+    sessionStorage.setItem('lastPage', currentPath);
 
     if (enterPortfolioBtn && introGate) {
         enterPortfolioBtn.addEventListener('click', () => {
@@ -69,16 +75,24 @@ document.addEventListener('DOMContentLoaded', () => {
     window.addEventListener('scroll', () => {
         if (!scarabNav) return;
 
-        // Finds the first major layout element, defaulting to a 300px boundary line if none are found
-        const topSection = document.querySelector('section') || document.querySelector('header');
-        const collapseThreshold = topSection ? (topSection.offsetHeight / 2) : 300;
+        // Work and Contact have an oversized first section (it wraps most of
+        // the page), so "half its height" is still huge and the logo used to
+        // stay visible until you were halfway down the page. Those two pages
+        // now use a small fixed threshold so the nav collapses shortly after
+        // you start scrolling, instead of being driven by section height.
+        const isCompactHeroPage = currentPath === 'work.html' || currentPath === 'contact.html';
 
-        // STATE 1: Within the top surface boundary limits
+        let collapseThreshold;
+        if (isCompactHeroPage) {
+            collapseThreshold = 120;
+        } else {
+            const topSection = document.querySelector('section') || document.querySelector('header');
+            collapseThreshold = topSection ? Math.min(topSection.offsetHeight / 2, window.innerHeight) : 300;
+        }
+
         if (window.scrollY <= collapseThreshold) {
             scarabNav.classList.add('on-hero');
-        } 
-        // STATE 2: Deep descent past the boundary marker
-        else {
+        } else {
             scarabNav.classList.remove('on-hero');
             if (!scarabNav.classList.contains('is-closed')) {
                 scarabNav.classList.add('is-closed');
@@ -89,14 +103,10 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // Wire up the custom cinematic smooth-scroll callback
     if (easterEggBeetle) {
         easterEggBeetle.addEventListener('click', (e) => {
             e.preventDefault();
-            
-            // Targets the root HTML tag directly to ensure an absolute top landing
-            // This completely eliminates errors from missing or misplaced section IDs
-            smoothScrollTo('html', 2200); 
+            smoothScrollTo('html', 2200); // scrolls to the root <html>, not a specific section
         });
     }
 
@@ -125,13 +135,13 @@ document.addEventListener('DOMContentLoaded', () => {
             if (startTime === null) startTime = currentTime;
             const timeElapsed = currentTime - startTime;
             const run = easeInOutQuint(timeElapsed, startPosition, distance, duration);
-            
+
             window.scrollTo(0, run);
-            
+
             if (timeElapsed < duration) {
                 requestAnimationFrame(animation);
             } else {
-                window.scrollTo(0, targetPosition); 
+                window.scrollTo(0, targetPosition);
                 htmlElement.style.scrollBehavior = originalScrollBehavior;
             }
         }
@@ -232,18 +242,13 @@ document.addEventListener('DOMContentLoaded', () => {
             const moveX = (e.clientX - centerX) / centerX;
             const moveY = (e.clientY - centerY) / centerY;
 
-            const moonOffsetX = moveX * -20; 
+            const moonOffsetX = moveX * -20;
             const moonOffsetY = moveY * -20;
             moonFrame.style.transform = `translate(${moonOffsetX}px, ${moonOffsetY}px)`;
-
-            const bgOffsetX = 50 + (moveX * 1.5); 
-            const bgOffsetY = 100 + (moveY * 1.5);
-            foregroundDunes.style.backgroundPosition = `${bgOffsetX}% ${bgOffsetY}%`;
         });
 
         heroSection.addEventListener('mouseleave', () => {
             moonFrame.style.transform = 'translate(0px, 0px)';
-            foregroundDunes.style.backgroundPosition = 'center bottom';
         });
     }
 
@@ -281,7 +286,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (expansionTrigger && expansionCard && expansionContent) {
         expansionTrigger.addEventListener("click", (e) => {
-            e.stopPropagation(); 
+            e.stopPropagation();
             toggleExpansion();
         });
 
@@ -341,8 +346,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
     if (!prefersReducedMotion) {
-        const SLIDE_VISIBLE_MS = 4200; 
-        const SPIKE_CLOSE_MS = 500;    
+        const SLIDE_VISIBLE_MS = 4200;
+        const SPIKE_CLOSE_MS = 500;
 
         document.querySelectorAll('.relic-slideshow').forEach((slideshow) => {
             const slides = slideshow.querySelectorAll('.relic-image');
@@ -368,9 +373,8 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // ── WORK PAGE PROJECT SLIDESHOW (automatic door open/close) ──
-    // The sandy overlay now acts like a door on a timer instead of a
-    // hover trigger: it swings shut, the slide underneath is swapped
-    // while hidden, then it swings open again to reveal the new image.
+    // A sandy overlay acts as a door on a timer: closes, swaps the slide
+    // underneath while hidden, then opens to reveal the new image.
     if (!prefersReducedMotion) {
         const DOOR_CLOSE_MS = 900;     // matches the CSS clip-path transition
         const SLIDE_VISIBLE_MS = 4200; // how long the photo stays uncovered
@@ -385,18 +389,14 @@ document.addEventListener('DOMContentLoaded', () => {
             const interval = SLIDE_VISIBLE_MS + (frameIndex * 650);
 
             function cycle() {
-                // close the door over the current photo
                 frame.classList.add('door-closed');
 
                 setTimeout(() => {
-                    // swap the slide while it's hidden behind the door
                     slides[current].classList.remove('active');
                     if (dots[current]) dots[current].classList.remove('active');
                     current = (current + 1) % slides.length;
                     slides[current].classList.add('active');
                     if (dots[current]) dots[current].classList.add('active');
-
-                    // open the door to reveal the new photo
                     frame.classList.remove('door-closed');
                 }, DOOR_CLOSE_MS);
             }
@@ -441,7 +441,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (!group) return;
 
                 group.classList.remove('field-error');
-                void group.offsetWidth; 
+                void group.offsetWidth;
                 if (!field.checkValidity()) {
                     group.classList.add('field-error');
                     if (!firstInvalid) firstInvalid = field;
@@ -462,4 +462,4 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-}); // ── This single closing tag at the absolute bottom cleanly terminates everything!
+});

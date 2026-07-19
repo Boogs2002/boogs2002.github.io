@@ -8,6 +8,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=IM+Fell+English:ital@0;1&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css">
+    <link rel="stylesheet" href="css/main.css">
     <link rel="stylesheet" href="css/index.css">
 </head>
 <body>
@@ -50,21 +51,18 @@
         </div>
     </div>
 
-
-   
-
     <!-- Main Architectural Navigation (Visible instantly on load) -->
     <nav class="scarab-nav" id="scarab-nav" aria-label="Main navigation">
         <ul class="papyrus-menu" role="list">
             <li class="nav-link-item"><a href="/index.html">Home</a></li>
             <li class="nav-link-item"><a href="/about.html">About</a></li>
-            
+
             <!-- THE CENTER TOGGLE EMBLEM -->
             <li class="nav-logo-item" id="nav-toggle-trigger" role="button" aria-label="Toggle Sanctum Vault Bar" tabindex="0">
                 <!-- Using a stylized geometric glyph placeholder for now -->
-                <div class="nav-logo-placeholder"><img src="/images/brand/hsb-logo.png" alt="HSB logo"></div>
+                <div class="nav-logo-placeholder"><img src="/img/brand/hsb-logo.png" alt="HSB logo"></div>
             </li>
-            
+
             <li class="nav-link-item"><a href="/work.html">Work</a></li>
             <li class="nav-link-item"><a href="/contact.html">Contact</a></li>
         </ul>
@@ -78,9 +76,12 @@
             <!-- Layer 1: Far Background Sky -->
             <div class="hero-sky" aria-hidden="true"></div>
 
+            <!-- Layer 1b: Moving Stars (top of hero, same effect as the About page) -->
+            <div class="hero-stars" aria-hidden="true"></div>
+
             <!-- Layer 2: Middle Ground Profile Moon -->
             <div class="moon-frame" aria-label="Profile photo">
-                <img src="/images/index/Gemini_Generated_Image_72wtdp72wtdp72wt-removebg-preview.png" alt="Hrishikesh Bajnath" class="moon-photo">            
+                <img src="/img/index/profile.png" alt="Hrishikesh Bajnath" class="moon-photo">
             </div>
 
             <!-- Layer 3: Foreground Sand Dunes (Sits in front of the moon) -->
@@ -105,11 +106,10 @@
         </div>
 
          <!-- skills -->
-        <div class="tomb-hallway"> 
-    
-           
+        <div class="tomb-hallway">
+
             <div class="chamber-shroud" aria-hidden="true"></div>
-            
+
             <!-- Matrix background only defined once -->
             <div class="hallway-matrix-bg" aria-hidden="true">
                 <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
@@ -128,12 +128,12 @@
                     <rect width="100%" height="100%" fill="url(#vertical-matrix)" />
                 </svg>
             </div>
-                      
+
             <section id="skills" aria-label="Skills — The Pyramid">
 
                 <h2 class="section-heading" aria-label="Skills section">
                     <span class="section-glyph" aria-hidden="true">𓇳</span>
-                    Foundations 
+                    Foundations
                     <span class="section-subtitle">Knowledge & Skills</span>
                 </h2>
 
@@ -249,10 +249,7 @@
 
                 <a href="/about.html#expansion" class="section-more-btn">More info <span aria-hidden="true">→</span></a>
 
-
             </section>
-
-            
 
             <!-- projects -->
             <section id="projects-preview" aria-label="Projects — The Excavation">
@@ -269,10 +266,10 @@
                         <span class="bone-accent top-left" aria-hidden="true"></span>
                         <div class="frame-border">
                             <div class="relic-slideshow">
-                                <img src="/images/rkz/rkz.png" alt="Screenshot of the RKZ Voorraadbeheer dashboard" class="relic-image active">
-                                <img src="/images/rkz/rkz (2).png" alt="Screenshot of the RKZ Voorraadbeheer dashboard" class="relic-image">
-                                <img src="/images/rkz/rkz (3).png" alt="Screenshot of the RKZ Voorraadbeheer dashboard" class="relic-image">
-                                <img src="/images/rkz/rkz (4).png" alt="Screenshot of the RKZ Voorraadbeheer dashboard" class="relic-image">
+                                <img src="/img/rkz/rkz.png" alt="Screenshot of the RKZ Voorraadbeheer dashboard" class="relic-image active">
+                                <img src="/img/rkz/rkz-2.png" alt="Screenshot of the RKZ Voorraadbeheer dashboard" class="relic-image">
+                                <img src="/img/rkz/rkz-3.png" alt="Screenshot of the RKZ Voorraadbeheer dashboard" class="relic-image">
+                                <img src="/img/rkz/rkz-4.png" alt="Screenshot of the RKZ Voorraadbeheer dashboard" class="relic-image">
                             </div>
                             <div class="spike-trap" aria-hidden="true">
                                 <svg class="spike-row top" viewBox="0 0 200 60" preserveAspectRatio="none">
@@ -295,10 +292,10 @@
                         <span class="bone-accent top-left" aria-hidden="true"></span>
                         <div class="frame-border">
                             <div class="relic-slideshow">
-                                <img src="/images/portfolio/port.png" alt="Preview of this portfolio site" class="relic-image active">
-                                <img src="/images/portfolio/port (2).png" alt="Preview of this portfolio site" class="relic-image">
-                                <img src="/images/portfolio/port (3).png" alt="Preview of this portfolio site" class="relic-image">
-                                <img src="/images/portfolio/port (4).png" alt="Preview of this portfolio site" class="relic-image">
+                                <img src="/img/portfolio/port.png" alt="Preview of this portfolio site" class="relic-image active">
+                                <img src="/img/portfolio/port-2.png" alt="Preview of this portfolio site" class="relic-image">
+                                <img src="/img/portfolio/port-3.png" alt="Preview of this portfolio site" class="relic-image">
+                                <img src="/img/portfolio/port-4.png" alt="Preview of this portfolio site" class="relic-image">
                             </div>
                             <div class="spike-trap" aria-hidden="true">
                                 <svg class="spike-row top" viewBox="0 0 200 60" preserveAspectRatio="none">
@@ -331,7 +328,7 @@
             </section>
         </div>
 
-        <!-- experience figuren -->
+        <!-- Tomb arch: experience section threshold -->
         <div class="tomb-arch" aria-hidden="true">
             <svg viewBox="0 0 800 120" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
                 <!-- Dark stone arch opening -->
@@ -354,7 +351,7 @@
 
         <!-- experience -->
         <section id="experience" aria-label="Experience — The Tomb">
-            
+
             <button id="torch-toggle" class="accessibility-btn" aria-label="Toggle Torchlight Effect">
                 <span class="btn-text">Torch: ON</span>
             </button>
@@ -415,13 +412,11 @@
 
         <!-- Lava animation lives here -->
         <div class="lava-stage" aria-hidden="true">
-            <!-- <div class="lava-rock-surface"></div> -->
             <div class="lava-flow">
                 <div class="lava-wave wave-a"></div>
                 <div class="lava-wave wave-b"></div>
                 <div class="lava-wave wave-c"></div>
             </div>
-            <!-- <div class="lava-bar"></div> -->
             <div class="lava-haze"></div>
         </div>
 

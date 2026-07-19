@@ -7,25 +7,23 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=IM+Fell+English:ital@0;1&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="css/index.css">
+    <link rel="stylesheet" href="css/main.css">
     <link rel="stylesheet" href="css/about.css">
 </head>
 <body>
-
-
 
     <!-- Main Architectural Navigation (Visible instantly on load) -->
     <nav class="scarab-nav" id="scarab-nav" aria-label="Main navigation">
         <ul class="papyrus-menu" role="list">
             <li class="nav-link-item"><a href="/index.html">Home</a></li>
             <li class="nav-link-item"><a href="/about.html">About</a></li>
-            
+
             <!-- THE CENTER TOGGLE EMBLEM -->
             <li class="nav-logo-item" id="nav-toggle-trigger" role="button" aria-label="Toggle Sanctum Vault Bar" tabindex="0">
                 <!-- Using a stylized geometric glyph placeholder for now -->
-                <div class="nav-logo-placeholder"><img src="/images/brand/hsb-logo.png" alt="HSB logo"></div>
+                <div class="nav-logo-placeholder"><img src="/img/brand/hsb-logo.png" alt="HSB logo"></div>
             </li>
-            
+
             <li class="nav-link-item"><a href="/work.html">Work</a></li>
             <li class="nav-link-item"><a href="/contact.html">Contact</a></li>
         </ul>
@@ -46,7 +44,7 @@
             </h2>
 
             <div class="about-content">
-                
+
                 <p>
                     My journey into engineering didn't begin on a screen—it began with blueprints. At NATIN, I discovered a passion for structural design, utilizing AutoCAD to plan, scale, and map out physical houses. This early immersion in structural geometry shaped how I view the digital world. To me, a webpage isn't just code; it is a digital structure requiring pristine foundations, balanced grids, and exceptional spatial awareness.
                 </p>
@@ -57,7 +55,6 @@
                     As a frontend freelancer and full-stack creator, I dedicate myself to bridging the gap between backend logic and beautiful, user-centered interfaces.
                 </p>
 
-            
                 <div class="about-tags reveal from-bottom" role="list">
                     <span class="about-tag" role="listitem">Full-Stack Development</span>
                     <span class="about-tag" role="listitem">2nd-Year SE Student, UNASAT</span>
@@ -74,7 +71,6 @@
 
         <div class="tomb-hallway">
 
-            
             <span class="hallway-cap left" aria-hidden="true"></span>
             <span class="hallway-cap right" aria-hidden="true"></span>
 
@@ -90,7 +86,7 @@
                 <div class="constellation-container" aria-hidden="true">
                     <svg class="constellation-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 2000" preserveAspectRatio="xMidYMin slice">
                         <defs>
-                            <!-- Glow effect filter for the transport energy particles -->
+                            <!-- glow filter for the traveling energy particles -->
                             <filter id="particle-glow" x="-50%" y="-50%" width="200%" height="200%">
                                 <feGaussianBlur stdDeviation="4" result="blur" />
                                 <feMerge>
@@ -99,136 +95,94 @@
                                 </feMerge>
                             </filter>
 
-                            <!-- Node Symbol 1: Classic Eye Glyph -->
                             <g id="glyph-eye">
                                 <circle cx="0" cy="0" r="7" />
                                 <circle cx="0" cy="0" r="3" fill="none" stroke-width="2"/>
                             </g>
 
-                            <!-- Node Symbol 2: Sacred Triangle -->
                             <g id="glyph-triangle">
                                 <polygon points="0,-9 -9,7 9,7" />
                             </g>
 
-                            <!-- Node Symbol 3: Minimalist 8-Point Star -->
                             <g id="glyph-star">
                                 <path d="M 0,-10 L 2,-3 L 9,-3 L 4,1 L 6,8 L 0,4 L -6,8 L -4,1 L -9,-3 L -2,-3 Z" />
                             </g>
                         </defs>
 
-                        <!-- Static Background Lines (The structural skeleton) -->
+                        <!-- static connecting lines behind the animated glow particles -->
                         <g class="network-lines">
-                            <!-- First Tier Connections -->
                             <path d="M 200,100 L 400,250" />
                             <path d="M 200,100 L 150,400" />
                             <path d="M 400,250 L 700,200" />
                             <path d="M 700,200 L 850,450" />
-                            
-                            <!-- Second Tier Connections -->
                             <path d="M 150,400 L 500,500" />
                             <path d="M 400,250 L 500,500" />
                             <path d="M 500,500 L 300,650" />
                             <path d="M 850,450 L 600,750" />
                             <path d="M 300,650 L 600,750" />
-                            
-                            <!-- Third Tier Connections -->
                             <path d="M 300,650 L 250,1000" />
                             <path d="M 600,750 L 800,900" />
                             <path d="M 800,900 L 750,1150" />
                             <path d="M 250,1000 L 450,1200" />
-                            
-                            <!-- Fourth Tier Connections -->
                             <path d="M 450,1200 L 150,1350" />
                             <path d="M 750,1150 L 600,1450" />
                             <path d="M 450,1200 L 600,1450" />
-                            
-                            <!-- Fifth Tier Connections -->
                             <path d="M 150,1350 L 350,1750" />
                             <path d="M 600,1450 L 850,1650" />
                             <path d="M 350,1750 L 500,1900" />
                             <path d="M 850,1650 L 500,1900" />
                         </g>
 
-                        <!-- Glow Transports (Energy packets gliding along designated line pathways) -->
+                        <!-- glowing particles animated along the lines above -->
                         <g class="glow-transports">
-                            <!-- Channel 1: 200,100 to 400,250 -->
                             <circle r="4" fill="var(--gold)" filter="url(#particle-glow)">
                                 <animateMotion dur="4.5s" repeatCount="indefinite" path="M 200,100 L 400,250" />
                             </circle>
-
-                            <!-- Channel 2: 700,200 to 400,250 (Reverse flow) -->
                             <circle r="4" fill="var(--gold)" filter="url(#particle-glow)">
                                 <animateMotion dur="5s" repeatCount="indefinite" path="M 700,200 L 400,250" />
                             </circle>
-
-                            <!-- Channel 3: 150,400 to 500,500 -->
                             <circle r="4" fill="var(--gold)" filter="url(#particle-glow)">
                                 <animateMotion dur="6s" repeatCount="indefinite" path="M 150,400 L 500,500" />
                             </circle>
-
-                            <!-- Channel 4: 850,450 to 600,750 -->
                             <circle r="4" fill="var(--gold)" filter="url(#particle-glow)">
                                 <animateMotion dur="4s" repeatCount="indefinite" path="M 850,450 L 600,750" />
                             </circle>
-
-                            <!-- Channel 5: 300,650 to 600,750 -->
                             <circle r="4" fill="var(--gold)" filter="url(#particle-glow)">
                                 <animateMotion dur="7s" repeatCount="indefinite" path="M 300,650 L 600,750" />
                             </circle>
-
-                            <!-- Channel 6: 800,900 to 750,1150 -->
                             <circle r="4" fill="var(--gold)" filter="url(#particle-glow)">
                                 <animateMotion dur="5.5s" repeatCount="indefinite" path="M 800,900 L 750,1150" />
                             </circle>
-
-                            <!-- Channel 7: 250,1000 to 450,1200 -->
                             <circle r="4" fill="var(--gold)" filter="url(#particle-glow)">
                                 <animateMotion dur="4.8s" repeatCount="indefinite" path="M 250,1000 L 450,1200" />
                             </circle>
-
-                            <!-- Channel 8: 450,1200 to 600,1450 -->
                             <circle r="4" fill="var(--gold)" filter="url(#particle-glow)">
                                 <animateMotion dur="6.5s" repeatCount="indefinite" path="M 450,1200 L 600,1450" />
                             </circle>
-
-                            <!-- Channel 9: 150,1350 to 350,1750 -->
                             <circle r="4" fill="var(--gold)" filter="url(#particle-glow)">
                                 <animateMotion dur="5.2s" repeatCount="indefinite" path="M 150,1350 L 350,1750" />
                             </circle>
-
-                            <!-- Channel 10: 850,1650 to 500,1900 -->
                             <circle r="4" fill="var(--gold)" filter="url(#particle-glow)">
                                 <animateMotion dur="4.2s" repeatCount="indefinite" path="M 850,1650 L 500,1900" />
                             </circle>
                         </g>
 
-                        <!-- Interactive Symbols (Structured elegantly along the 2000px height span) -->
+                        <!-- glyph nodes marking each point in the network -->
                         <g class="network-nodes">
-                            <!-- Tier 1 -->
                             <use href="#glyph-star" x="200" y="100" class="node speed-fast" />
                             <use href="#glyph-triangle" x="400" y="250" class="node speed-slow" />
                             <use href="#glyph-eye" x="700" y="200" class="node speed-medium" />
-                            
-                            <!-- Tier 2 -->
                             <use href="#glyph-eye" x="150" y="400" class="node speed-medium" />
                             <use href="#glyph-star" x="850" y="450" class="node speed-slow" />
                             <use href="#glyph-star" x="500" y="500" class="node speed-fast" />
-                            
-                            <!-- Tier 3 -->
                             <use href="#glyph-triangle" x="300" y="650" class="node speed-slow" />
                             <use href="#glyph-eye" x="600" y="750" class="node speed-medium" />
                             <use href="#glyph-triangle" x="800" y="900" class="node speed-fast" />
-                            
-                            <!-- Tier 4 -->
                             <use href="#glyph-star" x="250" y="1000" class="node speed-fast" />
                             <use href="#glyph-eye" x="450" y="1200" class="node speed-medium" />
                             <use href="#glyph-star" x="750" y="1150" class="node speed-slow" />
-                            
-                            <!-- Tier 5 -->
                             <use href="#glyph-triangle" x="150" y="1350" class="node speed-slow" />
                             <use href="#glyph-eye" x="600" y="1450" class="node speed-medium" />
-                            
-                            <!-- Tier 6 -->
                             <use href="#glyph-triangle" x="850" y="1650" class="node speed-fast" />
                             <use href="#glyph-star" x="350" y="1750" class="node speed-slow" />
                             <use href="#glyph-eye" x="500" y="1900" class="node speed-medium" />
@@ -333,7 +287,7 @@
                     </h2>
 
                     <div class="expansion-card reveal from-bottom">
-                        
+
                         <!-- The Trigger Button -->
                         <button class="expansion-trigger" aria-expanded="false" aria-controls="expansion-content">
                             <span class="trigger-text">Unearth Details</span>
@@ -368,7 +322,7 @@
 
                             </div>
                         </div>
-                        
+
                     </div>
 
                 </section>

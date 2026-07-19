@@ -1,291 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Almendra+Display:ital,wght@0,400;0,700;1,400&family=Cinzel+Decorative:wght@400;700&display=swap');
-
-/* ── 1. TOKENS & RESET ─────────────────────────────────── */
-:root {
-    --gold:         #ffd700;
-    --gold-dim:     rgba(255, 215, 0, 0.25);
-    --gold-glow:    rgba(255, 215, 0, 0.55);
-    --stone-dark:   #1a1814;
-    --stone-mid:    #2e2a24;
-    --stone-text:   #4a4540;
-    --lava-hot:     #ff4500;
-    --lava-mid:     #ff8800;
-    --lava-pale:    #ffcc00;
-    --font-display: 'Cinzel', Georgia, serif;
-    --font-body:    'IM Fell English', Georgia, serif;
-}
-
-*, *::before, *::after {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-html {
-    scroll-behavior: smooth;
-}
-
-/* ── 2. THE MASTER CONTINUOUS GRADIENT ─────────────────── */
-/* This is the spine of the entire descent. Every section
-   is transparent — this body gradient shows through all of them. */
-body {
-    /* Hero sky colour sampled from wallpaper base → deep midnight → tomb black */
-    background: linear-gradient(
-        to bottom,
-        #3a3058 0%,      /* matches wallpaper dune base */
-        #261e45 12%,     /* deepening dusk */
-        #160f38 28%,     /* midnight entry */
-        #0e0824 44%,     /* descending */
-        #080518 58%,     /* mid-tomb */
-        #050310 74%,     /* deep tomb */
-        #020108 88%,     /* near black */
-        #010005 100%     /* absolute dark */
-    );
-    background-attachment: fixed; /* parallax — sky stays as content scrolls */
-    color: #e8dcc8;
-    font-family: var(--font-body);
-    overflow-x: hidden;
-    min-height: 100vh;
-}
-
-
-/* ── 3. NAVIGATION BAR & CENTERING MECHANICS ── */
-
-/* The Top Navigation Bar (Visible instantly on page load) */
-.scarab-nav {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 90px;
-    z-index: 1001;
-    display: flex;
-    align-items: center;
-    
-    /* OPACITY FIX: Dropped to 0.35 to blend organically into the deep purple background */
-    background: rgba(12, 10, 20, 0.35); 
-    
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    border-bottom: 1px solid rgba(255, 215, 0, 0.15); 
-    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5);
-    transition: background 0.5s ease, border-color 0.5s ease, box-shadow 0.5s ease;
-}
-
-/* The Horizontal Alignment Row */
-.papyrus-menu {
-    display: flex;
-    list-style: none;
-    width: 100%;
-    justify-content: center; 
-    align-items: center;    
-    gap: 5vw;               
-    padding: 0 40px;
-}
-
-/* Base link tracking wrapper */
-.nav-link-item {
-    transition: opacity 0.4s cubic-bezier(0.4, 0, 0.2, 1), 
-                transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.papyrus-menu a {
-    display: block;
-    padding: 12px 16px;
-    font-family: var(--font-display);
-    font-size: 0.85rem;
-    letter-spacing: 0.3em;
-    text-transform: uppercase;
-    color: #ffd70080;
-    text-decoration: none;
-    transition: color 0.2s, text-shadow 0.2s;
-}
-
-.papyrus-menu a:hover {
-    color: var(--gold);
-    text-shadow: 0 0 12px var(--gold-glow);
-}
-
-/* ── CENTER EMBLEM BUTTON ── */
-.nav-logo-item {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    outline: none;
-    z-index: 1002; /* Ensures the button handles interaction states even when collapsed */
-}
-
-.nav-logo-placeholder {
-    height: 60px;
-    width: 60px;
-    border-radius: 50%;
-    background: linear-gradient(135deg, #1c172e, #0c0914);
-    border: 1px solid rgba(255, 215, 0, 0.3);
-    color: var(--gold);
-    font-size: 1.6rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    box-shadow: 0 0 15px rgba(0, 0, 0, 0.6);
-    transition: transform 0.4s ease, border-color 0.4s ease, box-shadow 0.4s ease;
-    user-select: none;
-    overflow: hidden;
-}
-
-.nav-logo-placeholder img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: block;
-    pointer-events: none;
-    user-select: none;
-
-    /* The source PNG has a lot of transparent padding baked around the
-       emblem, so at 100% size it looks small inside the circle. Scaling
-       the image up (the circle's overflow:hidden crops the excess)
-       zooms in on the emblem itself so it actually fills the frame. */
-    transform: scale(1.45);
-}
-
-.nav-logo-item:hover .nav-logo-placeholder {
-    transform: scale(1.08) rotate(5deg);
-    border-color: var(--gold);
-    box-shadow: 0 0 20px var(--gold-dim);
-}
-
-/* ── THE CLOSED VALVE LAYOUT STATE ── */
-
-/* Dissolve the background shroud and container borders */
-.scarab-nav.is-closed {
-    background: rgba(0, 0, 0, 0);
-    border-bottom-color: transparent;
-    box-shadow: none;
-    backdrop-filter: none;
-    -webkit-backdrop-filter: none;
-    pointer-events: none; 
-}
-
-/* Dissolve and push text links out of view layout boundaries */
-.scarab-nav.is-closed .nav-link-item {
-    opacity: 0;
-    pointer-events: none;
-    transform: translateY(-15px);
-}
-
-/* 
-   SURFACE LOCK: Dissolve the logo placeholder completely by default 
-   so it never blocks your content or clips into the lower sections!
-*/
-.scarab-nav.is-closed .nav-logo-item {
-    opacity: 0;
-    pointer-events: none;
-    transition: opacity 0.4s ease;
-}
-
-/* 
-   HERO RESCUE BOUNDARY: Only allow the floating logo to display and flare 
-   when the navbar is closed WHILE the user is still resting inside the hero section!
-*/
-.scarab-nav.is-closed.on-hero .nav-logo-item {
-    opacity: 1;
-    pointer-events: auto;
-}
-
-.scarab-nav.is-closed.on-hero .nav-logo-placeholder {
-    border-color: var(--gold);
-    transform: scale(1.05);
-    animation: ancientSunFlare 2.5s infinite alternate ease-in-out;
-}
-
-/* ── ATMOSPHERIC SUN FLARE ANIMATION ── */
-@keyframes ancientSunFlare {
-    0% {
-        box-shadow: 
-            0 0 15px rgba(255, 215, 0, 0.2),
-            0 0 30px rgba(255, 215, 0, 0.1);
-        filter: drop-shadow(0 0 2px transparent);
-    }
-    100% {
-        box-shadow: 
-            0 0 30px var(--gold-glow),
-            0 0 60px rgba(255, 215, 0, 0.25),
-            0 0 90px rgba(214, 136, 201, 0.15); /* Soft cosmic pink matching header gradient tones */
-        filter: drop-shadow(0 0 8px var(--gold-glow));
-    }
-}
-
-/* ── RESPONSIVE MOBILE ADJUSTMENT ── */
-@media (max-width: 640px) {
-    .scarab-nav {
-        height: auto;
-    }
-    .scarab-nav.is-closed {
-        background: transparent;
-    }
-    .papyrus-menu {
-        flex-direction: column;
-        padding: 20px 0;
-        gap: 20px;
-    }
-    /* Keep logo row tracking active on vertical stack configurations */
-    .nav-logo-item {
-        order: -1; /* Floats toggle emblem cleanly to the absolute top row on mobile screens */
-    }
-}
-
-/* ── 4. SECTION SHARED STYLES ───────────────────────────── */
-section {
-    position: relative;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding: 100px 8%;
-    background: transparent;
-}
-
-.section-heading {
-    font-family: var(--font-display);
-    font-size: clamp(1.1rem, 2.5vw, 1.5rem);
-    font-weight: 400;
-    letter-spacing: 0.45em;
-    text-transform: uppercase;
-    color: var(--gold) !important;
-    text-shadow: 0 0 15px var(--gold-glow), 0 0 30px rgba(255, 215, 0, 0.2);
-    margin-bottom: 60px;
-    display: flex;
-    align-items: center;
-    gap: 16px;
-    flex-wrap: wrap;
-    justify-content: center;
-}
-
-.section-glyph {
-    font-size: 1.4rem;
-    opacity: 0.6;
-}
-
-.section-subtitle {
-    display: block; 
-    width: 100%;
-    flex-basis: 100%; 
-    text-align: center;
-    font-family: var(--font-body);
-    font-size: 0.85rem;
-    text-transform: uppercase;
-    letter-spacing: 4px;
-    color: rgba(255, 215, 0, 0.6) !important;
-    text-shadow: 0 0 8px rgba(255, 215, 0, 0.15);
-    margin-top: 10px; 
-    padding-left: 4px; 
-}
-
-
-
-
-/* ── 5. HERO SECTION ────────────────────────────────────── */
+/* ── 1. HERO SECTION ────────────────────────────────────── */
 #hero {
     position: relative;
     min-height: 100vh;
@@ -297,35 +10,56 @@ section {
     gap: 40px;
     background-color: #0c0a14;
     overflow: hidden;
-    padding-top: 80px; 
+    padding-top: 80px;
     padding-bottom: 40px;
 }
 
-/* LAYER 1: Far Background Sky */
 .hero-sky {
     position: absolute;
     inset: 0;
-    background-image: url('../images/index/sky-background.png');
+    background-image: url('../img/index/sky-background.png');
     background-repeat: no-repeat;
     z-index: 1;
 }
 
-/* LAYER 2: Middle Ground Profile Moon Frame (Atmospheric Layer) */
+.hero-stars {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 55%;
+    pointer-events: none;
+    z-index: 1;
+    opacity: 0.5;
+    background-image:
+        radial-gradient(2px 2px at 20px 30px, #ffffff, transparent),
+        radial-gradient(2px 2px at 75px 130px, var(--gold), transparent),
+        radial-gradient(1.5px 1.5px at 150px 60px, #ffffff, transparent),
+        radial-gradient(2px 2px at 220px 170px, rgba(255,255,255,0.7), transparent),
+        radial-gradient(2.5px 2.5px at 280px 90px, var(--gold-dim), transparent);
+    background-size: 360px 240px;
+    animation: driftHeroStars 45s linear infinite;
+    -webkit-mask-image: linear-gradient(to bottom, black 0%, transparent 100%);
+    mask-image: linear-gradient(to bottom, black 0%, transparent 100%);
+}
+
+@keyframes driftHeroStars {
+    0% { background-position: 0px 0px; }
+    100% { background-position: 360px 0px; }
+}
+
 .moon-frame {
-    /* POSITION FIX: Swapped to absolute layers to pull the moon to the right side of the screen */
     position: absolute;
     top: 18vh;
     right: 12vw;
-    
-    width: 320px;  
-    height: 320px; 
+    width: 320px;
+    height: 320px;
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
     overflow: hidden;
-    z-index: 2; 
-    
+    z-index: 2;
     opacity: 0.75;
     mix-blend-mode: screen;
     box-shadow:
@@ -345,34 +79,25 @@ section {
 }
 
 @media (max-width: 640px) {
-    /* ... your existing mobile rules ... */
-    
     .moon-frame {
         position: relative;
         top: auto;
         right: auto;
         margin: 0 auto -40px auto;
-        width: 240px; /* Scaled down slightly to fit small mobile screen wrappers gracefully */
+        width: 240px;
         height: 240px;
     }
 }
 
-/* LAYER 3: Transparent Foreground Dunes */
 .hero-dunes-foreground {
     position: absolute;
     inset: 0;
-    background-image: url('../images/index/dunes-foreground.png');
+    background-image: url('../img/index/dunes-foreground.png');
     background-repeat: no-repeat;
-    z-index: 3; 
+    z-index: 3;
     pointer-events: none;
 }
 
-/* LAYER 4: The Master Vignette Shroud */
-/* 
-   BRIGHTNESS FIX: Moving this to z-index 4 stretches the dark shadows 
-   OVER both the sky and the dunes. This removes the harsh glare and blends 
-   the foreground landscape back into the moody tomb environment.
-*/
 #hero::before {
     content: '';
     position: absolute;
@@ -383,46 +108,28 @@ section {
         rgba(0,0,0,0.55) 100%
     );
     pointer-events: none;
-    z-index: 4; 
+    z-index: 4;
 }
 
-/* LAYER 5: Interactive Text & Scroll Content (The Absolute Top Layer) */
-/*
-   TEXT FIX: Elevating these to z-index 10 pulls your name, description, 
-   and links safely out from behind the sand dunes so they are crisp and readable.
-*/
 .hero-content {
     position: relative;
-    z-index: 10; 
+    z-index: 10;
 }
 
-.scroll-indicator {
-    z-index: 10; 
-}
-
-/* Push the name below the moon instead of letting the flex-centering
-   place it mid-screen where it overlaps the moon graphic. Only applied
-   above the mobile breakpoint, since on mobile the moon is already
-   in normal document flow above the text. */
 @media (min-width: 641px) {
     #hero {
         justify-content: flex-start;
     }
-
     .hero-content {
-        /* moon top (18vh) + moon height (320px) + a little breathing
-           room, minus the 80px top padding #hero already has */
         margin-top: calc(18vh + 320px + 24px - 80px);
     }
 }
 
-/* ── INTERACTIVE HOVER EFFECTS ── */
 #hero:hover .moon-frame {
     transform: scale(1.02);
-    opacity: 0.85; /* Becomes slightly clearer when interacting */
+    opacity: 0.85;
 }
 
-/* ── RESPONSIVE SCALING ── */
 @media (min-aspect-ratio: 1/1) {
     .hero-sky, .hero-dunes-foreground {
         background-size: 175% auto;
@@ -437,37 +144,33 @@ section {
     }
 }
 
-/* ── TOMB ENTRANCE PORTAL CAP ───────────────────────────── */
-
+/* ── 2. TOMB ENTRANCE PORTAL CAP ────────────────────────── */
 .tomb-entrance-gate {
     position: relative;
     width: 100%;
-    padding: 0; /* Changed from "0 6.5vw" to stretch edge-to-edge */
+    padding: 0;
     z-index: 12;
     margin-top: 0;
 }
 
-/* Adjust the SVG wrapper for the new slimmer, minimalist layout */
 .egyptian-gate-svg {
     width: 100%;
     height: auto;
-    max-height: 80px; /* Reduced from 160px for a more low-profile visual cap */
+    max-height: 80px;
     display: block;
     filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.75));
 }
 
-/* The shroud layer masking the skills section until activated */
 .chamber-shroud {
     position: absolute;
     inset: 0;
-    background-color: #030107; /* Blends with the deep purple/midnight background */
+    background-color: #030107;
     z-index: 10;
-    opacity: 1; /* Completely dark by default */
+    opacity: 1;
     transition: opacity 1.8s cubic-bezier(0.25, 1, 0.5, 1);
     pointer-events: none;
 }
 
-/* Initial hidden/shadowed states for matrix background and content */
 .hallway-matrix-bg {
     opacity: 0;
     filter: brightness(0) blur(12px);
@@ -480,13 +183,12 @@ section {
     transition: opacity 1.8s cubic-bezier(0.25, 1, 0.5, 1), filter 2.2s cubic-bezier(0.25, 1, 0.5, 1);
 }
 
-/* Active entered states (Classes handled smoothly by JS observer) */
 .tomb-hallway.chamber-revealed .chamber-shroud {
     opacity: 0;
 }
 
 .tomb-hallway.chamber-revealed .hallway-matrix-bg {
-    opacity: 0.35; /* Gently transitions matrix lines to baseline opacity */
+    opacity: 0.35;
     filter: brightness(1) blur(0px);
 }
 
@@ -495,31 +197,16 @@ section {
     filter: brightness(1) blur(0px);
 }
 
-
-/* ── HERO TEXT ── */
-.hero-content {
-    position: relative;
-    z-index: 10; /* Forces the text to float on the absolute top layer above the dunes */
-}
-
+/* ── 3. HERO TEXT ───────────────────────────────────────── */
 .hero-content h1 {
     font-family: 'Cinzel Decorative', serif;
-    font-size: clamp(2rem, 6vw, 4rem); 
+    font-size: clamp(2rem, 6vw, 4rem);
     letter-spacing: 0.15em;
     text-transform: uppercase;
     background: linear-gradient(to top, #d0abb7 0%, #d688c9 50%, #ffffff 100%);
-    
-    /* Clip the background to the text shape */
     -webkit-background-clip: text;
     background-clip: text;
-    
-    /* Make the actual text color transparent so the gradient shows */
     color: transparent;
-    
-    /* Dark drop shadow ensures crisp legibility against any moving background elements,
-       plus a soft "moonlight" glow pulled from the h1's own gradient (lilac/pink,
-       same family as the moon and sky) rather than gold, so it reads as one
-       cohesive light source instead of two competing palettes. */
     text-shadow:
         2px 3px 18px rgba(0,0,0,0.85),
         0 0 40px rgba(0,0,0,0.6),
@@ -539,41 +226,7 @@ section {
     text-shadow: 0 0 20px var(--gold-glow);
 }
 
-/* ── SCROLL INDICATOR ── */
-.scroll-indicator {
-    position: absolute;
-    bottom: 40px;
-    left: 50%;
-    transform: translateX(-50%);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 6px;
-    text-decoration: none;
-    z-index: 10; /* Changed from 1 to 10 to clear the sand dunes foreground */
-    animation: bounce 2.4s ease-in-out infinite;
-}
-
-.descend-text {
-    font-family: 'Cinzel Decorative', serif;
-    font-size: 0.62rem;
-    letter-spacing: 0.45em;
-    text-transform: uppercase;
-    color: rgba(255, 215, 0, 0.5);
-}
-
-.descend-arrow {
-    font-size: 1.3rem;
-    color: rgba(255, 215, 0, 0.4);
-}
-
-@keyframes bounce {
-    0%, 60%, 100% { transform: translateX(-50%) translateY(0); }
-    30%            { transform: translateX(-50%) translateY(-10px); }
-    45%            { transform: translateX(-50%) translateY(-4px); }
-}
-
-/* ── 6. SHAFT (surface → pyramid transition) ────────────── */
+/* ── 4. SHAFT (surface → pyramid transition) ────────────── */
 .shaft {
     position: relative;
     height: 180px;
@@ -591,7 +244,6 @@ section {
         #0000002e 40%,
         #0000002e 100%
     );
-    /* Stone texture via repeating gradient */
     background-image:
         repeating-linear-gradient(
             0deg,
@@ -606,7 +258,7 @@ section {
 .shaft-wall.left  { border-right: 1px solid #ffd7000f; }
 .shaft-wall.right { border-left:  1px solid #ffd7000f; }
 
-/* ── 7. SKILLS / PYRAMID ────────────────────────────────── */
+/* ── 5. SKILLS / PYRAMID ────────────────────────────────── */
 #skills {
     padding-top: 60px;
 }
@@ -621,7 +273,6 @@ section {
     position: relative;
 }
 
-/* CSS-only apex triangle */
 .pyramid-apex {
     width: 0;
     height: 0;
@@ -631,12 +282,8 @@ section {
     filter: drop-shadow(0 -4px 14px #ffd9006c);
     margin-bottom: 2px;
     transition: filter 0.3s ease;
-    
 }
 
-
-
-/* Each layer row animation container */
 .pyramid-layer {
     display: flex;
     justify-content: center;
@@ -645,7 +292,6 @@ section {
     transition: opacity 0.5s ease, transform 0.5s ease;
 }
 
-/* NEW: Invisible layout wrapper anchoring the popup panels outside the clip-path */
 .tier-wrapper {
     position: relative;
     display: inline-flex;
@@ -653,7 +299,6 @@ section {
     align-items: center;
 }
 
-/* The trapezoid block */
 .block {
     display: flex;
     flex-direction: column;
@@ -668,28 +313,21 @@ section {
     transition: background 0.35s ease, box-shadow 0.35s ease;
     cursor: default;
     border-top: 1px solid rgba(255,215,0,0.15);
-    
-    /* 1. ADD THIS line so the texture stays locked inside the block bounds */
-    position: relative; 
+    position: relative;
 }
 
-/* 2. ADD THIS NEW BLOCK RIGHT BELOW IT ── */
 .block::after {
     content: '';
     position: absolute;
     inset: 0;
-    z-index: 1;             
-    pointer-events: none;   
-    
-    /* Clean masonry running-bond vector joints */
+    z-index: 1;
+    pointer-events: none;
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='25'%3E%3Cline x1='0' y1='25' x2='40' y2='25' stroke='%23000000' stroke-width='1.2' opacity='1'/%3E%3Cline x1='20' y1='0' x2='20' y2='12.5' stroke='%23000000' stroke-width='1.2' opacity='0.35'/%3E%3Cline x1='0' y1='12.5' x2='0' y2='25' stroke='%23000000' stroke-width='1.2' opacity='0.35'/%3E%3C/svg%3E");
-    background-size: 40px 25px; /* Size proportions matched beautifully for your tier heights */
-    
-    mix-blend-mode: multiply;   /* Perfectly darkens your purple/blue gradient shades */
-    opacity: 0.25;              /* Subtle, elegant stonework depth */
+    background-size: 40px 25px;
+    mix-blend-mode: multiply;
+    opacity: 0.25;
 }
 
-/* Ensure your text layers sit proudly above the brick texture */
 .block h3, .block p {
     position: relative;
     z-index: 2;
@@ -713,10 +351,6 @@ section {
 .tier-3 { width: 445px; height: 70px; }
 .tier-4 { width: 540px; height: 80px; }
 
-/* ── HOVER POP-OUT: LABEL → CONNECTOR → PANEL ───────────── */
-/* Each side is a flex row. Source order in the HTML controls
-   visual order (nearest-to-block to farthest-from-block), so
-   no flex-direction trickery is needed. */
 .skill-group {
     position: absolute;
     top: 50%;
@@ -730,7 +364,6 @@ section {
 .skill-group.left  { right: calc(100% + 10px); }
 .skill-group.right { left:  calc(100% + 10px); }
 
-/* Stage 1: the short label, sits closest to the block */
 .skill-label {
     font-family: var(--font-display);
     font-size: 0.7rem;
@@ -743,7 +376,6 @@ section {
     pointer-events: none;
 }
 
-/* Stage 2: the connector line, grows after the label appears */
 .skill-connector {
     display: block;
     height: 1px;
@@ -752,7 +384,6 @@ section {
     transition: width 0.3s ease 0.15s, background 0.3s ease 0.15s, box-shadow 0.3s ease 0.15s;
 }
 
-/* Stage 3: the detail card, fades in at the far end of the line */
 .skill-panel {
     width: 160px;
     background: rgba(15, 12, 24, 0.95);
@@ -783,17 +414,15 @@ section {
     line-height: 1.3;
 }
 
-/* Styling the container and the icon inside it (now an <a> to the
-   program's homepage, so it needs its own anchor reset + affordance) */
 .panel-icon {
     display: inline-block;
-    font-size: 1.8rem; /* Makes the icons a great scannable size */
+    font-size: 1.8rem;
     margin-bottom: 6px;
-    color: var(--stone-text); /* Matches your resting text stone shade */
+    color: var(--stone-text);
     text-decoration: none;
     cursor: pointer;
     position: relative;
-    z-index: 2; /* Sits above the panel so it stays clickable */
+    z-index: 2;
     transition: color 0.3s ease, transform 0.3s ease;
 }
 
@@ -803,16 +432,12 @@ section {
     border-radius: 4px;
 }
 
-/* When the parent skill-panel transitions into focus/hover */
 .skill-panel:hover .panel-icon {
-    color: var(--gold); /* Ignites to golden-glyph status */
-    transform: scale(1.1); /* Subtle visual pop forward */
+    color: var(--gold);
+    transform: scale(1.1);
     filter: drop-shadow(0 0 6px var(--gold-glow));
 }
 
-/* ── HOVER / FOCUS STATES TRIGGERED FROM WRAPPER ── */
-
-/* 1. Ignite block in gold */
 .tier-wrapper:hover .block,
 .tier-wrapper:focus-within .block {
     background: linear-gradient(135deg, #c8950a, #ffd700, #e6a800);
@@ -822,7 +447,6 @@ section {
         inset 0 0 10px rgba(255,255,255,0.1);
 }
 
-/* 2. Label appears first */
 .tier-wrapper:hover .skill-label,
 .tier-wrapper:focus-within .skill-label {
     opacity: 1;
@@ -830,7 +454,6 @@ section {
     text-shadow: 0 0 12px var(--gold-glow);
 }
 
-/* 3. Connector line grows next */
 .tier-wrapper:hover .skill-connector,
 .tier-wrapper:focus-within .skill-connector {
     width: 26px;
@@ -838,7 +461,6 @@ section {
     box-shadow: 0 0 8px var(--gold-glow);
 }
 
-/* 4. Detail panel fades in last, at the end of the line */
 .tier-wrapper:hover .skill-panel,
 .tier-wrapper:focus-within .skill-panel {
     opacity: 1;
@@ -851,10 +473,6 @@ section {
     outline-offset: 4px;
     border-radius: 2px;
 }
-
-/* JS-controlled visibility states */
-.hidden  { opacity: 0; transform: translateY(40px); }
-.visible { opacity: 1; transform: translateY(0); }
 
 .blueprint-card {
     background: linear-gradient(135deg, rgba(20, 18, 30, 0.95), rgba(12, 10, 20, 0.95));
@@ -875,7 +493,7 @@ section {
 
 .blueprint-col h4 {
     color: var(--gold-bright, #ffd700);
-    font-family: 'Cinzel', serif; /* Or your custom heading font */
+    font-family: 'Cinzel', serif;
     border-bottom: 1px solid rgba(255, 215, 0, 0.2);
     padding-bottom: 0.5rem;
     margin-bottom: 1rem;
@@ -893,15 +511,7 @@ section {
     line-height: 1.4;
 }
 
-/* Stack them vertically on mobile devices */
-@media (max-width: 640px) {
-    .blueprint-grid {
-        grid-template-columns: 1fr;
-        gap: 1.5rem;
-    }
-}
-
-/* ── 7B. PROJECTS GALLERY (EXCAVATIONS) ─────────────────── */
+/* ── 6. PROJECTS GALLERY (EXCAVATIONS) ─────────────────── */
 #projects-preview {
     padding-top: 20px;
 }
@@ -936,12 +546,11 @@ section {
     outline-offset: 4px;
 }
 
-/* The carved stone frame holding each screenshot */
 .frame-border {
     position: relative;
     width: 100%;
     aspect-ratio: 4 / 3;
-    border-radius: 14px 4px 12px 4px; /* uneven, chipped-stone corners */
+    border-radius: 14px 4px 12px 4px;
     overflow: hidden;
     border: 2px solid #ffd70040;
     background: linear-gradient(155deg, #3c372f 0%, #221f1a 100%);
@@ -961,8 +570,6 @@ section {
         0 16px 32px rgba(0,0,0,0.6),
         inset 0 0 20px rgba(0,0,0,0.5);
 }
-
-/* ── PROJECT IMAGE SLIDESHOW ── */
 
 .relic-slideshow {
     position: absolute;
@@ -993,7 +600,6 @@ section {
     transform: scale(1.04);
 }
 
-/* ── SPIKE TRAP SLIDE TRANSITION ── */
 .spike-trap {
     position: absolute;
     inset: 0;
@@ -1027,39 +633,19 @@ section {
 .spike-row.bottom {
     bottom: -1px;
     height: 80%;
-    /* Keep it perfectly centered (no translateX offset) but flip it horizontally */
-    transform: scaleX(-1) translateY(100%); 
+    transform: scaleX(-1) translateY(100%);
 }
 
 .spike-trap.closing .spike-row {
     transition-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-/* Separate closing states to preserve the horizontal flip on the bottom row */
 .spike-trap.closing .spike-row.top {
-    /* Closes straight down with a tiny overlap to seal light leaks */
-    transform: translateY(1%); 
+    transform: translateY(1%);
 }
 
 .spike-trap.closing .spike-row.bottom {
-    /* Closes straight up, keeping its horizontal mirror flip intact */
-    transform: scaleX(-1) translateY(-1%); 
-}
-
-.relic-badge {
-    position: absolute;
-    top: 12px;
-    left: 12px;
-    z-index: 4;
-    font-family: var(--font-display);
-    font-size: 0.6rem;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    color: var(--stone-dark);
-    background: var(--gold);
-    padding: 5px 12px;
-    border-radius: 3px 10px 3px 10px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+    transform: scaleX(-1) translateY(-1%);
 }
 
 .relic-caption {
@@ -1082,8 +668,6 @@ section {
     color: rgba(200,188,160,0.75);
 }
 
-/* Small bone accents at opposite corners of each filled frame —
-   decorative flourish for the "relic frame" concept */
 .bone-accent {
     position: absolute;
     font-size: 1.1rem;
@@ -1102,7 +686,6 @@ section {
     opacity: 0.85;
 }
 
-/* The empty "More Coming" frame — deliberately dimmer and unfinished-looking */
 .relic-frame.empty .frame-border {
     aspect-ratio: 4 / 3;
     display: flex;
@@ -1134,7 +717,6 @@ section {
     color: rgba(255,215,0,0.22);
 }
 
-/* ── SHARED "MORE" BUTTON (used by Projects & Work sections) ── */
 .section-more-btn {
     display: inline-flex;
     align-items: center;
@@ -1158,21 +740,17 @@ section {
     letter-spacing: 0.36em;
 }
 
-/* Sits below the torchlight-masked tomb-container, so it stays
-   visible regardless of the mask/torch state */
 .tomb-more-btn {
     position: relative;
     z-index: 5;
     margin-top: 60px;
 }
 
-/* ── 8. TOMB ARCH (pyramid → tomb transition) ───────────── */
-
-/* ── TWIN PILLAR ASCENT NAVIGATION ARROWS ── */
+/* ── 7. TOMB ARCH (pyramid → tomb transition) ───────────── */
 .pillar-scroll-top {
     position: fixed;
-    top: 45vh; /* Safely suspended right in the comfortable middle viewport workspace */
-    width: 6vw; /* Matches your structural column grids perfectly */
+    top: 45vh;
+    width: 6vw;
     min-width: 40px;
     max-width: 90px;
     height: 70px;
@@ -1186,12 +764,9 @@ section {
     font-family: var(--font-display);
     color: var(--gold);
     z-index: 100;
-    
-    /* RESTING PROFILE: Low opacity blends gracefully directly into your stone column styles */
     opacity: 0;
     visibility: hidden;
     filter: brightness(0.55);
-    
     transition: opacity 0.5s ease, visibility 0.5s ease, filter 0.3s ease, transform 0.3s ease;
 }
 
@@ -1203,9 +778,8 @@ section {
     right: 0;
 }
 
-/* Active Class engaged programmatically by our JS engine scroll tracking */
 .pillar-scroll-top.is-active {
-    opacity: 0.28; /* Soft ghosted outline stays entirely out of your readable text space */
+    opacity: 0.28;
     visibility: visible;
 }
 
@@ -1215,29 +789,20 @@ section {
     transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
-/* Interactive Hover Reactions scoped cleanly to the specific columns */
 .pillar-scroll-top:hover {
     opacity: 0.95 !important;
     filter: brightness(1.1) drop-shadow(0 0 8px var(--gold-glow));
-    transform: translateY(-4px); /* Clean upward physical nudge hint */
+    transform: translateY(-4px);
 }
 
 .pillar-scroll-top:hover .pillar-arrow {
     transform: scale(1.18);
 }
 
-/* Completely drop the side selectors on tiny devices to prioritize absolute page widths */
-@media (max-width: 640px) {
-    .pillar-scroll-top {
-        display: none !important;
-    }
-}
-
 .tomb-arch {
     width: 100%;
     overflow: hidden;
     line-height: 0;
-    /* Slightly negative margin pulls it flush against the pyramid section */
     margin-top: -2px;
 }
 
@@ -1247,89 +812,21 @@ section {
     display: block;
 }
 
-/* ── TOMB HALLWAY STRUCTURAL PILLARS ── */
-.tomb-hallway {
-    position: relative;
-    width: 100%;
-    overflow: hidden; /* Keeps things neat on the edges */
-    background: transparent;
-}
-
-
-/* Base styles for both pillars */
-.tomb-hallway::before,
-.tomb-hallway::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    width: 6vw; /* Responsive pillar width based on viewport size */
-    min-width: 40px;
-    max-width: 90px;
-    z-index: 2;
-    pointer-events: none;
-    
-    /* Solid base stone color  */
-    background-color: #0c0a14;
-    
-    /* Carved horizontal stone/brick blocks via a repeating gradient */
-    background-image: repeating-linear-gradient(
-        0deg,
-        transparent,
-        transparent 38px,
-        #463e1180 45px,
-        #00000073 40px
-    );
-    box-shadow: 
-        inset -5px 0 15px rgba(0, 0, 0, 0.6),
-        inset 5px 0 15px rgba(0, 0, 0, 0.6);
-
-    /* Fades the pillar in from nothing over its first ~140px, so it
-       emerges out of the shaft gradient above instead of starting as
-       a hard-edged block right where the hallway begins. */
-    mask-image: linear-gradient(to bottom, transparent 0, black 140px);
-    -webkit-mask-image: linear-gradient(to bottom, transparent 0, black 140px);
-}
-
-/* Left Pillar Placement and inner lighting edge */
-.tomb-hallway::before {
-    left: 0;
-    border-right: 1px solid var(--gold-dim);
-}
-
-/* Right Pillar Placement and inner lighting edge */
-.tomb-hallway::after {
-    right: 0;
-    border-left: 1px solid var(--gold-dim);
-}
-
-/* Responsive adjustment: Slightly dim the pillars on tiny mobile devices */
-@media (max-width: 640px) {
-    .tomb-hallway::before,
-    .tomb-hallway::after {
-        width: 25px;
-        min-width: 25px;
-        opacity: 0.6;
-    }
-}
-
-/* ── 9. EXPERIENCE / TOMB ───────────────────────────────── */
+/* ── 8. EXPERIENCE / TOMB ───────────────────────────────── */
 #experience {
-    background: #050505; 
-    /* background: linear-gradient(to bottom, #050505 80%, #0c0602 100%); */
+    background: #050505;
     padding: 100px 0;
     width: 100%;
-    position: relative; /* Keep this for the absolute button */
+    position: relative;
 }
 
-/* Style the button */
 .accessibility-btn {
     position: absolute;
     top: 20px;
     left: 50%;
-    transform: translateX(-50%); /* Perfectly center it */
-    z-index: 20; /* Ensure it is always above the mask */
-    background: #050505; /* Solid background to make it readable */
+    transform: translateX(-50%);
+    z-index: 20;
+    background: #050505;
     border: 1px solid var(--gold);
     color: var(--gold);
     padding: 8px 16px;
@@ -1340,7 +837,6 @@ section {
     background: var(--gold-dim);
 }
 
-/* The magic override: when no-torch is applied, remove the mask */
 #experience.no-torch .tomb-container {
     -webkit-mask-image: none;
     mask-image: none;
@@ -1350,411 +846,27 @@ section {
     color: rgba(255, 215, 0, 0.18);
 }
 
-.tomb-container {
-    width: 100%;
-    max-width: 900px;
-    margin: 0 auto;
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-    
-    /* The Spotlight Effect: Only masks the text */
-    -webkit-mask-image: radial-gradient(circle 350px at var(--cursor-x) var(--cursor-y), black 20%, transparent 100%);
-    mask-image: radial-gradient(circle 350px at var(--cursor-x) var(--cursor-y), black 20%, transparent 100%);
-}
-
-/* Stone-wall tablet rows */
-.tablet-row {
-    display: grid;
-    grid-template-columns: 1fr 2px 1.5fr;
-    align-items: center;
-    gap: 0 32px;
-    padding: 44px 0;
-    border-bottom: 1px solid rgba(255,255,255,0.04);
-    transition: opacity 0.75s ease, transform 0.75s ease;
-}
-
-.tablet-row:last-child { border-bottom: none; }
-
-/* Engraving — the stone tablet bearing job title & date */
-.engraving {
-    position: relative;
-    padding: 28px 32px;
-    background:
-        radial-gradient(circle at 25% 20%, rgba(255,255,255,0.035) 0%, transparent 45%),
-        radial-gradient(circle at 75% 75%, rgba(255,255,255,0.025) 0%, transparent 50%),
-        linear-gradient(155deg, #3c372f 0%, #221f1a 55%, #2e2a23 100%);
-    border-radius: 16px 5px 14px 6px; /* uneven corners — looks chipped, not machine-cut */
-    box-shadow:
-        inset 0 0 24px rgba(0,0,0,0.6),
-        inset 0 1px 0 rgba(255,255,255,0.05),
-        0 14px 28px rgba(0,0,0,0.55);
-    border: 1px solid rgba(255,255,255,0.05);
-    overflow: hidden;
-    transition: transform 0.4s ease;
-}
-
-/* Faint crack lines across the stone surface */
-.engraving::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background-image: repeating-linear-gradient(
-        118deg,
-        transparent,
-        transparent 22px,
-        rgba(0,0,0,0.14) 23px,
-        transparent 24px
-    );
-    pointer-events: none;
-}
-
-/* Each tablet tilts slightly off-axis so the row doesn't look mass-produced */
-.tablet-row:nth-child(odd)  .engraving { transform: rotate(-0.6deg); }
-.tablet-row:nth-child(even) .engraving { transform: rotate(0.6deg); }
-
-.tablet-row:hover .engraving,
-.tablet-row:focus-within .engraving {
-    transform: rotate(0deg);
-}
-
-.engraving h3 {
-    position: relative;
-    font-family: var(--font-display);
-    font-size: clamp(1rem, 2.5vw, 1.5rem);
-    font-weight: 600;
-    color: var(--stone-text); /* dim stone grey — looks carved */
-    text-shadow:
-        1px 1px 0 rgba(0,0,0,0.9),
-        -1px -1px 0 rgba(255,255,255,0.03);
-    margin-bottom: 8px;
-    transition: color 0.4s ease, text-shadow 0.4s ease;
-}
-
-.engraving-date {
-    position: relative;
-    display: block;
-    font-family: var(--font-display);
-    font-size: 0.62rem;
-    letter-spacing: 0.28em;
-    text-transform: uppercase;
-    color: rgba(255,215,0,0.18);
-    transition: color 0.4s ease;
-}
-
-/* The vertical golden divider bar — starts dark, ignites on hover */
-.tablet-divider {
-    width: 2px;
-    height: 70px;
-    background: #1a1a1a;
-    align-self: center;
-    transition: background 0.4s ease, box-shadow 0.4s ease;
-}
-
-/* Description — hidden until hover */
-.details {
-    opacity: 0;
-    transition: opacity 0.4s ease;
-}
-
-.details p {
-    font-family: var(--font-body);
-    font-size: 0.9rem;
-    line-height: 1.75;
-    color: rgba(200, 188, 160, 0.0); /* starts invisible */
-    transition: color 0.4s ease;
-}
-
-/* ── TORCHLIGHT HOVER MECHANIC ── */
-.tablet-row:hover .engraving h3,
-.tablet-row:focus-within .engraving h3 {
-    color: var(--gold);
-    text-shadow: 0 0 20px var(--gold-glow), 0 0 40px rgba(255,215,0,0.2);
-}
-
-.tablet-row:hover .engraving-date,
-.tablet-row:focus-within .engraving-date {
-    color: rgba(255,215,0,0.5);
-}
-
-.tablet-row:hover .tablet-divider,
-.tablet-row:focus-within .tablet-divider {
-    background: var(--gold);
-    box-shadow: 0 0 12px var(--gold-glow), 0 0 30px rgba(255,215,0,0.3);
-}
-
-.tablet-row:hover .details,
-.tablet-row:focus-within .details {
-    opacity: 1;
-}
-
-.tablet-row:hover .details p,
-.tablet-row:focus-within .details p {
-    color: #c8bca0;
-}
-
-.tablet-row:focus-visible {
-    outline: 2px solid var(--gold);
-    outline-offset: 6px;
-    border-radius: 2px;
-}
-
-/* Slide-in animation for tablet rows (JS adds .visible) */
-.hidden-left {
-    opacity: 0;
-    transform: translateX(-60px);
-}
-
-.hidden-left.visible {
-    opacity: 1;
-    transform: translateX(0);
-}
-
-/* ── 10. FOOTER ──────────────────────────────────────────── */
-#contact {
-    position: relative;
-    padding: 20px 8% 10px;
-    text-align: center;
-    overflow: hidden;
-    background: radial-gradient(circle at 50% 100%, #3d1a00 0%, #1a0a00 50%, #050505 100%);
-    z-index: 1;
-    animation: breathe 5s ease-in-out infinite;
-}
-
-@keyframes breathe {
-    0% { filter: brightness(1); }
-    50% { filter: brightness(1.2); }
-    100% { filter: brightness(1); }
-}
-
-.footer-content {
-    position: relative;
-    z-index: 2;
-    padding-bottom: 40px;
-}
-
-.footer-glyph { 
-    font-size: 2rem; 
-    color: var(--gold-dim); 
-    margin-bottom: 8px; /* Was 14px */
-}
-
-.footer-name { 
-    font-family: var(--font-display); 
-    color: var(--gold); 
-    text-shadow: 0 0 15px rgba(255, 69, 0, 0.6); 
-    margin-bottom: 12px; /* Was 20px */
-}
-
-.footer-links { 
-    display: flex; 
-    justify-content: center; 
-    align-items: center; 
-    gap: 16px; 
-    flex-wrap: wrap; 
-    margin-bottom: 16px; /* Was 24px */
-}
-
-.link-github { color: #716e6e; }   /* Example: Neutral Grey */
-.link-linkedin { color: #716e6e; } /* Example: Classic LinkedIn Blue */
-.link-github:hover, 
-.link-linkedin:hover {
-    color: var(--gold); /* Or your --lava-hot variable */
-    text-shadow: 0 0 10px var(--gold-glow);}
-
-.footer-sep { color: rgba(255,215,0,0.15); }
-.footer-copy { font-size: 0.68rem; letter-spacing: 0.15em; color: rgba(255,215,0,0.12); }
-
-/* ── FOOTER SMOOTH TRANSITION VEIL ── */
-footer#contact {
-    position: relative; /* Establish relative tracking for the veil */
-}
-
-footer#contact::before {
-    content: '';
-    position: absolute;
-    
-    /* Pull the gradient 40px above the footer to bleed into <main> */
-    top: -40px; 
-    left: 0;
-    width: 100%;
-    height: 80px; /* Total depth of the blending zone */
-    
-    /* Fades from transparent, hits deep tomb shadow at the seam, dissolves back out */
-    background: linear-gradient(
-        to bottom, 
-        transparent 0%, 
-        #050408 50%, 
-        transparent 100%
-    );
-    
-    pointer-events: none; /* Prevents blocking clicks on links */
-    z-index: 4; /* Sits over background edges, but beneath your text/links */
-}
-
-/* ── LAVA ATMOSPHERE ── */
-.lava-stage {
-    position: absolute;
-    bottom: 0; left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 1;
-    pointer-events: none;
-    overflow: hidden;
-    /* Soften the very top edge so it blends into the black */
-    mask-image: linear-gradient(to top, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 70%, transparent 100%);
-    -webkit-mask-image: linear-gradient(to top, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 70%, transparent 100%);
-}
-
-.lava-wave {
-    position: absolute;
-    bottom: -50px;
-    width: 200%;
-    height: 100px;
-    background: var(--lava-hot);
-    border-radius: 40%;
-    filter: blur(100px); /* Heavy blur to make it look like a glow, not a line */
-    opacity: 0.3;
-    mix-blend-mode: screen;
-    animation: lavaFlow 15s infinite ease-in-out;
-}
-
-.wave-a { left: -50%; }
-.wave-b { left: -20%; animation-delay: -5s; opacity: 0.2; }
-.wave-c { left: -80%; animation-delay: -10s; opacity: 0.25; }
-
-@keyframes lavaFlow {
-    0%   { transform: translateX(0%) translateY(0%); }
-    50%  { transform: translateX(-25%) translateY(-20px); }
-    100% { transform: translateX(0%) translateY(0%); }
-}
-
-/* ── 11. ACCESSIBILITY & RESPONSIVE ─────────────────────── */
-
-/* Focus ring for keyboard nav */
-a:focus-visible,
-summary:focus-visible {
-    outline: 2px solid var(--gold);
-    outline-offset: 4px;
-    border-radius: 2px;
-}
-
-/* Mobile: stack tiers and their detail groups vertically, always visible
-   since there's no hover on touch devices */
-@media (max-width: 640px) {
-    .tier-wrapper {
-        flex-direction: column;
-    }
-
-    .skill-group {
-        position: static;
-        transform: none;
-        flex-direction: column;
-        gap: 4px;
-        margin-top: 10px;
-        width: 90%;
-    }
-
-    .skill-label {
-        opacity: 1;
-        color: var(--gold-dim);
-    }
-
-    .skill-connector {
-        width: 1px;
-        height: 12px;
-    }
-
-    .skill-panel {
-        opacity: 1;
-        transform: none !important;
-        pointer-events: auto;
-        width: 100%;
-    }
-
-    /* Experience: no hover on touch, so titles/details need a readable
-       resting state instead of waiting for torchlight */
-    .engraving h3 {
-        color: var(--stone-text);
-    }
-    .engraving-date {
-        color: rgba(255,215,0,0.4);
-    }
-
-    .engraving {
-        padding: 20px 22px;
-        transform: none !important; /* skip the tilt on small screens */
-    }
-
-    .tablet-row {
-        grid-template-columns: 1fr;
-        grid-template-rows: auto auto auto;
-        gap: 14px 0;
-    }
-
-    .tablet-divider {
-        width: 40px;
-        height: 2px;
-    }
-
-    .details { opacity: 1; }
-    .details p { color: rgba(200,188,160,0.65); }
-
-    .tomb-arch svg { height: 70px; }
-
-    .shaft { height: 100px; }
-
-    .relic-gallery {
-        gap: 32px;
-    }
-
-    .relic-frame {
-        width: 100%;
-        max-width: 320px;
-    }
-}
-
-@media (max-width: 400px) {
-    .tier-4 { width: 95vw; }
-    .tier-3 { width: 75vw; }
-    .tier-2 { width: 56vw; }
-    .tier-1 { width: 38vw; }
-}
-
-/* Respect prefers-reduced-motion */
-@media (prefers-reduced-motion: reduce) {
-    *,
-    *::before,
-    *::after {
-        animation-duration: 0.01ms !important;
-        animation-iteration-count: 1 !important;
-        transition-duration: 0.01ms !important;
-    }
-}
-
-/* ── VERTICAL INSCRIPTION TRACKS ── */
+/* ── 9. VERTICAL INSCRIPTION TRACKS ─────────────────────── */
 .vertical-track {
     position: absolute;
     top: 0;
     bottom: 0;
     width: 40px;
-    z-index: 1; /* Sits behind content cards but clearly on the background layer */
+    z-index: 1;
     display: flex;
     flex-direction: column;
     align-items: center;
-    pointer-events: none; /* Allows user to click items near the edge safely */
+    pointer-events: none;
 }
 
-/* Hugs perfectly against your existing 6vw side stone pillars */
 .vertical-track.left {
-    left: 6.5vw; 
+    left: 6.5vw;
 }
 
 .vertical-track.right {
     right: 6.5vw;
 }
 
-/* The vertical conduit wire anchoring the glyphs */
 .track-line {
     position: absolute;
     top: 0;
@@ -1770,7 +882,6 @@ summary:focus-visible {
     box-shadow: 0 0 8px rgba(255, 215, 0, 0.05);
 }
 
-/* Spreads your symbols evenly down the full scroll height */
 .track-glyphs {
     position: absolute;
     top: 0;
@@ -1778,7 +889,7 @@ summary:focus-visible {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    padding: 20vh 0; /* Keeps symbols nicely spread relative to screen height */
+    padding: 20vh 0;
     align-items: center;
 }
 
@@ -1786,11 +897,9 @@ summary:focus-visible {
     font-size: 1.4rem;
     font-family: var(--font-display);
     user-select: none;
-    /* Living, breathing torchlight flickering animation */
     animation: glyphTrackFlicker 4s ease-in-out infinite;
 }
 
-/* Staggering the glows organically so the tomb looks active */
 .track-glyphs span:nth-child(1) { animation-delay: 0s; }
 .track-glyphs span:nth-child(2) { animation-delay: 1.4s; }
 .track-glyphs span:nth-child(3) { animation-delay: 2.8s; }
@@ -1798,7 +907,6 @@ summary:focus-visible {
 .track-glyphs span:nth-child(5) { animation-delay: 2.1s; }
 .track-glyphs span:nth-child(6) { animation-delay: 3.3s; }
 
-/* Inscription Flicker Animation tailored for Text Glyphs */
 @keyframes glyphTrackFlicker {
     0%, 100% {
         color: rgba(255, 215, 0, 0.22);
@@ -1807,19 +915,69 @@ summary:focus-visible {
     }
     50% {
         color: var(--gold);
-        text-shadow: 
-            0 0 12px var(--gold-glow), 
+        text-shadow:
+            0 0 12px var(--gold-glow),
             0 0 22px rgba(255, 215, 0, 0.35);
         transform: scale(1.03);
     }
 }
 
-/* RESPONSIVE FILTER: Completely hide on smaller screens 
-   to prioritize text reading area over background decoration */
-@media (max-width: 1024px) {
-    .vertical-track {
-        display: none;
+/* ── 10. GEOMETRIC LABYRINTH BACKGROUND ─────────────────────── */
+.index-labyrinth-zone {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+}
+
+.labyrinth-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    pointer-events: none;
+    opacity: 0.8;
+    mix-blend-mode: screen;
+}
+
+#foundations,
+#excavations {
+    position: relative;
+    z-index: 2;
+}
+
+.circuit-line {
+    stroke: var(--gold);
+    transition: all 0.5s ease;
+}
+
+@keyframes circuitPulse {
+    0%, 100% {
+        opacity: 0.1;
+        stroke: var(--gold-dim);
+        filter: drop-shadow(0 0 0px transparent);
     }
+    50% {
+        opacity: 0.3;
+        stroke: var(--gold);
+        filter: drop-shadow(0 0 6px var(--gold-glow));
+    }
+}
+
+.pulse-fast {
+    animation: circuitPulse 5s infinite ease-in-out;
+    animation-delay: 0s;
+}
+
+.pulse-med {
+    animation: circuitPulse 7.5s infinite ease-in-out;
+    animation-delay: 2s;
+}
+
+.pulse-slow {
+    animation: circuitPulse 11s infinite ease-in-out;
+    animation-delay: 4s;
 }
 
 .hallway-matrix-bg {
@@ -1828,20 +986,11 @@ summary:focus-visible {
     left: 0;
     width: 100%;
     height: 100%;
-    z-index: 1;             /* Keeps the pattern on the background layer */
-    pointer-events: none;   /* Allows links/cards on top to remain fully clickable */
-    opacity: 0.35;          /* Ambient opacity so it doesn't overpower your content */
-    mix-blend-mode: screen; /* Merges the golden light seamlessly into your gradient */
+    z-index: 1;
+    pointer-events: none;
+    opacity: 0.35;
+    mix-blend-mode: screen;
 }
-
-/* Forces your actual skills pyramid and project panels to stay on top of the grid lines */
-#skills, 
-#projects-preview {
-    position: relative;
-    z-index: 2;
-}
-
-/* ── SVG PATTERN STYLING ── */
 
 .matrix-line {
     stroke: var(--gold);
@@ -1851,10 +1000,8 @@ summary:focus-visible {
 .matrix-glyph {
     fill: var(--gold);
     font-family: var(--font-display);
-    font-size: 3.2rem;      /* Large mystical weight for the hieroglyphs */
+    font-size: 3.2rem;
 }
-
-/* ── ASYNCHRONOUS GLOW MATRIX TIMINGS ── */
 
 @keyframes matrixGlow {
     0%, 100% {
@@ -1867,24 +1014,7 @@ summary:focus-visible {
     }
 }
 
-.pulse-fast {
-    animation: matrixGlow 5s infinite ease-in-out;
-}
-
-.pulse-med {
-    animation: matrixGlow 8.5s infinite ease-in-out;
-    animation-delay: 2s;
-}
-
-.pulse-slow {
-    animation: matrixGlow 12s infinite ease-in-out;
-    animation-delay: 4.5s;
-}
-
-/* ══════════════════════════════════════════════════════════
-   CINEMATIC INTRO GATE (FIXED OVERLAY — TEXT ONLY)
-   ══════════════════════════════════════════════════════════ */
-
+/* ── 11. CINEMATIC INTRO GATE ────────────────────────────── */
 #intro-gate {
     position: fixed;
     top: 0;
@@ -1895,12 +1025,12 @@ summary:focus-visible {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    background: #090614; /* Deep cosmic darkness */
-    z-index: 9999; /* Sits completely on top of everything */
+    background: #090614;
+    z-index: 9999;
     transition: opacity 1.8s cubic-bezier(0.25, 1, 0.5, 1), visibility 1.8s;
     overflow: hidden;
     padding: 0 24px;
-    gap: 40px; /* Beautiful spatial separation between the header and enter link */
+    gap: 40px;
 }
 
 #intro-gate.fade-out {
@@ -1909,12 +1039,11 @@ summary:focus-visible {
     pointer-events: none;
 }
 
-/* Drifting Cosmic Backdrop */
 .intro-stars {
     position: absolute;
     inset: 0;
     opacity: 0.65;
-    background-image: 
+    background-image:
         radial-gradient(2px 2px at 40px 60px, #ffffff, transparent),
         radial-gradient(2px 2px at 150px 240px, var(--gold), transparent),
         radial-gradient(1.5px 1.5px at 280px 120px, #ffffff, transparent),
@@ -1929,10 +1058,9 @@ summary:focus-visible {
     100% { background-position: 400px 400px; }
 }
 
-/* Centered & Massive Egyptian Header */
 .intro-welcome-text {
     font-family: 'Cinzel Decorative', serif;
-    font-size: clamp(2.2rem, 6vw, 3.8rem); /* Expanded size so it dominates the space */
+    font-size: clamp(2.2rem, 6vw, 3.8rem);
     font-weight: 700;
     letter-spacing: 0.18em;
     text-transform: uppercase;
@@ -1946,7 +1074,6 @@ summary:focus-visible {
     z-index: 2;
 }
 
-/* Deeply Delayed Action Wrapper (2.8s total wait time before appearing) */
 .intro-action {
     opacity: 0;
     animation: introFadeIn 2s ease-out 2.8s forwards;
@@ -1957,7 +1084,6 @@ summary:focus-visible {
     to { opacity: 1; }
 }
 
-/* Minimalist Glowing Text Link (Replaces the chunky button) */
 .glowing-text-btn {
     background: none;
     border: none;
@@ -1975,48 +1101,87 @@ summary:focus-visible {
 .glowing-text-btn:hover,
 .glowing-text-btn:focus-visible {
     color: var(--gold);
-    text-shadow: 
-        0 0 15px var(--gold), 
+    text-shadow:
+        0 0 15px var(--gold),
         0 0 30px var(--gold-glow);
-    transform: scale(1.08); /* Soft hover magnification */
+    transform: scale(1.08);
     outline: none;
 }
 
-/* ── FOOTER BEETLE EASTER EGG ── */
-.footer-beetle-btn {
-    display: inline-block;
-    text-decoration: none;
-    cursor: pointer;
-    margin-bottom: 1rem;
-    position: relative;
-    z-index: 10;
-    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+/* ── 12. RESPONSIVE (Index-Specific) ─────────────────────── */
+@media (max-width: 640px) {
+    .tier-wrapper {
+        flex-direction: column;
+    }
+    .skill-group {
+        position: static;
+        transform: none;
+        flex-direction: column;
+        gap: 4px;
+        margin-top: 10px;
+        width: 90%;
+    }
+    .skill-label {
+        opacity: 1;
+        color: var(--gold-dim);
+    }
+    .skill-connector {
+        width: 1px;
+        height: 12px;
+    }
+    .skill-panel {
+        opacity: 1;
+        transform: none !important;
+        pointer-events: auto;
+        width: 100%;
+    }
+    .engraving h3 {
+        color: var(--stone-text);
+    }
+    .engraving-date {
+        color: rgba(255,215,0,0.4);
+    }
+    .engraving {
+        padding: 20px 22px;
+        transform: none !important;
+    }
+    .tablet-row {
+        grid-template-columns: 1fr;
+        grid-template-rows: auto auto auto;
+        gap: 14px 0;
+    }
+    .tablet-divider {
+        width: 40px;
+        height: 2px;
+    }
+    .details { opacity: 1; }
+    .details p { color: rgba(200,188,160,0.65); }
+    .tomb-arch svg { height: 70px; }
+    .shaft { height: 100px; }
+    .relic-gallery {
+        gap: 32px;
+    }
+    .relic-frame {
+        width: 100%;
+        max-width: 320px;
+    }
+    .pillar-scroll-top {
+        display: none !important;
+    }
+    .vertical-track {
+        display: none;
+    }
 }
 
-.footer-beetle-btn .beetle-glyph {
-    font-size: 2.2rem;
-    color: var(--gold-dim, rgba(255, 215, 0, 0.35));
-    transition: color 0.4s ease, text-shadow 0.4s ease;
+@media (max-width: 1024px) {
+    .vertical-track {
+        display: none;
+    }
 }
 
-/* Easter Egg Hover: Glows Golden & Vibrates Subtle Elevation */
-.footer-beetle-btn:hover {
-    transform: translateY(-5px) scale(1.1);
-}
-
-.footer-beetle-btn:hover .beetle-glyph {
-    color: var(--gold, #ffd700);
-    text-shadow: 
-        0 0 12px var(--gold-glow, rgba(255, 215, 0, 0.6)), 
-        0 0 24px rgba(255, 215, 0, 0.3);
-}
-
-/* Subtle continuous drift animation once uncovered */
-@keyframes beetleDrift {
-    0% { transform: translateY(0); }
-    100% { transform: translateY(-3px); }
-}
-
-.footer-beetle-btn:active {
-    transform: translateY(2px) scale(0.95);
+@media (max-width: 400px) {
+    .tier-4 { width: 95vw; }
+    .tier-3 { width: 75vw; }
+    .tier-2 { width: 56vw; }
+    .tier-1 { width: 38vw; }
 }
