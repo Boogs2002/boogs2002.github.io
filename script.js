@@ -1,6 +1,113 @@
 // Handles scrolling, navigation, parallax, torchlight, scroll reveals, slideshows, and the cinematic session-gated welcome overlay
 document.addEventListener('DOMContentLoaded', () => {
 
+    // Page transition doors: closed on load then slide open; reversed then navigated on internal link clicks
+    const pageTransition = document.getElementById('page-transition');
+    const TRANSITION_MS = 750; // must match the CSS transition duration
+
+    if (pageTransition) {
+        const openDoors = () => {
+            requestAnimationFrame(() => {
+                setTimeout(() => pageTransition.classList.add('is-open'), 60);
+            });
+        };
+
+        if (document.readyState === 'complete') {
+            openDoors();
+        } else {
+            window.addEventListener('load', openDoors, { once: true });
+        }
+
+        document.querySelectorAll('a[href]').forEach((link) => {
+            const href = link.getAttribute('href');
+            if (!href) return;
+
+            const isSamePageHash = href.startsWith('#');
+            const isExternal = /^https?:\/\//i.test(href) && !href.includes(window.location.hostname);
+            const isSpecialProtocol = /^(mailto:|tel:|javascript:)/i.test(href);
+            const opensNewTab = link.target === '_blank';
+
+            if (isSamePageHash || isExternal || isSpecialProtocol || opensNewTab) return;
+
+            link.addEventListener('click', (e) => {
+                if (e.defaultPrevented || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button !== 0) return;
+
+                e.preventDefault();
+                pageTransition.classList.remove('is-open');
+                setTimeout(() => {
+                    window.location.href = href;
+                }, TRANSITION_MS);
+            });
+        });
+    }
+
+    // ── CUSTOM CURSOR (ankh glyph, fine-pointer devices only) ──
+    if (window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
+        const root = document.documentElement;
+        root.classList.add('has-custom-cursor');
+
+        document.addEventListener('mousemove', (e) => {
+            root.style.setProperty('--cx', `${e.clientX}px`);
+            root.style.setProperty('--cy', `${e.clientY}px`);
+        });
+
+        const HOVER_TARGETS = 'a, button, [role="button"], input, textarea, select';
+
+        document.addEventListener('mouseover', (e) => {
+            if (e.target.closest(HOVER_TARGETS)) {
+                root.classList.add('custom-cursor-hover');
+            }
+        });
+
+        document.addEventListener('mouseout', (e) => {
+            if (e.target.closest(HOVER_TARGETS)) {
+                root.classList.remove('custom-cursor-hover');
+            }
+        });
+    }
+
+    // Chisel text reveal: wraps each heading letter in a span for staggered CSS reveal on scroll
+    document.querySelectorAll('.section-heading').forEach((heading) => {
+        Array.from(heading.childNodes).forEach((node) => {
+            if (node.nodeType !== Node.TEXT_NODE || !node.textContent.trim()) return;
+
+            const fragment = document.createDocumentFragment();
+            let letterIndex = 0;
+
+            Array.from(node.textContent).forEach((char) => {
+                if (char.trim() === '') {
+                    fragment.appendChild(document.createTextNode(char));
+                    return;
+                }
+                const span = document.createElement('span');
+                span.className = 'chisel-letter';
+                span.style.setProperty('--i', letterIndex);
+                span.textContent = char;
+                fragment.appendChild(span);
+                letterIndex += 1;
+            });
+
+            heading.replaceChild(fragment, node);
+        });
+    });
+
+    const chiselObserver = new IntersectionObserver(
+        (entries) => {
+            entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('is-chiseled');
+                } else {
+                    entry.target.classList.remove('is-chiseled');
+                }
+            });
+        },
+        { root: null, threshold: 0.4 }
+    );
+
+    document.querySelectorAll('.section-heading').forEach((heading) => {
+        chiselObserver.observe(heading);
+    });
+
     // ── CINEMATIC WELCOME OVERLAY (SESSION GATED) ─────────────────
     const enterPortfolioBtn = document.getElementById('enter-portfolio-btn');
     const introGate = document.getElementById('intro-gate');
@@ -19,8 +126,7 @@ document.addEventListener('DOMContentLoaded', () => {
         return lastSegment;
     }
 
-    // currentPath is computed here (outside the introGate check) because it's
-    // also needed below for the Work/Contact navbar-collapse fix.
+    // currentPath is also needed below for the Work/Contact navbar-collapse fix
     const currentPath = normalizePath(window.location.pathname);
 
     if (introGate) {
@@ -34,13 +140,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // Records this page on EVERY page (not just index.html) so that a later
-    // navigation back to Home always sees an accurate "lastPage" and knows
-    // you came from elsewhere, instead of only re-showing the gate on an
-    // actual refresh. Previously this line lived inside `if (introGate)`,
-    // so visiting Work/About/Contact never updated it — leaving "lastPage"
-    // stuck at "index.html" and causing the gate to wrongly reappear every
-    // time you navigated back to Home.
+    // Records this page on every page so "lastPage" is accurate when navigating back to Home
     sessionStorage.setItem('lastPage', currentPath);
 
     if (enterPortfolioBtn && introGate) {
@@ -75,11 +175,7 @@ document.addEventListener('DOMContentLoaded', () => {
     window.addEventListener('scroll', () => {
         if (!scarabNav) return;
 
-        // Work and Contact have an oversized first section (it wraps most of
-        // the page), so "half its height" is still huge and the logo used to
-        // stay visible until you were halfway down the page. Those two pages
-        // now use a small fixed threshold so the nav collapses shortly after
-        // you start scrolling, instead of being driven by section height.
+        // Work/Contact use a small fixed threshold since their first section is oversized
         const isCompactHeroPage = currentPath === 'work.html' || currentPath === 'contact.html';
 
         let collapseThreshold;
@@ -372,9 +468,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // ── WORK PAGE PROJECT SLIDESHOW (automatic door open/close) ──
-    // A sandy overlay acts as a door on a timer: closes, swaps the slide
-    // underneath while hidden, then opens to reveal the new image.
+    // Work page slideshow: sandy overlay acts as a timed door — closes, swaps slide, reopens
     if (!prefersReducedMotion) {
         const DOOR_CLOSE_MS = 900;     // matches the CSS clip-path transition
         const SLIDE_VISIBLE_MS = 4200; // how long the photo stays uncovered

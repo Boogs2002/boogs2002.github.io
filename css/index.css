@@ -35,13 +35,38 @@
     height: 55%;
     pointer-events: none;
     z-index: 1;
-    opacity: 0.5;
+    opacity: 0.62;
     background-image:
-        radial-gradient(2px 2px at 20px 30px, #ffffff, transparent),
-        radial-gradient(2px 2px at 75px 130px, var(--gold), transparent),
-        radial-gradient(1.5px 1.5px at 150px 60px, #ffffff, transparent),
+        radial-gradient(1.5px 1.5px at 20px 30px, rgba(255,255,255,0.9), transparent),
+        radial-gradient(2.5px 2.5px at 75px 130px, var(--gold), transparent),
+        radial-gradient(1.5px 1.5px at 150px 60px, rgba(255,255,255,0.5), transparent),
         radial-gradient(2px 2px at 220px 170px, rgba(255,255,255,0.7), transparent),
-        radial-gradient(2.5px 2.5px at 280px 90px, var(--gold-dim), transparent);
+        radial-gradient(2.5px 2.5px at 280px 90px, var(--gold-dim), transparent),
+        radial-gradient(1px 1px at 40px 200px, rgba(255,255,255,0.3), transparent),
+        radial-gradient(3px 3px at 100px 15px, rgba(255,255,255,1), transparent),
+        radial-gradient(1px 1px at 185px 210px, rgba(255,255,255,0.35), transparent),
+        radial-gradient(2px 2px at 250px 35px, rgba(255,255,255,0.6), transparent),
+        radial-gradient(1px 1px at 320px 150px, rgba(255,255,255,0.25), transparent),
+        radial-gradient(2px 2px at 10px 110px, var(--gold-glow), transparent),
+        radial-gradient(1px 1px at 340px 220px, rgba(255,255,255,0.4), transparent),
+        radial-gradient(1px 1px at 60px 90px, rgba(255,255,255,0.2), transparent),
+        radial-gradient(2.5px 2.5px at 130px 190px, rgba(255,255,255,0.95), transparent),
+        radial-gradient(1px 1px at 300px 200px, rgba(255,255,255,0.3), transparent),
+        radial-gradient(2px 2px at 355px 70px, rgba(255,255,255,0.55), transparent),
+        radial-gradient(1px 1px at 5px 60px, rgba(255,255,255,0.35), transparent),
+        radial-gradient(1.5px 1.5px at 45px 165px, rgba(255,255,255,0.6), transparent),
+        radial-gradient(3px 3px at 90px 220px, rgba(255,255,255,0.9), transparent),
+        radial-gradient(1px 1px at 120px 100px, rgba(255,255,255,0.2), transparent),
+        radial-gradient(1.5px 1.5px at 165px 15px, var(--gold-dim), transparent),
+        radial-gradient(1px 1px at 200px 130px, rgba(255,255,255,0.28), transparent),
+        radial-gradient(2.5px 2.5px at 235px 200px, rgba(255,255,255,0.85), transparent),
+        radial-gradient(1px 1px at 265px 55px, rgba(255,255,255,0.22), transparent),
+        radial-gradient(1.5px 1.5px at 295px 140px, rgba(255,255,255,0.65), transparent),
+        radial-gradient(1px 1px at 310px 20px, rgba(255,255,255,0.3), transparent),
+        radial-gradient(2px 2px at 330px 190px, var(--gold), transparent),
+        radial-gradient(1px 1px at 350px 110px, rgba(255,255,255,0.25), transparent),
+        radial-gradient(1.5px 1.5px at 15px 180px, rgba(255,255,255,0.55), transparent),
+        radial-gradient(1px 1px at 205px 75px, rgba(255,255,255,0.3), transparent);
     background-size: 360px 240px;
     animation: driftHeroStars 45s linear infinite;
     -webkit-mask-image: linear-gradient(to bottom, black 0%, transparent 100%);
@@ -1119,6 +1144,15 @@
 
 /* ── 12. RESPONSIVE (Index-Specific) ─────────────────────── */
 @media (max-width: 640px) {
+    /* Heading wraps to 2 lines here, so the bottom line lands in the
+       gradient's darkest stop — brighten it and lighten the shadow. */
+    .hero-content h1 {
+        background: linear-gradient(to top, #f0c9dd 0%, #f3b8e6 45%, #ffffff 100%);
+        text-shadow:
+            1px 2px 10px rgba(0, 0, 0, 0.5),
+            0 0 20px rgba(0, 0, 0, 0.35),
+            0 0 20px rgba(214, 136, 201, 0.4);
+    }
     .tier-wrapper {
         flex-direction: column;
     }

@@ -95,7 +95,7 @@
 
 /* ── EXCAVATIONS (Projects Detail) ──────────────────────── */
 #projects {
-    padding-top: 60px;
+    padding-top: 160px;
     padding-bottom: 60px;
     display: flex;
     flex-direction: column;
@@ -486,6 +486,9 @@
     .hallway-collar span:nth-child(5) { width: 30px; min-width: 30px; }
     .inscription-arch svg {
         height: 60px;
+    }
+    #projects {
+        padding-top: 130px;
     }
     .project-detail {
         grid-template-columns: 1fr;

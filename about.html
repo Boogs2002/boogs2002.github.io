@@ -12,6 +12,19 @@
 </head>
 <body>
 
+    <!-- Page transition (stone doors) — see main.css §10 and script.js -->
+    <div class="page-transition" id="page-transition" aria-hidden="true">
+        <div class="page-transition-panel left"></div>
+        <div class="page-transition-panel right"></div>
+        <div class="page-transition-glyph">𓋹</div>
+    </div>
+
+    <!-- Custom cursor (fine-pointer devices only) — see main.css §11 and script.js -->
+    <div class="custom-cursor" aria-hidden="true">
+        <span class="cursor-dot"></span>
+        <span class="cursor-glyph">𓋹</span>
+    </div>
+
     <!-- Main Architectural Navigation (Visible instantly on load) -->
     <nav class="scarab-nav" id="scarab-nav" aria-label="Main navigation">
         <ul class="papyrus-menu" role="list">

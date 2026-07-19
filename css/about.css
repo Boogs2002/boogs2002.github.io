@@ -364,10 +364,7 @@ body {
 .timeline-entry.left  { grid-column: 1; text-align: right; }
 .timeline-entry.right { grid-column: 2; text-align: left; }
 
-/* Pins each entry to its own row — otherwise grid auto-placement puts
-   every explicit grid-column entry in the first free row of that
-   column, landing "right" entries next to "left" ones instead of
-   further down the timeline. */
+/* Pins each entry to its own row so left/right entries don't share a row */
 .timeline-entry:nth-child(1) { grid-row: 1; }
 .timeline-entry:nth-child(2) { grid-row: 2; }
 .timeline-entry:nth-child(3) { grid-row: 3; }
@@ -588,6 +585,7 @@ body {
     background-size: 100% 200%;
     -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
     -webkit-mask-composite: xor;
+    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
     mask-composite: exclude;
     pointer-events: none;
     z-index: 1;

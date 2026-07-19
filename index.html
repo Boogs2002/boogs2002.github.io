@@ -13,6 +13,19 @@
 </head>
 <body>
 
+    <!-- Page transition (stone doors) — see main.css §10 and script.js -->
+    <div class="page-transition" id="page-transition" aria-hidden="true">
+        <div class="page-transition-panel left"></div>
+        <div class="page-transition-panel right"></div>
+        <div class="page-transition-glyph">𓋹</div>
+    </div>
+
+    <!-- Custom cursor (fine-pointer devices only) — see main.css §11 and script.js -->
+    <div class="custom-cursor" aria-hidden="true">
+        <span class="cursor-dot"></span>
+        <span class="cursor-glyph">𓋹</span>
+    </div>
+
     <!-- Shared SVG paint definitions (referenced by url() from CSS/other SVGs) -->
     <svg width="0" height="0" class="svg-defs" aria-hidden="true" focusable="false">
         <defs>
@@ -40,7 +53,7 @@
 
         <!-- Strong Egyptian-themed Welcome Text (Centered & Massive) -->
         <h1 class="intro-welcome-text">
-            Welcome, dare to enter...
+            The tomb awaits...
         </h1>
 
         <!-- Action: Pure Glowing Text Link (Delayed appearance) -->
