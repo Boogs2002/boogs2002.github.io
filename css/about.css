@@ -364,24 +364,40 @@ body {
 .timeline-entry.left  { grid-column: 1; text-align: right; }
 .timeline-entry.right { grid-column: 2; text-align: left; }
 
+/* 
+   Without this, CSS grid auto-placement puts every entry that has an
+   explicit grid-column into the first row where that column is free —
+   so the "right" entry (Bouwkunde) was landing in row 1 right next to
+   the "left" entry (Infrastructuur) instead of dropping to its own row
+   further down the timeline. Pinning each entry to its own row in
+   document order fixes that.
+*/
+.timeline-entry:nth-child(1) { grid-row: 1; }
+.timeline-entry:nth-child(2) { grid-row: 2; }
+.timeline-entry:nth-child(3) { grid-row: 3; }
+.timeline-entry:nth-child(4) { grid-row: 4; }
+.timeline-entry:nth-child(5) { grid-row: 5; }
+
 .timeline-node {
     position: absolute;
     top: 6px;
-    width: 14px;
-    height: 14px;
+    width: 16px;
+    height: 16px;
     border-radius: 50%;
-    background: var(--stone-dark);
-    border: 2px solid var(--gold-dim);
-    box-shadow: 0 0 0 5px #050310;
+    background: var(--gold);
+    border: 3px solid #050310;
+    box-shadow: 0 0 0 4px rgba(255, 215, 0, 0.18), 0 0 10px rgba(255, 215, 0, 0.4);
     z-index: 1;
 }
 
-.timeline-entry.left  .timeline-node { right: -31px; }
-.timeline-entry.right .timeline-node { left:  -31px; }
+.timeline-entry.left  .timeline-node { right: -32px; }
+.timeline-entry.right .timeline-node { left:  -32px; }
 
 .timeline-node.current {
-    border-color: var(--gold);
-    box-shadow: 0 0 12px var(--gold-glow), 0 0 0 5px #050310;
+    width: 18px;
+    height: 18px;
+    top: 5px;
+    box-shadow: 0 0 0 4px rgba(255, 215, 0, 0.25), 0 0 18px var(--gold-glow);
 }
 
 .timeline-card {

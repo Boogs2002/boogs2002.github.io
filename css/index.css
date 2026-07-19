@@ -48,122 +48,45 @@ body {
     min-height: 100vh;
 }
 
-/* ── TECH-HIEROGLYPHIC NAV HINT ── */
-/* ── COMET RIDDLE ANIMATION ── */
-.comet-riddle-container {
-    position: absolute;
-    top: 15vh; /* Adjust this to position it nicely in your desert sky */
-    left: 0;
-    width: 100%;
-    overflow: hidden;
-    pointer-events: none; /* Prevents it from blocking clicks */
-    z-index: 5;
-}
 
-.comet-riddle {
-    display: inline-block;
-    white-space: nowrap;
-    font-family: 'Cinzel', serif; /* Keeps your architectural theme */
-    font-size: 0.85rem;
-    letter-spacing: 3px;
-    color: rgba(255, 215, 0, 0.9);
-    
-    /* Creates the glowing "comet" effect on the text */
-    text-shadow: 
-        2px 0 8px rgba(255, 215, 0, 0.8), 
-        -15px 0 20px rgba(255, 215, 0, 0.3); 
-    
-    /* 25 seconds for a slow, readable pass. Linear keeps the speed constant */
-    animation: cometSlide 35s linear infinite; 
-}
+/* ── 3. NAVIGATION BAR & CENTERING MECHANICS ── */
 
-
-@keyframes cometSlide {
-    0%   { transform: translateX(100vw); opacity: 0; }
-    2%   { opacity: 1; }
-    38%  { opacity: 1; }
-    40% { transform: translateX(-100%); opacity: 0; }
-
-    100% { transform: translateX(100vw); opacity: 0; }
-}
-
-/* Speed it up slightly on mobile so users don't have to wait too long */
-@media (max-width: 640px) {
-    .comet-riddle {
-        font-size: 0.7rem;
-        animation: cometSlideLeftToRight 25s linear infinite;
-    }
-}
-
-/* The Fixed Beetle Button */
-.scarab-btn {
-    position: fixed;
-    top: 14px;
-    left: 36px;
-    width: 52px;
-    height: 52px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    z-index: 1002; /* Keeps the beetle above the sliding background */
-    user-select: none;
-}
-
-.scarab-icon {
-    font-size: 2.4rem;
-    color: var(--gold);
-    text-shadow: 0 0 18px var(--gold-glow), 0 0 40px #ffd70040;
-    display: block;
-    transition: transform 0.3s ease, text-shadow 0.3s ease;
-}
-
-/* Tilted state when hovered or when menu is open */
-.scarab-btn:hover .scarab-icon,
-.scarab-btn.is-open .scarab-icon {
-    transform: scale(1.18) rotate(-8deg);
-    text-shadow: 0 0 28px var(--gold-glow), 0 0 60px #ffd70066;
-}
-
-/* The Top Navigation Bar (Full Width) */
+/* The Top Navigation Bar (Visible instantly on page load) */
 .scarab-nav {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
-    height: 80px;
+    height: 90px;
     z-index: 1001;
     display: flex;
     align-items: center;
     
-
-    
+    /* OPACITY FIX: Dropped to 0.35 to blend organically into the deep purple background */
     background: rgba(12, 10, 20, 0.35); 
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px); /* Needed for Safari support */
     
-    border: 1px solid rgba(255, 215, 0, 0.15); 
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(255, 215, 0, 0.15); 
     box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5);
-    color: #ffffff;
-
-    /* The Scroll Animation Setup */
-    transform: translateY(-100%); /* Hides it above the screen */
-    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: background 0.5s ease, border-color 0.5s ease, box-shadow 0.5s ease;
 }
 
-/* This class will be toggled by JavaScript */
-.scarab-nav.active {
-    transform: translateY(0); /* Slides it down into view */
-}
-
-/* The Horizontal Menu Layout */
+/* The Horizontal Alignment Row */
 .papyrus-menu {
     display: flex;
     list-style: none;
     width: 100%;
-    justify-content: center; /* Centers the links on the page */
-    gap: 6vw; /* Responsive spacing between links */
-    padding-left: 80px; /* Visual offset to account for the beetle on the left */
+    justify-content: center; 
+    align-items: center;    
+    gap: 5vw;               
+    padding: 0 40px;
+}
+
+/* Base link tracking wrapper */
+.nav-link-item {
+    transition: opacity 0.4s cubic-bezier(0.4, 0, 0.2, 1), 
+                transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .papyrus-menu a {
@@ -181,6 +104,134 @@ body {
 .papyrus-menu a:hover {
     color: var(--gold);
     text-shadow: 0 0 12px var(--gold-glow);
+}
+
+/* ── CENTER EMBLEM BUTTON ── */
+.nav-logo-item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    outline: none;
+    z-index: 1002; /* Ensures the button handles interaction states even when collapsed */
+}
+
+.nav-logo-placeholder {
+    height: 60px;
+    width: 60px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #1c172e, #0c0914);
+    border: 1px solid rgba(255, 215, 0, 0.3);
+    color: var(--gold);
+    font-size: 1.6rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.6);
+    transition: transform 0.4s ease, border-color 0.4s ease, box-shadow 0.4s ease;
+    user-select: none;
+    overflow: hidden;
+}
+
+.nav-logo-placeholder img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    pointer-events: none;
+    user-select: none;
+
+    /* The source PNG has a lot of transparent padding baked around the
+       emblem, so at 100% size it looks small inside the circle. Scaling
+       the image up (the circle's overflow:hidden crops the excess)
+       zooms in on the emblem itself so it actually fills the frame. */
+    transform: scale(1.45);
+}
+
+.nav-logo-item:hover .nav-logo-placeholder {
+    transform: scale(1.08) rotate(5deg);
+    border-color: var(--gold);
+    box-shadow: 0 0 20px var(--gold-dim);
+}
+
+/* ── THE CLOSED VALVE LAYOUT STATE ── */
+
+/* Dissolve the background shroud and container borders */
+.scarab-nav.is-closed {
+    background: rgba(0, 0, 0, 0);
+    border-bottom-color: transparent;
+    box-shadow: none;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    pointer-events: none; 
+}
+
+/* Dissolve and push text links out of view layout boundaries */
+.scarab-nav.is-closed .nav-link-item {
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(-15px);
+}
+
+/* 
+   SURFACE LOCK: Dissolve the logo placeholder completely by default 
+   so it never blocks your content or clips into the lower sections!
+*/
+.scarab-nav.is-closed .nav-logo-item {
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.4s ease;
+}
+
+/* 
+   HERO RESCUE BOUNDARY: Only allow the floating logo to display and flare 
+   when the navbar is closed WHILE the user is still resting inside the hero section!
+*/
+.scarab-nav.is-closed.on-hero .nav-logo-item {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.scarab-nav.is-closed.on-hero .nav-logo-placeholder {
+    border-color: var(--gold);
+    transform: scale(1.05);
+    animation: ancientSunFlare 2.5s infinite alternate ease-in-out;
+}
+
+/* ── ATMOSPHERIC SUN FLARE ANIMATION ── */
+@keyframes ancientSunFlare {
+    0% {
+        box-shadow: 
+            0 0 15px rgba(255, 215, 0, 0.2),
+            0 0 30px rgba(255, 215, 0, 0.1);
+        filter: drop-shadow(0 0 2px transparent);
+    }
+    100% {
+        box-shadow: 
+            0 0 30px var(--gold-glow),
+            0 0 60px rgba(255, 215, 0, 0.25),
+            0 0 90px rgba(214, 136, 201, 0.15); /* Soft cosmic pink matching header gradient tones */
+        filter: drop-shadow(0 0 8px var(--gold-glow));
+    }
+}
+
+/* ── RESPONSIVE MOBILE ADJUSTMENT ── */
+@media (max-width: 640px) {
+    .scarab-nav {
+        height: auto;
+    }
+    .scarab-nav.is-closed {
+        background: transparent;
+    }
+    .papyrus-menu {
+        flex-direction: column;
+        padding: 20px 0;
+        gap: 20px;
+    }
+    /* Keep logo row tracking active on vertical stack configurations */
+    .nav-logo-item {
+        order: -1; /* Floats toggle emblem cleanly to the absolute top row on mobile screens */
+    }
 }
 
 /* ── 4. SECTION SHARED STYLES ───────────────────────────── */
@@ -236,122 +287,154 @@ section {
 
 /* ── 5. HERO SECTION ────────────────────────────────────── */
 #hero {
-    background-image: url('../images/index/wallpaper 1.png');
+    position: relative;
+    min-height: 100vh;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    min-height: 100vh;
-    background-repeat: no-repeat;
     text-align: center;
     gap: 40px;
-    position: relative;
-    z-index: 1;
-    background-color: #0c0a14; /* Darker, cleaner blend into the deep purple descent */
+    background-color: #0c0a14;
+    overflow: hidden;
     padding-top: 80px; 
     padding-bottom: 40px;
-    overflow: hidden; /* Prevent visual scrollbar leakage during resize */
 }
 
+/* LAYER 1: Far Background Sky */
+.hero-sky {
+    position: absolute;
+    inset: 0;
+    background-image: url('../images/index/sky-background.png');
+    background-repeat: no-repeat;
+    z-index: 1;
+}
+
+/* LAYER 2: Middle Ground Profile Moon Frame (Atmospheric Layer) */
+.moon-frame {
+    /* POSITION FIX: Swapped to absolute layers to pull the moon to the right side of the screen */
+    position: absolute;
+    top: 18vh;
+    right: 12vw;
+    
+    width: 320px;  
+    height: 320px; 
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    z-index: 2; 
+    
+    opacity: 0.75;
+    mix-blend-mode: screen;
+    box-shadow:
+        0 0 40px rgba(255, 255, 255, 0.1),
+        0 0 80px rgba(214, 136, 201, 0.15);
+    transition: transform 0.3s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.3s ease;
+}
+
+.moon-photo {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    position: relative;
+    z-index: 1;
+    filter: brightness(0.85) contrast(1.1);
+}
+
+@media (max-width: 640px) {
+    /* ... your existing mobile rules ... */
+    
+    .moon-frame {
+        position: relative;
+        top: auto;
+        right: auto;
+        margin: 0 auto -40px auto;
+        width: 240px; /* Scaled down slightly to fit small mobile screen wrappers gracefully */
+        height: 240px;
+    }
+}
+
+/* LAYER 3: Transparent Foreground Dunes */
+.hero-dunes-foreground {
+    position: absolute;
+    inset: 0;
+    background-image: url('../images/index/dunes-foreground.png');
+    background-repeat: no-repeat;
+    z-index: 3; 
+    pointer-events: none;
+}
+
+/* LAYER 4: The Master Vignette Shroud */
 /* 
-   Cranking the scale up to 175% forces the sky (and its native moon) 
-   well past the upper viewport boundaries, leaving only the pristine sand dunes.
+   BRIGHTNESS FIX: Moving this to z-index 4 stretches the dark shadows 
+   OVER both the sky and the dunes. This removes the harsh glare and blends 
+   the foreground landscape back into the moody tomb environment.
 */
-@media (min-aspect-ratio: 1/1) {
-    #hero {
-        background-size: 175% auto; /* Pushes the wallpaper moon completely off-screen on landscape */
-        background-position: center bottom;
-    }
-}
-
-@media (max-aspect-ratio: 1/1) {
-    #hero {
-        background-size: auto 175%; /* Pushes the wallpaper moon completely off-screen on portrait/mobile */
-        background-position: center bottom;
-    }
-}
-
-/* Subtle vignette so text reads over the image */
 #hero::before {
     content: '';
     position: absolute;
     inset: 0;
     background: radial-gradient(
         ellipse at center,
-        rgba(0,0,0,0.1) 0%,
-        rgba(0,0,0,0.45) 100%
+        rgba(0,0,0,0.05) 0%,
+        rgba(0,0,0,0.55) 100%
     );
     pointer-events: none;
+    z-index: 4; 
 }
 
-/* ── CRESCENT MOON PROFILE FRAME ── */
-.moon-frame {
-    transition: transform 0.2s ease-out, box-shadow 0.3s ease;
+/* LAYER 5: Interactive Text & Scroll Content (The Absolute Top Layer) */
+/*
+   TEXT FIX: Elevating these to z-index 10 pulls your name, description, 
+   and links safely out from behind the sand dunes so they are crisp and readable.
+*/
+.hero-content {
     position: relative;
-    width: 200px;
-    height: 200px;
-    /* The crescent is made by overlapping two circles:
-       one large visible circle, one smaller offset circle
-       that cuts into it via a radial-gradient mask */
-    background: radial-gradient(
-        circle at 55% 50%,
-        transparent 42%,
-        rgba(255, 255, 255, 0.12) 43%,
-        rgba(255, 255, 255, 0.08) 50%
-    );
-    border-radius: 50%;
-    /* Outer glow */
-    box-shadow:
-        0 0 40px rgba(255, 255, 255, 0.18),
-        0 0 80px rgba(255, 255, 255, 0.08),
-        inset -8px 8px 20px rgba(255, 255, 255, 0.15);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    overflow: hidden;
-    /* Clip to crescent shape using clip-path */
-    /* A crescent = circle minus an offset circle.
-       We achieve it with a CSS mask. */
-    mask-image: radial-gradient(
-        circle at 60% 50%,
-        transparent 40%,
-        black 41%
-    );
-    -webkit-mask-image: radial-gradient(
-        circle at 60% 50%,
-        transparent 40%,
-        black 41%
-    );
-    z-index: 1;
+    z-index: 10; 
 }
 
-/* Subtle ambient light behind the moon */
-.moon-frame::before {
-    /* content: ''; */
-    position: absolute;
-    /* inset: 20px; */
-    border-radius: 50%;
-    background: radial-gradient(circle, rgba(220,210,180,0.12) 0%, transparent 70%);
-    z-index: 0;
-    pointer-events: none;
+.scroll-indicator {
+    z-index: 10; 
 }
 
-.moon-photo {
-    width: 10%;
-    height: 10%;
-    object-fit: cover;
-    object-position: top;
-    position: relative;
-    z-index: 1;
+/* Push the name below the moon instead of letting the flex-centering
+   place it mid-screen where it overlaps the moon graphic. Only applied
+   above the mobile breakpoint, since on mobile the moon is already
+   in normal document flow above the text. */
+@media (min-width: 641px) {
+    #hero {
+        justify-content: flex-start;
+    }
+
+    .hero-content {
+        /* moon top (18vh) + moon height (320px) + a little breathing
+           room, minus the 80px top padding #hero already has */
+        margin-top: calc(18vh + 320px + 24px - 80px);
+    }
 }
 
-.moon-photo-placeholder {
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(135deg, #2a2040, #1a1030);
-    border-radius: 50%;
-    opacity: 0.6;
-    /* Replace this div with your <img> once you have the photo */
+/* ── INTERACTIVE HOVER EFFECTS ── */
+#hero:hover .moon-frame {
+    transform: scale(1.02);
+    opacity: 0.85; /* Becomes slightly clearer when interacting */
+}
+
+/* ── RESPONSIVE SCALING ── */
+@media (min-aspect-ratio: 1/1) {
+    .hero-sky, .hero-dunes-foreground {
+        background-size: 175% auto;
+        background-position: center bottom;
+    }
+}
+
+@media (max-aspect-ratio: 1/1) {
+    .hero-sky, .hero-dunes-foreground {
+        background-size: auto 175%;
+        background-position: center bottom;
+    }
 }
 
 /* ── TOMB ENTRANCE PORTAL CAP ───────────────────────────── */
@@ -416,7 +499,7 @@ section {
 /* ── HERO TEXT ── */
 .hero-content {
     position: relative;
-    z-index: 1;
+    z-index: 10; /* Forces the text to float on the absolute top layer above the dunes */
 }
 
 .hero-content h1 {
@@ -426,13 +509,22 @@ section {
     text-transform: uppercase;
     background: linear-gradient(to top, #d0abb7 0%, #d688c9 50%, #ffffff 100%);
     
-    /* 2. Clip the background to the text shape */
+    /* Clip the background to the text shape */
     -webkit-background-clip: text;
     background-clip: text;
     
-    /* 3. Make the actual text color transparent so the gradient shows */
+    /* Make the actual text color transparent so the gradient shows */
     color: transparent;
-    text-shadow: 2px 3px 18px rgba(0,0,0,0.7), 0 0 60px rgba(0,0,0,0.4);
+    
+    /* Dark drop shadow ensures crisp legibility against any moving background elements,
+       plus a soft "moonlight" glow pulled from the h1's own gradient (lilac/pink,
+       same family as the moon and sky) rather than gold, so it reads as one
+       cohesive light source instead of two competing palettes. */
+    text-shadow:
+        2px 3px 18px rgba(0,0,0,0.85),
+        0 0 40px rgba(0,0,0,0.6),
+        0 0 25px rgba(214, 136, 201, 0.5),
+        0 0 55px rgba(255, 255, 255, 0.2);
     margin-bottom: 12px;
 }
 
@@ -458,7 +550,7 @@ section {
     align-items: center;
     gap: 6px;
     text-decoration: none;
-    z-index: 1;
+    z-index: 10; /* Changed from 1 to 10 to clear the sand dunes foreground */
     animation: bounce 2.4s ease-in-out infinite;
 }
 
@@ -691,13 +783,24 @@ section {
     line-height: 1.3;
 }
 
-/* Styling the container and the icon inside it */
+/* Styling the container and the icon inside it (now an <a> to the
+   program's homepage, so it needs its own anchor reset + affordance) */
 .panel-icon {
     display: inline-block;
     font-size: 1.8rem; /* Makes the icons a great scannable size */
     margin-bottom: 6px;
     color: var(--stone-text); /* Matches your resting text stone shade */
+    text-decoration: none;
+    cursor: pointer;
+    position: relative;
+    z-index: 2; /* Sits above the panel so it stays clickable */
     transition: color 0.3s ease, transform 0.3s ease;
+}
+
+.panel-icon:focus-visible {
+    outline: 2px solid var(--gold);
+    outline-offset: 4px;
+    border-radius: 4px;
 }
 
 /* When the parent skill-panel transitions into focus/hover */
@@ -903,12 +1006,12 @@ section {
     left: -1px;
     width: calc(100% + 2px);
     display: block;
-    filter: drop-shadow(0 3px 6px rgba(0, 0, 0, 0.7));
+    filter: url(#stoneTexture);
     transition: transform 0.5s cubic-bezier(0.7, 0, 0.84, 0);
 }
 
 .spike-row polygon {
-    fill: var(--stone-dark);
+    fill: url(#stoneGrad);
     stroke: var(--gold-dim);
     stroke-width: 2;
     stroke-linejoin: miter;
@@ -1064,6 +1167,72 @@ section {
 }
 
 /* ── 8. TOMB ARCH (pyramid → tomb transition) ───────────── */
+
+/* ── TWIN PILLAR ASCENT NAVIGATION ARROWS ── */
+.pillar-scroll-top {
+    position: fixed;
+    top: 45vh; /* Safely suspended right in the comfortable middle viewport workspace */
+    width: 6vw; /* Matches your structural column grids perfectly */
+    min-width: 40px;
+    max-width: 90px;
+    height: 70px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-display);
+    color: var(--gold);
+    z-index: 100;
+    
+    /* RESTING PROFILE: Low opacity blends gracefully directly into your stone column styles */
+    opacity: 0;
+    visibility: hidden;
+    filter: brightness(0.55);
+    
+    transition: opacity 0.5s ease, visibility 0.5s ease, filter 0.3s ease, transform 0.3s ease;
+}
+
+.pillar-scroll-top.left {
+    left: 0;
+}
+
+.pillar-scroll-top.right {
+    right: 0;
+}
+
+/* Active Class engaged programmatically by our JS engine scroll tracking */
+.pillar-scroll-top.is-active {
+    opacity: 0.28; /* Soft ghosted outline stays entirely out of your readable text space */
+    visibility: visible;
+}
+
+.pillar-arrow {
+    font-size: 1.1rem;
+    margin-top: -2px;
+    transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+/* Interactive Hover Reactions scoped cleanly to the specific columns */
+.pillar-scroll-top:hover {
+    opacity: 0.95 !important;
+    filter: brightness(1.1) drop-shadow(0 0 8px var(--gold-glow));
+    transform: translateY(-4px); /* Clean upward physical nudge hint */
+}
+
+.pillar-scroll-top:hover .pillar-arrow {
+    transform: scale(1.18);
+}
+
+/* Completely drop the side selectors on tiny devices to prioritize absolute page widths */
+@media (max-width: 640px) {
+    .pillar-scroll-top {
+        display: none !important;
+    }
+}
+
 .tomb-arch {
     width: 100%;
     overflow: hidden;
@@ -1811,4 +1980,43 @@ summary:focus-visible {
         0 0 30px var(--gold-glow);
     transform: scale(1.08); /* Soft hover magnification */
     outline: none;
+}
+
+/* ── FOOTER BEETLE EASTER EGG ── */
+.footer-beetle-btn {
+    display: inline-block;
+    text-decoration: none;
+    cursor: pointer;
+    margin-bottom: 1rem;
+    position: relative;
+    z-index: 10;
+    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.footer-beetle-btn .beetle-glyph {
+    font-size: 2.2rem;
+    color: var(--gold-dim, rgba(255, 215, 0, 0.35));
+    transition: color 0.4s ease, text-shadow 0.4s ease;
+}
+
+/* Easter Egg Hover: Glows Golden & Vibrates Subtle Elevation */
+.footer-beetle-btn:hover {
+    transform: translateY(-5px) scale(1.1);
+}
+
+.footer-beetle-btn:hover .beetle-glyph {
+    color: var(--gold, #ffd700);
+    text-shadow: 
+        0 0 12px var(--gold-glow, rgba(255, 215, 0, 0.6)), 
+        0 0 24px rgba(255, 215, 0, 0.3);
+}
+
+/* Subtle continuous drift animation once uncovered */
+@keyframes beetleDrift {
+    0% { transform: translateY(0); }
+    100% { transform: translateY(-3px); }
+}
+
+.footer-beetle-btn:active {
+    transform: translateY(2px) scale(0.95);
 }

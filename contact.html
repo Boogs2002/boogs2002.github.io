@@ -12,16 +12,22 @@
 </head>
 <body>
 
-    <div class="scarab-btn" id="nav-btn">
-        <span class="scarab-icon">𓆣</span>
-    </div>
 
+
+    <!-- Main Architectural Navigation (Visible instantly on load) -->
     <nav class="scarab-nav" id="scarab-nav" aria-label="Main navigation">
         <ul class="papyrus-menu" role="list">
-            <li><a href="/index.html">Home</a></li>
-            <li><a href="/about.html">About</a></li>
-            <li><a href="/work.html">Work</a></li>
-            <li><a href="/contact.html">Contact</a></li>
+            <li class="nav-link-item"><a href="/index.html">Home</a></li>
+            <li class="nav-link-item"><a href="/about.html">About</a></li>
+            
+            <!-- THE CENTER TOGGLE EMBLEM -->
+            <li class="nav-logo-item" id="nav-toggle-trigger" role="button" aria-label="Toggle Sanctum Vault Bar" tabindex="0">
+                <!-- Using a stylized geometric glyph placeholder for now -->
+                <div class="nav-logo-placeholder"><img src="/images/brand/hsb-logo.png" alt="HSB logo"></div>
+            </li>
+            
+            <li class="nav-link-item"><a href="/work.html">Work</a></li>
+            <li class="nav-link-item"><a href="/contact.html">Contact</a></li>
         </ul>
     </nav>
 
@@ -140,7 +146,9 @@
     <!-- footer -->
     <footer id="contact" aria-label="Contact and footer">
         <div class="footer-content">
-            <p class="footer-glyph" aria-hidden="true">𓆣</p>
+            <a href="#contact" class="footer-beetle-btn" id="easter-egg-ascent" aria-label="Secret Ascent to Surface">
+                <span class="beetle-glyph">𓆣</span>
+            </a>
             <h2 class="footer-name">Hrishikesh Bajnath</h2>
             <div class="footer-links">
                 <a class="link-github" href="https://github.com/Boogs2002" target="_blank" rel="noopener" aria-label="GitHub">GitHub</a>

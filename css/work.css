@@ -160,10 +160,11 @@
     z-index: 1;
 }
 
-/* ── DUST-REVEAL HOVER ── */
-/* Each screenshot sits under a sandy overlay by default — like an
-   artifact still half-buried. Hovering "brushes" it away left to
-   right, revealing the image underneath. */
+/* ── AUTOMATIC DOOR REVEAL ── */
+/* Each screenshot sits under a sandy "door" overlay. On a timer
+   (driven by script.js) the door closes over the photo, the slide
+   underneath is swapped while hidden, then the door opens again to
+   reveal the new image — no hover required. */
 .project-detail-image::before {
     content: '';
     position: absolute;
@@ -180,11 +181,12 @@
             #c2a476 12px
         );
     background-size: 160% 160%, 160% 160%, 100% 100%;
-    clip-path: inset(0 0 0 0);
-    transition: clip-path 1s cubic-bezier(0.65, 0, 0.35, 1);
+    /* Open by default so the photo is visible on load — the door
+       only swings shut when script.js adds .door-closed */
+    clip-path: inset(0 0 0 100%);
+    transition: clip-path 0.9s cubic-bezier(0.65, 0, 0.35, 1);
     /* Idle sand drift — a slow, faint shift so the overlay reads as
-       loose sediment rather than a flat painted texture, even before
-       anyone hovers to brush it away */
+       loose sediment rather than a flat painted texture */
     animation: sandDrift 10s ease-in-out infinite;
 }
 
@@ -205,27 +207,25 @@
     letter-spacing: 0.2em;
     text-transform: uppercase;
     color: rgba(40, 30, 15, 0.55);
+    opacity: 0;
     transition: opacity 0.5s ease;
     pointer-events: none;
 }
 
-/* .uncovered is added by script.js on touch devices, where :hover
-   never fires — the image reveals itself once as it scrolls into
-   view instead of waiting for a hover that can't happen */
-.project-detail-image:hover::before,
-.project-detail-image.uncovered::before {
-    clip-path: inset(0 0 0 100%);
+/* .door-closed is toggled automatically by script.js on a timer —
+   this is the moment the sand sweeps back over the photo right
+   before the slide underneath changes */
+.project-detail-image.door-closed::before {
+    clip-path: inset(0 0 0 0);
 }
 
-.project-detail-image:hover::after,
-.project-detail-image.uncovered::after {
-    opacity: 0;
+.project-detail-image.door-closed::after {
+    opacity: 1;
 }
 
 /* ── SLIDESHOW POSITION DOTS ── */
-/* Stays hidden while the sand overlay is covering the photo — only
-   appears once the image is actually revealed, so it reads as "here's
-   what you're looking at" rather than a distraction while buried. */
+/* Hidden while the door is closed over the photo — only visible
+   once the image is actually uncovered */
 .slide-dots {
     position: absolute;
     bottom: 12px;
@@ -234,14 +234,13 @@
     z-index: 4;
     display: flex;
     gap: 6px;
-    opacity: 0;
+    opacity: 1;
     transition: opacity 0.4s ease;
     pointer-events: none;
 }
 
-.project-detail-image:hover .slide-dots,
-.project-detail-image.uncovered .slide-dots {
-    opacity: 1;
+.project-detail-image.door-closed .slide-dots {
+    opacity: 0;
 }
 
 .slide-dots .dot {

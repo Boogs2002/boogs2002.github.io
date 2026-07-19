@@ -5,7 +5,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const enterPortfolioBtn = document.getElementById('enter-portfolio-btn');
     const introGate = document.getElementById('intro-gate');
 
-    // Helper function to normalize paths (handles index.html vs root '/' domains flawlessly)
     function normalizePath(path) {
         if (!path) return '';
         let normalized = path.toLowerCase().trim();
@@ -24,49 +23,88 @@ document.addEventListener('DOMContentLoaded', () => {
         const currentPath = normalizePath(window.location.pathname);
         const lastPage = normalizePath(sessionStorage.getItem('lastPage'));
 
-        // If they navigated here from a different internal page, skip the intro entirely
         if (lastPage && lastPage !== currentPath) {
-            introGate.style.display = 'none'; // Instant vanish, no transition flash
-            document.body.style.overflow = ''; // Instantly restore page scrollability
+            introGate.style.display = 'none'; 
+            document.body.style.overflow = ''; 
         } else {
-            // Otherwise, it's their first load or a reload: show intro and lock scroll
             document.body.style.overflow = 'hidden';
         }
-    }
 
-    // Always record the current page in sessionStorage so other pages can read it
-    sessionStorage.setItem('lastPage', window.location.pathname);
+        // Record this page so that navigating to a DIFFERENT page later in the
+        // same tab session correctly skips the gate. Without this line the key
+        // was never written, so the gate's on/off state depended entirely on
+        // whatever was left over in sessionStorage from earlier testing.
+        sessionStorage.setItem('lastPage', currentPath);
+    }
 
     if (enterPortfolioBtn && introGate) {
         enterPortfolioBtn.addEventListener('click', () => {
-            // Trigger seamless opacity dissolve transition
             introGate.classList.add('fade-out');
-            
-            // Restore native document page scrollability
             document.body.style.overflow = '';
         });
     }
 
     // ── NAVIGATION BAR TOGGLE ──────────────────────────────
-    const navBtn = document.getElementById('nav-btn');
+    const navToggleTrigger = document.getElementById('nav-toggle-trigger');
     const scarabNav = document.getElementById('scarab-nav');
 
-    if (navBtn && scarabNav) {
-        navBtn.addEventListener('click', () => {
-            // Toggles the slide-down animation
-            scarabNav.classList.toggle('active');
-            
-            // Toggles the tilted glowing state of the beetle icon
-            navBtn.classList.toggle('is-open'); 
+    if (navToggleTrigger && scarabNav) {
+        navToggleTrigger.addEventListener('click', (e) => {
+            e.stopPropagation();
+            const isClosed = scarabNav.classList.toggle('is-closed');
+            navToggleTrigger.setAttribute('aria-expanded', !isClosed);
+        });
+
+        navToggleTrigger.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                navToggleTrigger.click();
+            }
         });
     }
 
-    // ── CINEMATIC TOMB DESCENT SCROLL (FIXED FOR BROWSER CONFLICTS) ──
+    // ── UNIVERSAL EASTER EGG FOOTER ASCENT ENGINE ──
+    const easterEggBeetle = document.getElementById('easter-egg-ascent');
+
+    window.addEventListener('scroll', () => {
+        if (!scarabNav) return;
+
+        // Finds the first major layout element, defaulting to a 300px boundary line if none are found
+        const topSection = document.querySelector('section') || document.querySelector('header');
+        const collapseThreshold = topSection ? (topSection.offsetHeight / 2) : 300;
+
+        // STATE 1: Within the top surface boundary limits
+        if (window.scrollY <= collapseThreshold) {
+            scarabNav.classList.add('on-hero');
+        } 
+        // STATE 2: Deep descent past the boundary marker
+        else {
+            scarabNav.classList.remove('on-hero');
+            if (!scarabNav.classList.contains('is-closed')) {
+                scarabNav.classList.add('is-closed');
+                if (navToggleTrigger) {
+                    navToggleTrigger.setAttribute('aria-expanded', 'false');
+                }
+            }
+        }
+    });
+
+    // Wire up the custom cinematic smooth-scroll callback
+    if (easterEggBeetle) {
+        easterEggBeetle.addEventListener('click', (e) => {
+            e.preventDefault();
+            
+            // Targets the root HTML tag directly to ensure an absolute top landing
+            // This completely eliminates errors from missing or misplaced section IDs
+            smoothScrollTo('html', 2200); 
+        });
+    }
+
+    // ── CINEMATIC TOMB DESCENT SCROLL ──
     function smoothScrollTo(targetSelector, duration) {
         const target = document.querySelector(targetSelector);
         if (!target) return;
 
-        // Temporarily disable native 'scroll-behavior: smooth' to allow pixel-perfect JS control
         const htmlElement = document.documentElement;
         const originalScrollBehavior = htmlElement.style.scrollBehavior;
         htmlElement.style.scrollBehavior = 'auto';
@@ -76,7 +114,6 @@ document.addEventListener('DOMContentLoaded', () => {
         const distance = targetPosition - startPosition;
         let startTime = null;
 
-        // Cinematic quintic curve: slow start, rapid drop, gentle cushion halt
         function easeInOutQuint(t, b, c, d) {
             t /= d / 2;
             if (t < 1) return c / 2 * t * t * t * t * t + b;
@@ -89,22 +126,18 @@ document.addEventListener('DOMContentLoaded', () => {
             const timeElapsed = currentTime - startTime;
             const run = easeInOutQuint(timeElapsed, startPosition, distance, duration);
             
-            // Programmatically update the coordinates instantly
             window.scrollTo(0, run);
             
             if (timeElapsed < duration) {
                 requestAnimationFrame(animation);
             } else {
-                window.scrollTo(0, targetPosition); // Secure the final frame lock
-                
-                // Restore the native CSS smooth scroll behavior for normal link clicks
+                window.scrollTo(0, targetPosition); 
                 htmlElement.style.scrollBehavior = originalScrollBehavior;
             }
         }
         requestAnimationFrame(animation);
     }
 
-    // Bind custom scroll to all scroll-indicator links (works on Home & About pages)
     document.querySelectorAll('.scroll-indicator').forEach(indicator => {
         indicator.addEventListener('click', (e) => {
             e.preventDefault();
@@ -133,10 +166,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             });
         },
-        {
-            root: null,
-            threshold: 0.25
-        }
+        { root: null, threshold: 0.25 }
     );
 
     document.querySelectorAll('.pyramid-layer').forEach((layer) => {
@@ -162,10 +192,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     }
                 }
             });
-        }, {
-            root: null,
-            threshold: thresholdVal
-        });
+        }, { root: null, threshold: thresholdVal });
 
         chamberObserver.observe(skillsSection);
     }
@@ -185,10 +212,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             });
         },
-        {
-            root: null,
-            threshold: 0.15
-        }
+        { root: null, threshold: 0.15 }
     );
 
     document.querySelectorAll('.hidden-left').forEach((row) => {
@@ -198,8 +222,9 @@ document.addEventListener('DOMContentLoaded', () => {
     // ── HERO PARALLAX DEPTH ──────────────────────────────
     const heroSection = document.getElementById('hero');
     const moonFrame = document.querySelector('.moon-frame');
+    const foregroundDunes = document.querySelector('.hero-dunes-foreground');
 
-    if (heroSection && moonFrame) {
+    if (heroSection && moonFrame && foregroundDunes) {
         heroSection.addEventListener('mousemove', (e) => {
             const centerX = window.innerWidth / 2;
             const centerY = window.innerHeight / 2;
@@ -207,20 +232,18 @@ document.addEventListener('DOMContentLoaded', () => {
             const moveX = (e.clientX - centerX) / centerX;
             const moveY = (e.clientY - centerY) / centerY;
 
-            // Move the Moon (Opposite to cursor for 3D depth)
             const moonOffsetX = moveX * -20; 
             const moonOffsetY = moveY * -20;
             moonFrame.style.transform = `translate(${moonOffsetX}px, ${moonOffsetY}px)`;
 
-            // Shift the Dunes Background (With the cursor)
             const bgOffsetX = 50 + (moveX * 1.5); 
             const bgOffsetY = 100 + (moveY * 1.5);
-            heroSection.style.backgroundPosition = `${bgOffsetX}% ${bgOffsetY}%`;
+            foregroundDunes.style.backgroundPosition = `${bgOffsetX}% ${bgOffsetY}%`;
         });
 
         heroSection.addEventListener('mouseleave', () => {
             moonFrame.style.transform = 'translate(0px, 0px)';
-            heroSection.style.backgroundPosition = 'center bottom';
+            foregroundDunes.style.backgroundPosition = 'center bottom';
         });
     }
 
@@ -258,7 +281,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (expansionTrigger && expansionCard && expansionContent) {
         expansionTrigger.addEventListener("click", (e) => {
-            e.stopPropagation(); // Prevents bubbling event so we don't trigger double-toggles
+            e.stopPropagation(); 
             toggleExpansion();
         });
 
@@ -284,10 +307,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             });
         },
-        {
-            root: null,
-            threshold: 0.2
-        }
+        { root: null, threshold: 0.2 }
     );
 
     document.querySelectorAll('.reveal').forEach((el) => {
@@ -311,10 +331,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     }
                 });
             },
-            {
-                root: null,
-                threshold: [0, 0.1, 0.25, 0.4, 0.5, 0.6, 0.75, 0.9, 0.999, 1]
-            }
+            { root: null, threshold: [0, 0.1, 0.25, 0.4, 0.5, 0.6, 0.75, 0.9, 0.999, 1] }
         );
 
         doorObserver.observe(blueprintContainer);
@@ -324,8 +341,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
     if (!prefersReducedMotion) {
-        const SLIDE_VISIBLE_MS = 4200; // how long each image stays visible
-        const SPIKE_CLOSE_MS = 500;    // must roughly match the CSS transition duration
+        const SLIDE_VISIBLE_MS = 4200; 
+        const SPIKE_CLOSE_MS = 500;    
 
         document.querySelectorAll('.relic-slideshow').forEach((slideshow) => {
             const slides = slideshow.querySelectorAll('.relic-image');
@@ -350,8 +367,14 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // ── WORK PAGE PROJECT SLIDESHOW (plain crossfade, no spikes) ──
+    // ── WORK PAGE PROJECT SLIDESHOW (automatic door open/close) ──
+    // The sandy overlay now acts like a door on a timer instead of a
+    // hover trigger: it swings shut, the slide underneath is swapped
+    // while hidden, then it swings open again to reveal the new image.
     if (!prefersReducedMotion) {
+        const DOOR_CLOSE_MS = 900;     // matches the CSS clip-path transition
+        const SLIDE_VISIBLE_MS = 4200; // how long the photo stays uncovered
+
         document.querySelectorAll('.project-detail-image').forEach((frame, frameIndex) => {
             const slides = frame.querySelectorAll('img');
             const dots = frame.querySelectorAll('.slide-dots .dot');
@@ -359,21 +382,28 @@ document.addEventListener('DOMContentLoaded', () => {
 
             let current = 0;
             let timer = null;
+            const interval = SLIDE_VISIBLE_MS + (frameIndex * 650);
 
-            // Staggers each card's cadence slightly so they don't swap in visual sync
-            const interval = 4200 + (frameIndex * 650);
+            function cycle() {
+                // close the door over the current photo
+                frame.classList.add('door-closed');
 
-            function goToNext() {
-                slides[current].classList.remove('active');
-                if (dots[current]) dots[current].classList.remove('active');
-                current = (current + 1) % slides.length;
-                slides[current].classList.add('active');
-                if (dots[current]) dots[current].classList.add('active');
+                setTimeout(() => {
+                    // swap the slide while it's hidden behind the door
+                    slides[current].classList.remove('active');
+                    if (dots[current]) dots[current].classList.remove('active');
+                    current = (current + 1) % slides.length;
+                    slides[current].classList.add('active');
+                    if (dots[current]) dots[current].classList.add('active');
+
+                    // open the door to reveal the new photo
+                    frame.classList.remove('door-closed');
+                }, DOOR_CLOSE_MS);
             }
 
             function start() {
                 if (timer) return;
-                timer = setInterval(goToNext, interval);
+                timer = setInterval(cycle, interval);
             }
 
             function stop() {
@@ -382,56 +412,19 @@ document.addEventListener('DOMContentLoaded', () => {
             }
 
             start();
-
-            // Pause slideshow rotation on mouse hovers
+            // Hovering pauses the cycle so visitors can linger on a slide
             frame.addEventListener('mouseenter', stop);
             frame.addEventListener('mouseleave', start);
         });
     }
 
-    // ── PROJECT DUST REVEAL (Work page touch fallback) ─────
-    if (window.matchMedia('(hover: none)').matches) {
-        const dustObserver = new IntersectionObserver(
-            (entries) => {
-                entries.forEach((entry) => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('uncovered');
-                    } else {
-                        entry.target.classList.remove('uncovered');
-                    }
-                });
-            },
-            {
-                root: null,
-                threshold: 0.4
-            }
-        );
-
-        document.querySelectorAll('.project-detail-image').forEach((img) => {
-            dustObserver.observe(img);
-        });
-    }
-
-    // ── SANCTUM CONTACT FORM (crack-flash validation + seal) ────
-    // The form has novalidate, so the browser's native red-outline
-    // popup never fires — this does the required-field check itself
-    // and flashes a "crack" across the chiselled line under any empty
-    // field instead. Once everything's filled in, it plays a short
-    // sealing beat on the button, then swaps the form out for a
-    // confirmation message.
-    //
-    // Note: there's no backend behind action="#" yet, so this seals
-    // the ritual but doesn't actually deliver the message anywhere —
-    // wire it up to a real endpoint (e.g. Formspree, EmailJS, or your
-    // own server) whenever you're ready to receive real submissions.
+    // ── SANCTUM CONTACT FORM ──
     const sanctumForm = document.getElementById('sanctum-form');
     const altarConfirmation = document.getElementById('altar-confirmation');
 
     if (sanctumForm && altarConfirmation) {
         const requiredFields = sanctumForm.querySelectorAll('[required]');
 
-        // Clear a field's error state as soon as the person starts
-        // fixing it, rather than making them resubmit to find out.
         requiredFields.forEach((field) => {
             field.addEventListener('input', () => {
                 const group = field.closest('.altar-input-group');
@@ -441,16 +434,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
         sanctumForm.addEventListener('submit', (e) => {
             e.preventDefault();
-
             let firstInvalid = null;
 
             requiredFields.forEach((field) => {
                 const group = field.closest('.altar-input-group');
                 if (!group) return;
 
-                // Restart the crack animation even on repeat failures
                 group.classList.remove('field-error');
-                void group.offsetWidth; // force reflow
+                void group.offsetWidth; 
                 if (!field.checkValidity()) {
                     group.classList.add('field-error');
                     if (!firstInvalid) firstInvalid = field;
@@ -471,4 +462,4 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-});
+}); // ── This single closing tag at the absolute bottom cleanly terminates everything!

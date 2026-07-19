@@ -12,6 +12,26 @@
 </head>
 <body>
 
+    <!-- Shared SVG paint definitions (referenced by url() from CSS/other SVGs) -->
+    <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+        <defs>
+            <linearGradient id="stoneGrad" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#4a4030"/>
+                <stop offset="18%" stop-color="#33291c"/>
+                <stop offset="55%" stop-color="#1d1712"/>
+                <stop offset="100%" stop-color="#0a0806"/>
+            </linearGradient>
+            <filter id="stoneTexture" x="-40%" y="-40%" width="180%" height="180%">
+                <feTurbulence type="fractalNoise" baseFrequency="0.85 0.35" numOctaves="3" seed="11" result="grain"/>
+                <feColorMatrix in="grain" type="matrix"
+                    values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0.55 0.55 0.55 0 0" result="grainAlpha"/>
+                <feComposite in="grainAlpha" in2="SourceAlpha" operator="in" result="grainClipped"/>
+                <feBlend in="SourceGraphic" in2="grainClipped" mode="multiply" result="textured"/>
+                <feDropShadow in="textured" dx="0" dy="3" stdDeviation="4" flood-color="#000000" flood-opacity="0.7"/>
+            </filter>
+        </defs>
+    </svg>
+
     <!-- CINEMATIC COSMIC OVERLAY (PRELUDE) -->
     <div id="intro-gate" aria-label="Cosmic Prelude">
         <!-- Floating Moving Stars -->
@@ -30,48 +50,51 @@
         </div>
     </div>
 
-    
 
-    <div class="comet-riddle-container">
-        <div class="comet-riddle">
-            <!-- Choose your favorite riddle here -->
-            <span>" The path forward is locked in gold. Awaken the scarab to see the navbar unfold..."</span>
-        </div>
-    </div>
+   
 
-    <div class="scarab-btn" id="nav-btn">
-        <span class="scarab-icon">𓆣</span>
-    </div>
-
+    <!-- Main Architectural Navigation (Visible instantly on load) -->
     <nav class="scarab-nav" id="scarab-nav" aria-label="Main navigation">
         <ul class="papyrus-menu" role="list">
-            <li><a href="/index.html">Home</a></li>
-            <li><a href="/about.html">About</a></li>
-            <li><a href="/work.html">Work</a></li>
-            <li><a href="/contact.html">Contact</a></li>
+            <li class="nav-link-item"><a href="/index.html">Home</a></li>
+            <li class="nav-link-item"><a href="/about.html">About</a></li>
+            
+            <!-- THE CENTER TOGGLE EMBLEM -->
+            <li class="nav-logo-item" id="nav-toggle-trigger" role="button" aria-label="Toggle Sanctum Vault Bar" tabindex="0">
+                <!-- Using a stylized geometric glyph placeholder for now -->
+                <div class="nav-logo-placeholder"><img src="/images/brand/hsb-logo.png" alt="HSB logo"></div>
+            </li>
+            
+            <li class="nav-link-item"><a href="/work.html">Work</a></li>
+            <li class="nav-link-item"><a href="/contact.html">Contact</a></li>
         </ul>
     </nav>
 
     <main>
 
-
-
-        <!-- Home -->
+                <!-- Home Hero Section -->
         <section id="hero" aria-label="Hero — The Surface">
 
-                    <div class="moon-frame" aria-label="Profile photo">
-                        <img src="/images/index/Gemini_Generated_Image_72wtdp72wtdp72wt-removebg-preview.png" alt="Hrishikesh Bajnath" class="moon-photo">            
-                    </div>
+            <!-- Layer 1: Far Background Sky -->
+            <div class="hero-sky" aria-hidden="true"></div>
 
-                    <div class="hero-content">
-                        <h1>Hrishikesh Bajnath</h1>
-                        <h2>Description</h2>
-                    </div>
+            <!-- Layer 2: Middle Ground Profile Moon -->
+            <div class="moon-frame" aria-label="Profile photo">
+                <img src="/images/index/Gemini_Generated_Image_72wtdp72wtdp72wt-removebg-preview.png" alt="Hrishikesh Bajnath" class="moon-photo">            
+            </div>
 
-                    <a href="#skills" class="scroll-indicator" aria-label="Scroll down to skills">
-                        <span class="descend-text">Descend</span>
-                        <span class="descend-arrow" aria-hidden="true">↓</span>
-                    </a>
+            <!-- Layer 3: Foreground Sand Dunes (Sits in front of the moon) -->
+            <div class="hero-dunes-foreground" aria-hidden="true"></div>
+
+            <!-- Layer 4: Interactive Text Content (Sits in front of everything) -->
+            <div class="hero-content">
+                <h1>Hrishikesh Bajnath</h1>
+            </div>
+
+            <a href="#skills" class="scroll-indicator" aria-label="Scroll down to skills">
+                <span class="descend-text">Descend</span>
+                <span class="descend-arrow" aria-hidden="true">↓</span>
+            </a>
 
         </section>
 
@@ -83,24 +106,22 @@
 
          <!-- skills -->
         <div class="tomb-hallway"> 
-
+    
+           
             <div class="chamber-shroud" aria-hidden="true"></div>
             
-
+            <!-- Matrix background only defined once -->
             <div class="hallway-matrix-bg" aria-hidden="true">
                 <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
                     <defs>
                         <pattern id="vertical-matrix" width="360" height="600" patternUnits="userSpaceOnUse" x="50%" patternTransform="translate(-180, 0)">
-                            
                             <line x1="60" y1="0" x2="60" y2="600" class="matrix-line pulse-slow" stroke-width="1.5" />
                             <line x1="180" y1="0" x2="180" y2="600" class="matrix-line pulse-fast" stroke-width="1.5" />
                             <line x1="300" y1="0" x2="300" y2="600" class="matrix-line pulse-med" stroke-width="1.5" />
-                            
                             <text x="120" y="150" class="matrix-glyph pulse-fast" text-anchor="middle">𓇳</text>
                             <text x="240" y="280" class="matrix-glyph pulse-med" text-anchor="middle">𓋹</text>
                             <text x="120" y="420" class="matrix-glyph pulse-slow" text-anchor="middle">𓂀</text>
                             <text x="240" y="530" class="matrix-glyph pulse-fast" text-anchor="middle">𓆣</text>
-                            
                             <path d="M 45 150 H 75 M 165 280 H 195 M 285 420 H 315" class="matrix-line" style="opacity: 0.3;" stroke-width="1" />
                         </pattern>
                     </defs>
@@ -127,7 +148,7 @@
                             </div>
                             <div class="skill-group left">
                                 <div class="skill-panel">
-                                    <span class="panel-icon"><i class="devicon-typescript-plain"></i></span>
+                                    <a href="https://www.typescriptlang.org/" target="_blank" rel="noopener noreferrer" class="panel-icon" aria-label="Visit TypeScript's homepage" title="Visit TypeScript's homepage"><i class="devicon-typescript-plain"></i></a>
                                     <h4>TypeScript</h4>
                                     <p>Enhanced JavaScript with static typing.</p>
                                 </div>
@@ -138,7 +159,7 @@
                                 <span class="skill-label">JavaScript</span>
                                 <span class="skill-connector" aria-hidden="true"></span>
                                 <div class="skill-panel">
-                                    <span class="panel-icon"><i class="devicon-javascript-plain"></i></span>
+                                    <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript" target="_blank" rel="noopener noreferrer" class="panel-icon" aria-label="Visit JavaScript's homepage" title="Visit JavaScript's homepage"><i class="devicon-javascript-plain"></i></a>
                                     <h4>JavaScript</h4>
                                     <p>Dynamic interactive web behavior.</p>
                                 </div>
@@ -153,7 +174,7 @@
                             </div>
                             <div class="skill-group left">
                                 <div class="skill-panel">
-                                    <span class="panel-icon"><i class="devicon-html5-plain"></i></span>
+                                    <a href="https://developer.mozilla.org/en-US/docs/Web/HTML" target="_blank" rel="noopener noreferrer" class="panel-icon" aria-label="Visit HTML's homepage" title="Visit HTML's homepage"><i class="devicon-html5-plain"></i></a>
                                     <h4>HTML</h4>
                                     <p>Structure and styling of the web.</p>
                                 </div>
@@ -164,7 +185,7 @@
                                 <span class="skill-label">CSS</span>
                                 <span class="skill-connector" aria-hidden="true"></span>
                                 <div class="skill-panel">
-                                    <span class="panel-icon"><i class="devicon-css3-plain"></i></span>
+                                    <a href="https://developer.mozilla.org/en-US/docs/Web/CSS" target="_blank" rel="noopener noreferrer" class="panel-icon" aria-label="Visit CSS's homepage" title="Visit CSS's homepage"><i class="devicon-css3-plain"></i></a>
                                     <h4>CSS</h4>
                                     <p>Styling and layout for the web.</p>
                                 </div>
@@ -179,7 +200,7 @@
                             </div>
                             <div class="skill-group left">
                                 <div class="skill-panel">
-                                    <span class="panel-icon"><i class="devicon-nodejs-plain"></i></span>
+                                    <a href="https://nodejs.org/" target="_blank" rel="noopener noreferrer" class="panel-icon" aria-label="Visit Node.js's homepage" title="Visit Node.js's homepage"><i class="devicon-nodejs-plain"></i></a>
                                     <h4>Node.js</h4>
                                     <p>Server-side runtime.</p>
                                 </div>
@@ -190,7 +211,7 @@
                                 <span class="skill-label">Express</span>
                                 <span class="skill-connector" aria-hidden="true"></span>
                                 <div class="skill-panel">
-                                    <span class="panel-icon"><i class="devicon-express-original"></i></span>
+                                    <a href="https://expressjs.com/" target="_blank" rel="noopener noreferrer" class="panel-icon" aria-label="Visit Express's homepage" title="Visit Express's homepage"><i class="devicon-express-original"></i></a>
                                     <h4>Express</h4>
                                     <p>API routing and logic.</p>
                                 </div>
@@ -205,7 +226,7 @@
                             </div>
                             <div class="skill-group left">
                                 <div class="skill-panel">
-                                    <span class="panel-icon"><i class="devicon-mysql-original"></i></span>
+                                    <a href="https://www.mysql.com/" target="_blank" rel="noopener noreferrer" class="panel-icon" aria-label="Visit MySQL's homepage" title="Visit MySQL's homepage"><i class="devicon-mysql-original"></i></a>
                                     <h4>MySQL</h4>
                                     <p>Relational database management.</p>
                                 </div>
@@ -216,7 +237,7 @@
                                 <span class="skill-label">Prisma</span>
                                 <span class="skill-connector" aria-hidden="true"></span>
                                 <div class="skill-panel">
-                                    <span class="panel-icon"><i class="devicon-prisma-original"></i></span>
+                                    <a href="https://www.prisma.io/" target="_blank" rel="noopener noreferrer" class="panel-icon" aria-label="Visit Prisma's homepage" title="Visit Prisma's homepage"><i class="devicon-prisma-original"></i></a>
                                     <h4>Prisma</h4>
                                     <p>Modern database ORM.</p>
                                 </div>
@@ -349,7 +370,7 @@
                 <article class="tablet-row hidden-left" role="listitem" tabindex="0">
                     <div class="engraving">
                         <h3>Administration & Sales</h3>
-                        <span class="engraving-date">2024 - Present</span>
+                        <span class="engraving-date">2023 - 2024</span>
                     </div>
                     <div class="tablet-divider" aria-hidden="true"></div>
                     <div class="details">
@@ -380,7 +401,9 @@
     <footer id="contact" aria-label="Contact and footer">
 
         <div class="footer-content">
-            <p class="footer-glyph" aria-hidden="true">𓆣</p>
+            <a href="#hero" class="footer-beetle-btn" id="easter-egg-ascent" aria-label="Secret Ascent to Surface">
+                <span class="beetle-glyph">𓆣</span>
+            </a>
             <h2 class="footer-name">Hrishikesh Bajnath</h2>
             <div class="footer-links">
                 <a class="link-github" href="https://github.com/yourusername" target="_blank" rel="noopener" aria-label="GitHub">GitHub</a>
