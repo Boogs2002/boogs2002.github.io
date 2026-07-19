@@ -322,6 +322,19 @@
     transition: opacity 0.5s ease, transform 0.5s ease;
 }
 
+/* JS toggles .hidden/.visible on scroll (see script.js pyramidObserver) but no
+   rule previously existed for either, so every layer stayed fully visible and
+   the intended fade/rise-in reveal never actually ran. */
+.pyramid-layer.hidden {
+    opacity: 0;
+    transform: translateY(24px);
+}
+
+.pyramid-layer.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
 .tier-wrapper {
     position: relative;
     display: inline-flex;
