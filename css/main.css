@@ -284,15 +284,32 @@ section {
 
 .descend-text {
     font-family: 'Cinzel Decorative', serif;
-    font-size: 0.62rem;
-    letter-spacing: 0.45em;
+    font-size: 0.8rem;
+    letter-spacing: 0.5em;
     text-transform: uppercase;
-    color: rgba(255, 215, 0, 0.5);
+    color: rgba(255, 215, 0, 0.85);
+    text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+    transition: color 0.3s ease, text-shadow 0.3s ease;
 }
 
 .descend-arrow {
-    font-size: 1.3rem;
-    color: rgba(255, 215, 0, 0.4);
+    font-size: 2rem;
+    color: rgba(255, 215, 0, 0.8);
+    text-shadow: 0 0 16px rgba(255, 215, 0, 0.55);
+    transition: color 0.3s ease, text-shadow 0.3s ease, transform 0.3s ease;
+}
+
+.scroll-indicator:hover .descend-text,
+.scroll-indicator:focus-visible .descend-text {
+    color: var(--gold);
+    text-shadow: 0 0 16px var(--gold-glow);
+}
+
+.scroll-indicator:hover .descend-arrow,
+.scroll-indicator:focus-visible .descend-arrow {
+    color: var(--gold);
+    text-shadow: 0 0 22px var(--gold-glow);
+    transform: translateY(4px);
 }
 
 @keyframes bounce {

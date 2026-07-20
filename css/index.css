@@ -155,6 +155,77 @@
     }
 }
 
+@media (min-width: 1024px) {
+    #hero {
+        justify-content: center;
+        align-items: flex-start;
+    }
+    .hero-content {
+        position: absolute;
+        left: clamp(16px, 3vw, 60px);
+        bottom: 38vh;
+        margin: 0;
+        text-align: left;
+    }
+    .hero-content h1.hero-name {
+        font-size: clamp(2.8rem, 5.5vw, 5.5rem);
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.08em;
+        margin-bottom: 20px;
+    }
+    .name-line {
+        display: block;
+        background: linear-gradient(to top, #d0abb7 0%, #d688c9 50%, #ffffff 100%);
+        -webkit-background-clip: text;
+        background-clip: text;
+        opacity: 0;
+        animation: heroNameGlowReveal 1.4s ease-out forwards;
+        animation-play-state: paused;
+    }
+    .name-first {
+        animation-delay: 0.3s;
+    }
+    .name-last {
+        animation-delay: 0.75s;
+    }
+    #hero.hero-revealed .name-line {
+        animation-play-state: running;
+    }
+}
+
+@keyframes heroNameGlowReveal {
+    0% {
+        opacity: 0;
+        filter: blur(6px) brightness(2.4);
+        text-shadow: 0 0 0 rgba(255, 255, 255, 0);
+    }
+    40% {
+        opacity: 0.6;
+        filter: blur(2px) brightness(1.7);
+        text-shadow:
+            0 0 45px rgba(255, 255, 255, 0.9),
+            0 0 80px rgba(214, 136, 201, 0.75);
+    }
+    75% {
+        opacity: 0.95;
+        filter: blur(0.5px) brightness(1.1);
+        text-shadow:
+            0 0 20px rgba(214, 136, 201, 0.4),
+            0 0 35px rgba(255, 255, 255, 0.25);
+    }
+    100% {
+        opacity: 1;
+        filter: blur(0) brightness(1);
+        text-shadow:
+            2px 3px 18px rgba(0, 0, 0, 0.85),
+            0 0 40px rgba(0, 0, 0, 0.6),
+            0 0 25px rgba(214, 136, 201, 0.5),
+            0 0 55px rgba(255, 255, 255, 0.2);
+    }
+}
+
 #hero:hover .moon-frame {
     transform: scale(1.02);
     opacity: 0.85;
@@ -227,33 +298,121 @@
     filter: brightness(1) blur(0px);
 }
 
-/* ── 3. HERO TEXT ───────────────────────────────────────── */
-.hero-content h1 {
-    font-family: 'Cinzel Decorative', serif;
+/* 3. HERO TEXT & GLOWING TRACER ENGINE*/
+
+/* --- 1. Base Typography Foundations --- */
+.hero-content h1.hero-name {
+    font-family: 'Cinzel Decorative', serif; /* Keep your original display font */
     font-size: clamp(2rem, 6vw, 4rem);
     letter-spacing: 0.15em;
     text-transform: uppercase;
-    background: linear-gradient(to top, #d0abb7 0%, #d688c9 50%, #ffffff 100%);
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
-    text-shadow:
-        2px 3px 18px rgba(0,0,0,0.85),
-        0 0 40px rgba(0,0,0,0.6),
-        0 0 25px rgba(214, 136, 201, 0.5),
-        0 0 55px rgba(255, 255, 255, 0.2);
     margin-bottom: 12px;
+    line-height: 1.2;
 }
 
 .hero-content h2 {
-    font-family: 'Cinzel Decorative', serif;
+    font-family: var(--font-display);
     font-size: clamp(0.75rem, 1.8vw, 1rem);
     font-weight: 400;
     letter-spacing: 0.28em;
     text-transform: uppercase;
     color: var(--gold);
-    opacity: 0.85;
+    opacity: 0.4;
     text-shadow: 0 0 20px var(--gold-glow);
+    position: relative;
+    z-index: 10;
+}
+
+/* --- 2. Name Lines & Core Tracer Mechanics --- */
+.name-line {
+    display: block;
+    overflow: visible;
+    opacity: 0; /* Hidden until .hero-revealed class triggers on load */
+    transform: translateY(10px);
+    transition: opacity 1s ease-out, transform 1s ease-out;
+}
+
+/* Triggers structural fade-in once the intro gate clears */
+#hero.hero-revealed .name-line {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.tracer-char {
+    display: inline-block;
+    position: relative;
+    color: transparent;
+    -webkit-text-stroke: 1px rgba(255, 215, 0, 0.22);
+    text-shadow: 2px 3px 15px rgba(0, 0, 0, 0.9);
+    animation: letterTracerPulse 4s infinite ease-in-out;
+    animation-delay: calc(var(--li) * 0.09s); /* Staggers character delays automatically */
+}
+
+/* --- 3. The Sequential Light Wave Animation --- */
+@keyframes letterTracerPulse {
+    0%, 100% {
+        color: transparent;
+        -webkit-text-stroke: 1px rgba(255, 215, 0, 0.22);
+        text-shadow: 2px 3px 15px rgba(0, 0, 0, 0.9);
+        transform: scale(1);
+    }
+    12% {
+        /* Peak brightness moment as the glowing tracer passes the letter */
+        color: #ffffff;
+        -webkit-text-stroke: 1px var(--gold);
+        text-shadow: 
+            0 0 12px var(--gold),
+            0 0 24px var(--gold-glow),
+            0 0 40px #d688c9, /* Signature nebula pink highlight */
+            2px 3px 18px rgba(0, 0, 0, 0.9);
+        transform: scale(1.04); /* Subtle pop forward for extra depth */
+    }
+    24%, 80% {
+        /* Remainder of the animation loop stays settled in the baseline state */
+        color: transparent;
+        -webkit-text-stroke: 1px rgba(255, 215, 0, 0.22);
+        text-shadow: 2px 3px 15px rgba(0, 0, 0, 0.9);
+        transform: scale(1);
+    }
+}
+
+/* ==========================================================================
+   RESPONSIVE DESIGN LAYOUT OVERRIDES 
+   ========================================================================== */
+
+/* --- Desktop Layout Setup (replaces previous desktop h1 block) --- */
+@media (min-width: 1024px) {
+    #hero {
+        justify-content: center;
+        align-items: flex-start;
+    }
+    .hero-content {
+        position: absolute;
+        left: clamp(16px, 3vw, 60px);
+        bottom: 38vh;
+        margin: 0;
+        text-align: left;
+    }
+    .hero-content h1.hero-name {
+        font-size: clamp(2.8rem, 5.5vw, 5.5rem);
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.05em;
+        margin-bottom: 20px;
+    }
+}
+
+/* --- Mobile Fixes (Integrates safely with your styling) --- */
+@media (max-width: 640px) {
+    .hero-content h1.hero-name {
+        text-shadow: 0 2px 4px rgba(0, 0, 0, 0.55);
+        padding-bottom: 20px;
+    }
+    .tracer-char {
+        /* Slightly thicker default lines on smaller mobile resolutions */
+        -webkit-text-stroke: 1px rgba(255, 215, 0, 0.35);
+    }
 }
 
 /* ── 4. SHAFT (surface → pyramid transition) ────────────── */
@@ -322,9 +481,6 @@
     transition: opacity 0.5s ease, transform 0.5s ease;
 }
 
-/* JS toggles .hidden/.visible on scroll (see script.js pyramidObserver) but no
-   rule previously existed for either, so every layer stayed fully visible and
-   the intended fade/rise-in reveal never actually ran. */
 .pyramid-layer.hidden {
     opacity: 0;
     transform: translateY(24px);
@@ -1164,14 +1320,14 @@
 
 /* ── 12. RESPONSIVE (Index-Specific) ─────────────────────── */
 @media (max-width: 640px) {
-    /* Heading wraps to 2 lines here, so the bottom line lands in the
-       gradient's darkest stop — brighten it and lighten the shadow. */
+    
     .hero-content h1 {
-        background: linear-gradient(to top, #f0c9dd 0%, #f3b8e6 45%, #ffffff 100%);
+        /* background: linear-gradient(to top, #f0c9dd 0%, #f3b8e6 45%, #ffffff 100%); */
         text-shadow:
-            1px 2px 10px rgba(0, 0, 0, 0.5),
-            0 0 20px rgba(0, 0, 0, 0.35),
-            0 0 20px rgba(214, 136, 201, 0.4);
+        0 2px 4px rgba(0, 0, 0, 0.55),
+        0 0 6px rgba(0, 0, 0, 0.4),
+        0 0 10px rgba(214, 136, 201, 0.35);
+        padding-bottom: 40px;
     }
     .tier-wrapper {
         flex-direction: column;

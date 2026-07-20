@@ -126,8 +126,13 @@ document.addEventListener('DOMContentLoaded', () => {
         return lastSegment;
     }
 
-    // currentPath is also needed below for the Work/Contact navbar-collapse fix
     const currentPath = normalizePath(window.location.pathname);
+
+ 
+    function revealHeroName() {
+        const hero = document.getElementById('hero');
+        if (hero) hero.classList.add('hero-revealed');
+    }
 
     if (introGate) {
         const lastPage = normalizePath(sessionStorage.getItem('lastPage'));
@@ -135,9 +140,12 @@ document.addEventListener('DOMContentLoaded', () => {
         if (lastPage && lastPage !== currentPath) {
             introGate.style.display = 'none';
             document.body.style.overflow = '';
+            revealHeroName();
         } else {
             document.body.style.overflow = 'hidden';
         }
+    } else {
+        revealHeroName();
     }
 
     // Records this page on every page so "lastPage" is accurate when navigating back to Home
@@ -147,8 +155,30 @@ document.addEventListener('DOMContentLoaded', () => {
         enterPortfolioBtn.addEventListener('click', () => {
             introGate.classList.add('fade-out');
             document.body.style.overflow = '';
+            revealHeroName();
         });
     }
+
+    // Add this inside the document.addEventListener('DOMContentLoaded', () => { ... }) block:
+
+    document.querySelectorAll('.tracer-name .name-line').forEach((line) => {
+        const text = line.textContent;
+        line.textContent = ''; // Clear original text
+        
+        let letterIndex = 0;
+        Array.from(text).forEach((char) => {
+            const span = document.createElement('span');
+            if (char === ' ') {
+                span.innerHTML = '&nbsp;';
+            } else {
+                span.textContent = char;
+                span.className = 'tracer-char';
+                span.style.setProperty('--li', letterIndex);
+                letterIndex++;
+            }
+            line.appendChild(span);
+        });
+    });
 
     // ── NAVIGATION BAR TOGGLE ──────────────────────────────
     const navToggleTrigger = document.getElementById('nav-toggle-trigger');
@@ -277,6 +307,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
     document.querySelectorAll('.pyramid-layer').forEach((layer) => {
         pyramidObserver.observe(layer);
+    });
+
+    // Mouse clicks shouldn't leave a pyramid block "stuck" glowing via
+    // :focus-within — only actual hover, or genuine keyboard focus, should.
+    // preventDefault on mousedown stops the click from focusing the block,
+    // while Tab-key navigation (which uses keydown, not mousedown) still works.
+    document.querySelectorAll('.pyramid-layer .block').forEach((block) => {
+        block.addEventListener('mousedown', (e) => e.preventDefault());
     });
 
     // ── RESPONSIVE CHAMBER REVEAL OBSERVER ──
