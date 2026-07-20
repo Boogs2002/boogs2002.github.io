@@ -323,13 +323,17 @@
     z-index: 10;
 }
 
-/* --- 2. Name Lines & Core Tracer Mechanics --- */
+
 .name-line {
     display: block;
     overflow: visible;
-    opacity: 0; /* Hidden until .hero-revealed class triggers on load */
+    opacity: 0;
     transform: translateY(10px);
     transition: opacity 1s ease-out, transform 1s ease-out;
+    background: none !important;
+    background-clip: unset !important;
+    -webkit-background-clip: unset !important;
+    -webkit-text-fill-color: initial !important;
 }
 
 /* Triggers structural fade-in once the intro gate clears */
@@ -338,40 +342,44 @@
     transform: translateY(0);
 }
 
+/* --- Clean Tracer Character Styling --- */
 .tracer-char {
     display: inline-block;
     position: relative;
     color: transparent;
-    -webkit-text-stroke: 1px rgba(255, 215, 0, 0.22);
-    text-shadow: 2px 3px 15px rgba(0, 0, 0, 0.9);
+    
+    /* Elegant, sharp gold wireframe outline for the base state */
+    -webkit-text-stroke: 1px rgba(255, 215, 0, 0.25);
+    text-shadow: 2px 3px 15px rgba(0, 0, 0, 0.95);
+    
+    /* Animation loop setup */
     animation: letterTracerPulse 4s infinite ease-in-out;
-    animation-delay: calc(var(--li) * 0.09s); /* Staggers character delays automatically */
+    animation-delay: calc(var(--li) * 0.09s);
 }
 
-/* --- 3. The Sequential Light Wave Animation --- */
+/* --- The Sequential Light Wave Animation --- */
 @keyframes letterTracerPulse {
     0%, 100% {
         color: transparent;
-        -webkit-text-stroke: 1px rgba(255, 215, 0, 0.22);
-        text-shadow: 2px 3px 15px rgba(0, 0, 0, 0.9);
+        -webkit-text-stroke: 1px rgba(255, 215, 0, 0.25);
+        text-shadow: 2px 3px 15px rgba(0, 0, 0, 0.95);
         transform: scale(1);
     }
     12% {
-        /* Peak brightness moment as the glowing tracer passes the letter */
+        /* Peak lightning tracer moment as it sweeps across */
         color: #ffffff;
         -webkit-text-stroke: 1px var(--gold);
         text-shadow: 
             0 0 12px var(--gold),
             0 0 24px var(--gold-glow),
-            0 0 40px #d688c9, /* Signature nebula pink highlight */
+            0 0 40px #d688c9, /* Re-introduces your clean portfolio accent pink mid-pulse */
             2px 3px 18px rgba(0, 0, 0, 0.9);
-        transform: scale(1.04); /* Subtle pop forward for extra depth */
+        transform: scale(1.05);
     }
     24%, 80% {
-        /* Remainder of the animation loop stays settled in the baseline state */
         color: transparent;
-        -webkit-text-stroke: 1px rgba(255, 215, 0, 0.22);
-        text-shadow: 2px 3px 15px rgba(0, 0, 0, 0.9);
+        -webkit-text-stroke: 1px rgba(255, 215, 0, 0.25);
+        text-shadow: 2px 3px 15px rgba(0, 0, 0, 0.95);
         transform: scale(1);
     }
 }
