@@ -282,6 +282,15 @@ section {
     animation: bounce 2.4s ease-in-out infinite;
 }
 
+#hero .scroll-indicator {
+    position: relative;
+    bottom: auto;
+    left: auto;
+    transform: none;
+    margin-top: auto;
+    margin-bottom: 20px;
+}
+
 .descend-text {
     font-family: 'Cinzel Decorative', serif;
     font-size: 0.8rem;
