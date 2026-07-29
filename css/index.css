@@ -237,15 +237,15 @@
 
 @media (min-aspect-ratio: 1/1) {
     .hero-sky, .hero-dunes-foreground {
-        background-size: 175% auto;
-        background-position: center top;
+        background-size: 200% auto;
+        background-position: center bottom;
     }
 }
 
 @media (max-aspect-ratio: 1/1) {
     .hero-sky, .hero-dunes-foreground {
-        background-size: 175% auto;
-        background-position: center top;
+        background-size: 200% auto;
+        background-position: center bottom;
     }
 }
 
