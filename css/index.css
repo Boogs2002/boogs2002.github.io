@@ -21,10 +21,7 @@
 
 .hero-sky {
     position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100vh;
+    inset: 0;
     background-image: url('../img/index/sky-background.png');
     background-repeat: no-repeat;
     z-index: 1;
@@ -124,10 +121,7 @@
 
 .hero-dunes-foreground {
     position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100vh;
+    inset: 0;
     background-image: url('../img/index/dunes-foreground.png');
     background-repeat: no-repeat;
     z-index: 3;
@@ -757,6 +751,38 @@
     margin-bottom: 0.75rem;
     font-size: 0.95rem;
     line-height: 1.4;
+}
+
+@media (max-width: 1024px) {
+    .tier-wrapper {
+        flex-direction: column;
+    }
+    .skill-group {
+        position: static;
+        transform: none;
+        flex-direction: row;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-top: 8px;
+        width: 100%;
+    }
+    .skill-label {
+        opacity: 1;
+        color: var(--gold-dim);
+    }
+    .skill-connector {
+        display: none;
+    }
+    .skill-panel {
+        opacity: 1;
+        transform: none !important;
+        pointer-events: auto;
+        width: 140px;
+    }
+    .vertical-track {
+        display: none;
+    }
 }
 
 /* ── 6. PROJECTS GALLERY (EXCAVATIONS) ─────────────────── */
