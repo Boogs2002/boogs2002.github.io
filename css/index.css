@@ -597,12 +597,6 @@
     z-index: 20;
 }
 
-.pyramid-layer:has(.tier-wrapper:hover),
-.pyramid-layer:has(.tier-wrapper:focus-within) {
-    position: relative;
-    z-index: 50;
-}
-
 .skill-group.left  { right: calc(100% + 10px); }
 .skill-group.right { left:  calc(100% + 10px); }
 
@@ -781,6 +775,14 @@
         width: 140px;
     }
     .vertical-track {
+        display: none;
+    }
+    .skill-group {
+        justify-content: center;
+        align-items: center;
+    }
+
+    .skill-label {
         display: none;
     }
 }
