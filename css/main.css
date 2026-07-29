@@ -283,13 +283,12 @@ section {
 }
 
 #hero .scroll-indicator {
-    position: relative;
-    bottom: auto;
-    left: auto;
-    transform: none;
-    margin-top: auto;
-    margin-bottom: 20px;
-    align-self: center;
+    position: absolute;       
+    bottom: 40px;
+    left: 50%;              
+    transform: translateX(-50%);
+    margin: 0;
+    align-self: unset;
 }
 
 .descend-text {
