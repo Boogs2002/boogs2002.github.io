@@ -161,14 +161,11 @@ body {
 }
 
 .scarab-nav.is-closed .nav-logo-item {
-    opacity: 0;
-    pointer-events: none;
-    transition: opacity 0.4s ease;
-}
-
-.scarab-nav.is-closed.on-hero .nav-logo-item {
+    /* Always reachable even when manually collapsed, so there's never a
+       scroll position where the toggle itself is invisible. */
     opacity: 1;
     pointer-events: auto;
+    transition: opacity 0.4s ease;
 }
 
 .scarab-nav.is-closed.on-hero .nav-logo-placeholder {

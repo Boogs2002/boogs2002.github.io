@@ -216,16 +216,14 @@ document.addEventListener('DOMContentLoaded', () => {
             collapseThreshold = topSection ? Math.min(topSection.offsetHeight / 2, window.innerHeight) : 300;
         }
 
+        // Nav links stay visible at all scroll positions (feedback: don't force
+        // people to keep re-revealing the nav). 'on-hero' still toggles the
+        // hero-only glow styling on the center emblem; it no longer auto-closes
+        // the link bar.
         if (window.scrollY <= collapseThreshold) {
             scarabNav.classList.add('on-hero');
         } else {
             scarabNav.classList.remove('on-hero');
-            if (!scarabNav.classList.contains('is-closed')) {
-                scarabNav.classList.add('is-closed');
-                if (navToggleTrigger) {
-                    navToggleTrigger.setAttribute('aria-expanded', 'false');
-                }
-            }
         }
     });
 
